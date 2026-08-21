@@ -3,115 +3,999 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexite Career Lab | Pro Edition</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Nexite Career Lab | Smart Career Discovery</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        primary: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 900: '#312e81' },
+                        accent: { 500: '#8b5cf6', 600: '#7c3aed' },
+                        surface: '#F8FAFC'
+                    },
+                    boxShadow: {
+                        'glass': '0 4px 30px rgba(0, 0, 0, 0.05)',
+                        'float': '0 20px 40px -10px rgba(79, 70, 229, 0.15)',
+                    },
+                    animation: {
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'float-medium': 'float 4s ease-in-out infinite',
+                        'float-fast': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+                            '50%': { opacity: 0.8, transform: 'scale(1.05)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Global Styles & Animations -->
     <style>
-        .modal-animate { animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        body { background-color: #F8FAFC; color: #0f172a; overflow-x: hidden; }
+        
+        /* Glassmorphism */
+        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(226, 232, 240, 0.8); }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); }
+        
+        /* Scroll Reveal Utility Classes */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        
+        /* Custom Inputs */
+        .custom-input { @apply w-full bg-white border border-slate-200 rounded-xl p-4 text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all shadow-sm; }
+        
+        /* Step Transitions */
+        .step-container { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
+        .step-container.active { display: block; opacity: 1; animation: fadeUp 0.5s ease forwards; }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Gradient Text */
+        .text-gradient { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Background Orbs */
+        .bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.4; pointer-events: none; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
-</head>
-<body class="bg-slate-50">
 
-    <!-- Navbar -->
-    <nav class="sticky top-0 bg-white/80 backdrop-blur-md shadow-sm z-50 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <img src="11318.png" class="h-10 w-10 object-contain">
-            <span class="font-black text-xl tracking-tighter">NEXITE <span class="text-blue-600">LAB</span></span>
-        </div>
-        <div class="space-x-6 font-semibold hidden md:flex">
-            <a href="#home" class="hover:text-blue-600">Home</a>
-            <a href="#tools" class="hover:text-blue-600">Tools</a>
-            <a href="#gallery" class="hover:text-blue-600">Gallery</a>
-            <button onclick="toggleModal(true)" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700">Login</button>
-        </div>
-    </nav>
-
-    <!-- Login Popup -->
-    <div id="loginModal" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-8 w-full max-w-sm modal-animate shadow-2xl relative">
-            <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-gray-400 hover:text-black"><i class="fa-solid fa-xmark text-xl"></i></button>
-            <h2 class="text-2xl font-bold mb-6">Welcome Back</h2>
-            <input type="email" id="email" placeholder="Email" class="w-full p-3 border rounded-xl mb-3">
-            <input type="password" id="pass" placeholder="Password" class="w-full p-3 border rounded-xl mb-4">
-            <button onclick="loginWithEmail()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold mb-4">Login</button>
-            <div class="text-center text-gray-400 text-sm mb-4">OR</div>
-            <button onclick="googleLogin()" class="w-full border border-gray-300 py-3 rounded-xl font-bold flex justify-center items-center gap-2">
-                <img src="https://www.google.com/favicon.ico" class="w-4 h-4"> Sign in with Google
-            </button>
-        </div>
-    </div>
-
-    <!-- Hero -->
-    <section id="home" class="py-20 text-center px-4">
-        <img src="11287.jpg" class="w-32 h-32 rounded-full mx-auto shadow-2xl mb-6 border-4 border-white">
-        <h1 class="text-5xl font-extrabold mb-4">Nexite Career Lab</h1>
-        <p class="text-gray-600 max-w-md mx-auto">Smart tools for smart students. Built by Mahipal Parihar.</p>
-    </section>
-
-    <!-- Tools -->
-    <section id="tools" class="py-16 bg-white px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-8 text-center">Eligibility Tools</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Age Calc -->
-                <div class="p-6 border rounded-3xl shadow-sm bg-blue-50">
-                    <h3 class="font-bold text-xl mb-4">Age Calculator</h3>
-                    <input type="date" id="dob" class="w-full p-3 rounded-xl mb-3">
-                    <button onclick="calcAge()" class="w-full bg-blue-600 text-white py-3 rounded-xl">Calculate Now</button>
-                    <p id="ageResult" class="mt-4 font-bold text-blue-800 text-center"></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center py-10 bg-gray-900 text-white">
-        <p class="font-bold">Made with ❤️ by Nexite</p>
-    </footer>
-
-    <!-- Scripts -->
+    <!-- FIREBASE SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // FIREBASE CONFIG (Paste here from Screenshot)
         const firebaseConfig = {
             apiKey: "AIzaSyA2y6Ty0Iq2jFjbeGKaqqUMyLW0NZwKLIA",
             authDomain: "nexite-career-lab.firebaseapp.com",
             projectId: "nexite-career-lab",
             storageBucket: "nexite-career-lab.firebasestorage.app",
             messagingSenderId: "341950730543",
-            appId: "1:341950730543:web:88d3b101af0351b53cd1da"
+            appId: "1:341950730543:web:88d3b101af0351b53cd1da",
+            measurementId: "G-MK9PD3MQMB"
         };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        window.toggleModal = (show) => document.getElementById('loginModal').classList.toggle('hidden', !show);
+        window.NCL_Auth = {
+            login: async () => { try { await signInWithPopup(auth, provider); } catch(e) { console.error("Login Error:", e); } },
+            logout: () => signOut(auth)
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            const desktopAuth = document.getElementById('desktop-auth');
+            const mobileAuth = document.getElementById('mobile-auth');
+            
+            if (user) {
+                const userHtml = `
+                    <div class="flex items-center gap-3 bg-white border border-slate-200 px-2 py-1.5 rounded-full shadow-sm cursor-pointer hover:shadow-md transition-all group" onclick="window.NCL_Auth.logout()" title="Click to logout">
+                        <img src="${user.photoURL}" class="w-8 h-8 rounded-full border border-primary-200 object-cover">
+                        <span class="text-sm font-bold text-slate-800 pr-3 truncate max-w-[120px] group-hover:text-red-500 transition-colors">${user.displayName.split(' ')[0]}</span>
+                    </div>
+                `;
+                desktopAuth.innerHTML = userHtml;
+                mobileAuth.innerHTML = userHtml;
+            } else {
+                const loginBtn = `<button onclick="window.NCL_Auth.login()" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg shadow-primary-500/30 transform hover:-translate-y-0.5">Login</button>`;
+                desktopAuth.innerHTML = loginBtn;
+                mobileAuth.innerHTML = loginBtn;
+            }
+        });
+    </script>
+</head>
+<body class="antialiased selection:bg-primary-200 selection:text-primary-900">
+
+    <!-- Ambient Background Elements -->
+    <div class="bg-orb w-[600px] h-[600px] bg-primary-200 top-[-200px] left-[-200px]"></div>
+    <div class="bg-orb w-[500px] h-[500px] bg-accent-100 top-[20%] right-[-100px]"></div>
+    <div class="bg-orb w-[700px] h-[700px] bg-blue-100 bottom-[-200px] left-[10%]"></div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 transition-all duration-300" id="nav-container">
+                <!-- Brand -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="bg-white p-1.5 rounded-xl shadow-sm border border-slate-100 group-hover:shadow-md transition-all">
+                        <img src="11318.png" alt="NCL Logo" class="h-8 w-8 object-contain">
+                    </div>
+                    <span class="font-extrabold text-xl tracking-tight text-slate-900 hidden sm:block">NEXITE <span class="text-primary-600">LAB</span></span>
+                </a>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-sm font-semibold text-slate-600 hover:text-primary-600 transition-colors">Home</a>
+                    <a href="#eligibility" class="text-sm font-semibold text-slate-600 hover:text-primary-600 transition-colors">Eligibility</a>
+                    <a href="#exams" class="text-sm font-semibold text-slate-600 hover:text-primary-600 transition-colors">Exams</a>
+                    <a href="#tools" class="text-sm font-semibold text-slate-600 hover:text-primary-600 transition-colors">Tools</a>
+                    <a href="#about" class="text-sm font-semibold text-slate-600 hover:text-primary-600 transition-colors">About</a>
+                </div>
+
+                <!-- Desktop Auth & CTA -->
+                <div class="hidden md:flex items-center gap-4">
+                    <div id="desktop-auth"></div>
+                    <a href="#eligibility" class="hidden lg:flex items-center gap-2 text-primary-600 bg-primary-50 px-5 py-2.5 rounded-full font-bold text-sm hover:bg-primary-100 transition-colors border border-primary-100">
+                        Check Eligibility <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-600 hover:text-primary-600 text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Slide down) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 absolute w-full left-0 overflow-hidden shadow-xl origin-top transition-all duration-300">
+            <div class="px-6 py-6 flex flex-col gap-6">
+                <a href="#home" class="mobile-link text-lg font-bold text-slate-800">Home</a>
+                <a href="#eligibility" class="mobile-link text-lg font-bold text-slate-800">Eligibility Checker</a>
+                <a href="#exams" class="mobile-link text-lg font-bold text-slate-800">Explore Exams</a>
+                <a href="#tools" class="mobile-link text-lg font-bold text-slate-800">Student Tools</a>
+                <a href="#about" class="mobile-link text-lg font-bold text-slate-800">About Founder</a>
+                <div class="h-px bg-slate-100 w-full"></div>
+                <div id="mobile-auth" class="pb-2"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 relative">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            
+            <!-- Hero Text -->
+            <div class="text-center lg:text-left z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-primary-700 font-bold text-xs tracking-wider mb-8 shadow-sm reveal active">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-600"></span>
+                    </span>
+                    SMART CAREER DISCOVERY PLATFORM
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight reveal active delay-100">
+                    Know Your <span class="text-gradient">Eligibility.</span><br>
+                    Discover Your <span class="text-gradient">Opportunities.</span>
+                </h1>
+                
+                <p class="text-lg lg:text-xl text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed reveal active delay-200">
+                    Enter your basic details and instantly discover government exams, defence opportunities, and career options that perfectly match your profile.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start reveal active delay-200">
+                    <a href="#eligibility" class="w-full sm:w-auto bg-primary-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary-700 hover:shadow-float transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                        Check My Eligibility <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                    <a href="#tools" class="w-full sm:w-auto bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-50 transition-all flex items-center justify-center">
+                        Explore Tools
+                    </a>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-4 lg:gap-8 text-sm font-semibold text-slate-500 reveal active delay-200">
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> Personalized Results</span>
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-primary-500"></i> Fast & Secure</span>
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-amber-500"></i> Smart Tools</span>
+                </div>
+            </div>
+
+            <!-- Hero Visual (HTML/CSS Dashboard) -->
+            <div class="relative w-full max-w-lg mx-auto lg:max-w-none lg:h-[500px] flex items-center justify-center reveal active delay-200 z-10">
+                <!-- Connecting Line -->
+                <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 text-primary-200/50 -z-10" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 50 Q 50 10 90 50 T 90 90" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" class="animate-pulse"/>
+                </svg>
+
+                <!-- Profile Card -->
+                <div class="absolute top-0 left-0 lg:left-10 bg-white/90 backdrop-blur border border-white/50 p-5 rounded-2xl shadow-xl w-48 animate-float-slow z-20">
+                    <div class="text-[10px] font-bold text-slate-400 tracking-wider uppercase mb-2">Profile Match</div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center text-white font-bold text-lg">MP</div>
+                        <div>
+                            <div class="text-sm font-bold text-slate-800">Age: 20</div>
+                            <div class="text-xs text-slate-500">12th Pass</div>
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-primary-500 w-3/4 h-full"></div>
+                    </div>
+                </div>
+
+                <!-- Result Card 1 -->
+                <div class="absolute top-1/2 right-0 lg:right-4 -translate-y-1/2 bg-white/90 backdrop-blur border border-white/50 p-4 rounded-2xl shadow-xl w-56 animate-float-medium z-30">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2 py-1 rounded-full"><i class="fa-solid fa-check mr-1"></i> Eligible</div>
+                        <span class="text-lg text-primary-600"><i class="fa-solid fa-building-columns"></i></span>
+                    </div>
+                    <div class="font-bold text-slate-800">SSC CHSL</div>
+                    <div class="text-xs text-slate-500 mt-1">92% Match • Gov. Sector</div>
+                </div>
+
+                <!-- Result Card 2 -->
+                <div class="absolute bottom-10 left-10 lg:left-24 bg-white/90 backdrop-blur border border-white/50 p-4 rounded-2xl shadow-xl w-48 animate-float-fast z-20">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="bg-amber-50 text-amber-600 text-[10px] font-bold px-2 py-1 rounded-full"><i class="fa-solid fa-fire mr-1"></i> High Match</div>
+                        <span class="text-lg text-accent-500"><i class="fa-solid fa-shield-halved"></i></span>
+                    </div>
+                    <div class="font-bold text-slate-800">Defence NDA</div>
+                    <div class="text-xs text-slate-500 mt-1">87% Match • 12th PCM</div>
+                </div>
+
+                <!-- Center Orb -->
+                <div class="w-32 h-32 rounded-full bg-gradient-to-tr from-primary-600 to-accent-500 shadow-float flex flex-col items-center justify-center text-white relative z-10 animate-float-medium">
+                    <div class="absolute inset-0 rounded-full bg-primary-400 animate-pulse-glow z-[-1]"></div>
+                    <span class="text-3xl font-black">12</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-primary-100 text-center leading-tight mt-1">Matches<br>Found</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="py-20 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">How Nexite Lab Works</h2>
+                <p class="text-slate-500">Three simple steps to uncover your career path.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-10 relative">
+                <!-- Desktop Connector Line -->
+                <div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-primary-100 via-primary-300 to-primary-100 z-0"></div>
+                
+                <!-- Step 1 -->
+                <div class="relative z-10 text-center reveal">
+                    <div class="w-24 h-24 mx-auto bg-white border-4 border-slate-50 shadow-lg rounded-2xl flex items-center justify-center text-3xl text-primary-600 mb-6 rotate-3 hover:rotate-0 transition-transform">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <div class="text-primary-600 font-bold mb-2">01</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Enter Your Details</h3>
+                    <p class="text-slate-500 text-sm">Provide your Date of Birth, State, and Academic details securely.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="relative z-10 text-center reveal delay-100">
+                    <div class="w-24 h-24 mx-auto bg-white border-4 border-slate-50 shadow-lg rounded-2xl flex items-center justify-center text-3xl text-accent-500 mb-6 -rotate-3 hover:rotate-0 transition-transform">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="text-accent-600 font-bold mb-2">02</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">We Analyze Profile</h3>
+                    <p class="text-slate-500 text-sm">Our engine cross-references official exam rules and age limits.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="relative z-10 text-center reveal delay-200">
+                    <div class="w-24 h-24 mx-auto bg-white border-4 border-slate-50 shadow-lg rounded-2xl flex items-center justify-center text-3xl text-emerald-500 mb-6 rotate-3 hover:rotate-0 transition-transform">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                    <div class="text-emerald-600 font-bold mb-2">03</div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Discover Opportunities</h3>
+                    <p class="text-slate-500 text-sm">Get a personalized dashboard of exams you are eligible for today.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ELIGIBILITY CHECKER ENGINE (MAIN) -->
+    <section id="eligibility" class="py-24 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Find What You Qualify For</h2>
+                <p class="text-lg text-slate-600">Tell us a little about yourself and we'll show you relevant opportunities.</p>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 md:p-12 shadow-xl border border-slate-100 reveal">
+                
+                <!-- Progress Header -->
+                <div class="flex justify-between items-center mb-8 relative">
+                    <div class="absolute top-1/2 left-0 w-full h-1 bg-slate-100 -z-10 -translate-y-1/2 rounded-full"></div>
+                    <div id="progress-line" class="absolute top-1/2 left-0 w-1/3 h-1 bg-primary-500 -z-10 -translate-y-1/2 rounded-full transition-all duration-500"></div>
+                    
+                    <div class="step-indicator flex flex-col items-center gap-2" id="ind-1">
+                        <div class="w-10 h-10 rounded-full bg-primary-600 text-white font-bold flex items-center justify-center shadow-md transition-colors">01</div>
+                        <span class="text-xs font-bold text-slate-800">Profile</span>
+                    </div>
+                    <div class="step-indicator flex flex-col items-center gap-2" id="ind-2">
+                        <div class="w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-400 font-bold flex items-center justify-center transition-colors">02</div>
+                        <span class="text-xs font-bold text-slate-400">Education</span>
+                    </div>
+                    <div class="step-indicator flex flex-col items-center gap-2" id="ind-3">
+                        <div class="w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-400 font-bold flex items-center justify-center transition-colors">03</div>
+                        <span class="text-xs font-bold text-slate-400">Results</span>
+                    </div>
+                </div>
+
+                <!-- STEP 1: Profile -->
+                <div id="step-1" class="step-container active">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2"><i class="fa-regular fa-calendar text-primary-500 mr-2"></i> Date of Birth</label>
+                            <input type="date" id="form-dob" class="custom-input" required max="2012-01-01">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-users text-primary-500 mr-2"></i> Category</label>
+                                <div class="relative">
+                                    <select id="form-category" class="custom-input appearance-none pr-10">
+                                        <option value="UR">General / UR</option>
+                                        <option value="OBC">OBC</option>
+                                        <option value="SCST">SC / ST</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2"><i class="fa-solid fa-map-location-dot text-primary-500 mr-2"></i> State</label>
+                                <div class="relative">
+                                    <select id="form-state" class="custom-input appearance-none pr-10">
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="UP">Uttar Pradesh</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="EligibilityEngine.goToStep(2)" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition-colors mt-4 shadow-md">
+                            Continue to Education <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Education -->
+                <div id="step-2" class="step-container">
+                    <label class="block text-sm font-bold text-slate-700 mb-4"><i class="fa-solid fa-graduation-cap text-primary-500 mr-2"></i> Highest Qualification</label>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <!-- Selectable Cards -->
+                        <div class="edu-card cursor-pointer border-2 border-slate-100 rounded-xl p-4 text-center hover:border-primary-300 transition-all" onclick="EligibilityEngine.selectEdu('10th', this)">
+                            <i class="fa-solid fa-school text-3xl text-slate-400 mb-2 edu-icon"></i>
+                            <div class="font-bold text-slate-700">10th Pass</div>
+                        </div>
+                        <div class="edu-card cursor-pointer border-2 border-slate-100 rounded-xl p-4 text-center hover:border-primary-300 transition-all" onclick="EligibilityEngine.selectEdu('12th', this)">
+                            <i class="fa-solid fa-book-open text-3xl text-slate-400 mb-2 edu-icon"></i>
+                            <div class="font-bold text-slate-700">12th Pass</div>
+                        </div>
+                        <div class="edu-card cursor-pointer border-2 border-slate-100 rounded-xl p-4 text-center hover:border-primary-300 transition-all" onclick="EligibilityEngine.selectEdu('Graduation', this)">
+                            <i class="fa-solid fa-user-graduate text-3xl text-slate-400 mb-2 edu-icon"></i>
+                            <div class="font-bold text-slate-700">Graduation</div>
+                        </div>
+                        <div class="edu-card cursor-pointer border-2 border-slate-100 rounded-xl p-4 text-center hover:border-primary-300 transition-all" onclick="EligibilityEngine.selectEdu('PG', this)">
+                            <i class="fa-solid fa-award text-3xl text-slate-400 mb-2 edu-icon"></i>
+                            <div class="font-bold text-slate-700">Post Grad</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button onclick="EligibilityEngine.goToStep(1)" class="w-1/3 bg-slate-100 text-slate-700 py-4 rounded-xl font-bold hover:bg-slate-200 transition-colors">Back</button>
+                        <button onclick="EligibilityEngine.analyze()" class="w-2/3 bg-primary-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-primary-700 transition-colors shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2">
+                            Analyze My Profile <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- LOADING STATE (Simulated) -->
+                <div id="step-loading" class="step-container text-center py-10">
+                    <div class="inline-block relative w-16 h-16 mb-6">
+                        <div class="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
+                        <div class="absolute inset-0 border-4 border-primary-500 rounded-full border-t-transparent animate-spin"></div>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Analyzing your profile...</h3>
+                    <div class="text-sm text-slate-500 space-y-2 font-medium">
+                        <p class="text-emerald-500"><i class="fa-solid fa-check mr-2"></i> Personal Details</p>
+                        <p class="text-emerald-500"><i class="fa-solid fa-check mr-2"></i> Eligibility Rules</p>
+                        <p class="animate-pulse text-primary-600"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Opportunity Matching</p>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Results Dashboard -->
+                <div id="step-3" class="step-container">
+                    
+                    <!-- Top Summary & Age -->
+                    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Based on your profile</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-white border border-slate-200 px-3 py-1 rounded-lg text-sm font-semibold text-slate-700" id="res-state"></span>
+                                <span class="bg-white border border-slate-200 px-3 py-1 rounded-lg text-sm font-semibold text-slate-700" id="res-edu"></span>
+                                <span class="bg-white border border-slate-200 px-3 py-1 rounded-lg text-sm font-semibold text-slate-700" id="res-cat"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- Animated Age Display -->
+                        <div class="text-center md:text-right bg-white p-4 rounded-xl border border-slate-200 shadow-sm min-w-[200px]">
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Your Exact Age</div>
+                            <div class="flex justify-center md:justify-end items-end gap-1 font-bold text-primary-600">
+                                <span class="text-3xl" id="res-y">0</span><span class="text-sm text-slate-500 mb-1">y</span>
+                                <span class="text-3xl ml-2" id="res-m">0</span><span class="text-sm text-slate-500 mb-1">m</span>
+                                <span class="text-3xl ml-2" id="res-d">0</span><span class="text-sm text-slate-500 mb-1">d</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-end mb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-900">Best Matches For You</h3>
+                            <p class="text-slate-500 font-medium" id="res-count">0 opportunities found</p>
+                        </div>
+                        <button onclick="EligibilityEngine.goToStep(1)" class="text-sm font-bold text-primary-600 hover:text-primary-700 underline underline-offset-4">Edit Profile</button>
+                    </div>
+
+                    <!-- Dynamic Results Grid -->
+                    <div id="dynamic-results" class="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Populated by JS -->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPLORE EXAMS SECTION -->
+    <section id="exams" class="py-20 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 reveal">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Explore Opportunities</h2>
+                    <p class="text-slate-500 font-medium">Discover exams and careers across categories.</p>
+                </div>
+                <div class="mt-6 md:mt-0 relative w-full md:w-72">
+                    <input type="text" placeholder="Search exams..." class="w-full bg-slate-50 border border-slate-200 rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                </div>
+            </div>
+
+            <!-- Filter Pills -->
+            <div class="flex overflow-x-auto gap-3 pb-4 mb-8 custom-scrollbar reveal delay-100">
+                <button class="px-5 py-2 rounded-full bg-primary-600 text-white font-semibold text-sm whitespace-nowrap shadow-md">All</button>
+                <button class="px-5 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-100 whitespace-nowrap">Government</button>
+                <button class="px-5 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-100 whitespace-nowrap">Defence</button>
+                <button class="px-5 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-100 whitespace-nowrap">Banking</button>
+                <button class="px-5 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-100 whitespace-nowrap">Railway</button>
+                <button class="px-5 py-2 rounded-full bg-slate-50 border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-100 whitespace-nowrap">State Exams</button>
+            </div>
+
+            <!-- Exam Cards Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal delay-200">
+                
+                <!-- Static Card 1 -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full"><i class="fa-solid fa-check mr-1"></i> Active</span>
+                            <span class="text-slate-400 group-hover:text-primary-500 transition-colors cursor-pointer"><i class="fa-regular fa-bookmark"></i></span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-primary-600 transition-colors">SSC CHSL 2026</h3>
+                        <p class="text-sm font-medium text-slate-500 mb-5">Staff Selection Commission</p>
+                        
+                        <div class="grid grid-cols-2 gap-y-3 text-sm mb-6 border-t border-slate-100 pt-4">
+                            <div><span class="text-slate-400 block text-xs">Age Limit</span><span class="font-bold text-slate-700">18–27 Yrs</span></div>
+                            <div><span class="text-slate-400 block text-xs">Qualification</span><span class="font-bold text-slate-700">12th Pass</span></div>
+                        </div>
+                        
+                        <button class="w-full bg-slate-50 text-primary-600 font-bold py-2.5 rounded-xl group-hover:bg-primary-600 group-hover:text-white transition-colors">View Details <i class="fa-solid fa-arrow-right text-xs ml-1"></i></button>
+                    </div>
+                </div>
+
+                <!-- Static Card 2 -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-amber-50 text-amber-600 text-xs font-bold px-3 py-1 rounded-full"><i class="fa-solid fa-hourglass-half mr-1"></i> Closing Soon</span>
+                            <span class="text-slate-400 group-hover:text-primary-500 transition-colors cursor-pointer"><i class="fa-regular fa-bookmark"></i></span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-primary-600 transition-colors">IBPS PO</h3>
+                        <p class="text-sm font-medium text-slate-500 mb-5">Banking Sector</p>
+                        
+                        <div class="grid grid-cols-2 gap-y-3 text-sm mb-6 border-t border-slate-100 pt-4">
+                            <div><span class="text-slate-400 block text-xs">Age Limit</span><span class="font-bold text-slate-700">20–30 Yrs</span></div>
+                            <div><span class="text-slate-400 block text-xs">Qualification</span><span class="font-bold text-slate-700">Graduation</span></div>
+                        </div>
+                        
+                        <button class="w-full bg-slate-50 text-primary-600 font-bold py-2.5 rounded-xl group-hover:bg-primary-600 group-hover:text-white transition-colors">View Details <i class="fa-solid fa-arrow-right text-xs ml-1"></i></button>
+                    </div>
+                </div>
+
+                <!-- Static Card 3 -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1 rounded-full"><i class="fa-solid fa-calendar mr-1"></i> Upcoming</span>
+                            <span class="text-slate-400 group-hover:text-primary-500 transition-colors cursor-pointer"><i class="fa-regular fa-bookmark"></i></span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-1 group-hover:text-primary-600 transition-colors">NDA & NA</h3>
+                        <p class="text-sm font-medium text-slate-500 mb-5">Defence (UPSC)</p>
+                        
+                        <div class="grid grid-cols-2 gap-y-3 text-sm mb-6 border-t border-slate-100 pt-4">
+                            <div><span class="text-slate-400 block text-xs">Age Limit</span><span class="font-bold text-slate-700">16.5–19.5 Yrs</span></div>
+                            <div><span class="text-slate-400 block text-xs">Qualification</span><span class="font-bold text-slate-700">12th Pass</span></div>
+                        </div>
+                        
+                        <button class="w-full bg-slate-50 text-primary-600 font-bold py-2.5 rounded-xl group-hover:bg-primary-600 group-hover:text-white transition-colors">View Details <i class="fa-solid fa-arrow-right text-xs ml-1"></i></button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-10 reveal">
+                <button class="text-slate-500 font-bold hover:text-primary-600 transition-colors">Load More Opportunities <i class="fa-solid fa-chevron-down ml-1 text-xs"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- STUDENT TOOLS (Bento Grid) -->
+    <section id="tools" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <!-- Dark background glow -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
         
-        window.loginWithEmail = async () => {
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('pass').value;
-            try { await signInWithEmailAndPassword(auth, e, p); alert("Logged in!"); toggleModal(false); } 
-            catch(err) { alert(err.message); }
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-extrabold mb-4">Everything Students Need</h2>
+                <p class="text-slate-400 text-lg">Essential career tools, in one premium place.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 reveal">
+                
+                <!-- Functional Age Calculator Card (Large) -->
+                <div class="md:col-span-2 bg-slate-800/50 backdrop-blur border border-slate-700 rounded-3xl p-8 hover:border-slate-600 transition-colors flex flex-col md:flex-row gap-8 items-center">
+                    <div class="w-full md:w-1/2">
+                        <div class="w-12 h-12 bg-primary-500/20 text-primary-400 rounded-xl flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-calendar-day"></i></div>
+                        <h3 class="text-2xl font-bold mb-2">Age Calculator</h3>
+                        <p class="text-slate-400 text-sm mb-6">Calculate exact age for form submissions.</p>
+                        <input type="date" id="tool-dob" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white focus:outline-none focus:border-primary-500 mb-4">
+                        <button onclick="Tools.calculateAge()" class="bg-primary-600 hover:bg-primary-500 text-white font-bold py-3 px-6 rounded-xl transition-colors w-full sm:w-auto">Calculate</button>
+                    </div>
+                    <div class="w-full md:w-1/2 bg-slate-900 border border-slate-700 rounded-2xl p-6 text-center shadow-inner h-full flex flex-col justify-center min-h-[200px]">
+                        <div id="tool-age-empty" class="text-slate-500 font-medium">Select DOB to see result</div>
+                        <div id="tool-age-result" class="hidden">
+                            <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">You Are</div>
+                            <div class="flex justify-center items-end gap-1 font-bold text-white mb-4">
+                                <span class="text-4xl" id="ta-y"></span><span class="text-sm text-slate-400 mb-1 mr-2">y</span>
+                                <span class="text-4xl" id="ta-m"></span><span class="text-sm text-slate-400 mb-1 mr-2">m</span>
+                                <span class="text-4xl" id="ta-d"></span><span class="text-sm text-slate-400 mb-1">d</span>
+                            </div>
+                            <div class="text-sm font-medium text-primary-400" id="ta-next"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Syllabus Vault -->
+                <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-3xl p-8 hover:border-slate-600 transition-colors group cursor-pointer flex flex-col">
+                    <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-book"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Syllabus Vault</h3>
+                    <p class="text-slate-400 text-sm mb-6">Official PDFs for SSC, UPSC, and State exams.</p>
+                    <div class="mt-auto text-emerald-400 font-bold text-sm flex items-center">Open Tool <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></div>
+                </div>
+
+                <!-- CGPA Calc -->
+                <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-3xl p-8 hover:border-slate-600 transition-colors group cursor-pointer">
+                    <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-percent"></i></div>
+                    <h3 class="text-xl font-bold mb-2">CGPA Calculator</h3>
+                    <p class="text-slate-400 text-sm mb-6">Convert Board/College CGPA to standard percentage.</p>
+                    <div class="text-amber-400 font-bold text-sm flex items-center">Open Tool <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></div>
+                </div>
+
+                <!-- Date Calculator -->
+                <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-3xl p-8 hover:border-slate-600 transition-colors group cursor-pointer">
+                    <div class="w-12 h-12 bg-rose-500/20 text-rose-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-regular fa-clock"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Date Calculator</h3>
+                    <p class="text-slate-400 text-sm mb-6">Add or subtract days for application planning.</p>
+                    <div class="text-rose-400 font-bold text-sm flex items-center">Open Tool <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></div>
+                </div>
+
+                <!-- Saved Exams -->
+                <div class="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-3xl p-8 hover:border-slate-600 transition-colors group cursor-pointer">
+                    <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-regular fa-bookmark"></i></div>
+                    <h3 class="text-xl font-bold mb-2">My Saved Exams</h3>
+                    <p class="text-slate-400 text-sm mb-6">Track your bookmarked opportunities and deadlines.</p>
+                    <div class="text-blue-400 font-bold text-sm flex items-center">View Dashboard <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT / FOUNDER -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-5 gap-12 items-center">
+            
+            <div class="md:col-span-2 reveal">
+                <div class="relative p-2 bg-white rounded-3xl shadow-xl border border-slate-100 rotate-2 hover:rotate-0 transition-transform duration-500 max-w-sm mx-auto">
+                    <img src="11287.jpg" alt="Mahipal Parihar" class="w-full rounded-2xl object-cover aspect-square">
+                    <div class="absolute -bottom-5 -right-5 bg-primary-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-primary-500/30">
+                        <i class="fa-solid fa-quote-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-3 reveal delay-100 text-center md:text-left">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-2">Mahipal Parihar</h2>
+                <p class="text-primary-600 font-bold uppercase tracking-widest text-sm mb-6">Founder — Nexite Career Lab</p>
+                <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                    "I created Nexite Career Lab to simplify the complex world of career and exam discovery. Students shouldn't miss opportunities because of confusing eligibility rules or missed deadlines. We bring essential tools and smart matching into one premium platform."
+                </p>
+                
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <a href="mailto:pariharmahipal02@gmail.com" class="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-primary-600 hover:text-white hover:border-primary-600 transition-all shadow-sm"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="tel:9257184454" class="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all shadow-sm"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/nexiteofficial?igsi=amNxdXYyd3Z6eXVh" target="_blank" class="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-accent-500 hover:text-white hover:border-accent-500 transition-all shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- CONTACT CTA -->
+    <section id="contact" class="py-20 bg-primary-50 border-t border-primary-100">
+        <div class="max-w-4xl mx-auto px-4 text-center reveal">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Ready to Discover Your Next Opportunity?</h2>
+            <p class="text-lg text-slate-600 mb-10">Start with your profile and see exactly where you stand today.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#eligibility" class="bg-primary-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-primary-700 transition shadow-lg shadow-primary-500/20">Check My Eligibility</a>
+                <a href="mailto:pariharmahipal02@gmail.com" class="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm">Contact Nexite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="md:col-span-2">
+                    <a href="#home" class="flex items-center gap-2 mb-4">
+                        <img src="11318.png" alt="NCL Logo" class="h-8 w-8 object-contain">
+                        <span class="font-extrabold text-xl tracking-tight text-slate-900">NEXITE <span class="text-primary-600">LAB</span></span>
+                    </a>
+                    <p class="text-slate-500 text-sm max-w-sm mb-6">One smart platform for students to discover exams, check eligibility, and use essential career tools.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/nexiteofficial?igsi=amNxdXYyd3Z6eXVh" target="_blank" class="text-slate-400 hover:text-primary-600 transition"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="mailto:pariharmahipal02@gmail.com" class="text-slate-400 hover:text-primary-600 transition"><i class="fa-solid fa-envelope text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm">Quick Links</h4>
+                    <ul class="space-y-3 text-sm text-slate-500 font-medium">
+                        <li><a href="#eligibility" class="hover:text-primary-600 transition">Eligibility Checker</a></li>
+                        <li><a href="#exams" class="hover:text-primary-600 transition">Explore Exams</a></li>
+                        <li><a href="#tools" class="hover:text-primary-600 transition">Student Tools</a></li>
+                        <li><a href="#about" class="hover:text-primary-600 transition">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm">Legal</h4>
+                    <ul class="space-y-3 text-sm text-slate-500 font-medium">
+                        <li><a href="#" class="hover:text-primary-600 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-primary-600 transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-primary-600 transition">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400 font-medium">
+                <p>© 2026 Nexite Career Lab. All rights reserved.</p>
+                <p>Designed for students in India.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- APPLICATION LOGIC -->
+    <script>
+        // --- 1. UI & Scroll Animations ---
+        
+        // Sticky Navbar Resize & Scroll Reveal
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const navContainer = document.getElementById('nav-container');
+            if (window.scrollY > 20) {
+                navContainer.classList.remove('h-20');
+                navContainer.classList.add('h-16');
+            } else {
+                navContainer.classList.add('h-20');
+                navContainer.classList.remove('h-16');
+            }
+
+            // Reveal Animation
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveal.getBoundingClientRect().top;
+                if (revealTop < windowHeight - 50) {
+                    reveal.classList.add('active');
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('animate-[fadeUp_0.2s_ease]');
+            } else {
+                menu.classList.add('hidden');
+            }
+        });
+        
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // --- 2. Data Logic (Mock DB structured for future Firestore replacement) ---
+        const MOCK_EXAM_DB = [
+            { id: 1, name: "SSC CHSL", org: "Government", edu: "12th", minAge: 18, maxAge: 27 },
+            { id: 2, name: "SSC CGL", org: "Government", edu: "Graduation", minAge: 18, maxAge: 32 },
+            { id: 3, name: "NDA & NA", org: "Defence", edu: "12th", minAge: 16.5, maxAge: 19.5 },
+            { id: 4, name: "IBPS PO", org: "Banking", edu: "Graduation", minAge: 20, maxAge: 30 },
+            { id: 5, name: "RRB NTPC", org: "Railway", edu: "12th", minAge: 18, maxAge: 30 },
+            { id: 6, name: "SSC MTS", org: "Government", edu: "10th", minAge: 18, maxAge: 25 },
+            { id: 7, name: "State LDC", org: "State", edu: "12th", minAge: 18, maxAge: 40 }
+        ];
+
+        // --- 3. Eligibility Engine ---
+        const EligibilityEngine = {
+            state: { dob: null, category: null, state: null, edu: null, exactAge: {y:0, m:0, d:0} },
+            
+            goToStep: (step) => {
+                // Validate Step 1
+                if(step === 2) {
+                    const dob = document.getElementById('form-dob').value;
+                    if(!dob) { alert('Please enter your Date of Birth.'); return; }
+                    EligibilityEngine.state.dob = dob;
+                    EligibilityEngine.state.category = document.getElementById('form-category').value;
+                    EligibilityEngine.state.state = document.getElementById('form-state').value;
+                    
+                    EligibilityEngine.calculateAgeData(dob, EligibilityEngine.state.exactAge);
+                }
+
+                // Hide all, remove active
+                document.querySelectorAll('.step-container').forEach(el => {
+                    el.classList.remove('active');
+                    setTimeout(() => el.style.display = 'none', 400); // Wait for fade out
+                });
+                
+                // Update Progress Line
+                document.getElementById('progress-line').style.width = step === 1 ? '33%' : step === 2 ? '66%' : '100%';
+                
+                // Update Indicators
+                for(let i=1; i<=3; i++) {
+                    const ind = document.getElementById(`ind-${i}`).querySelector('div');
+                    if(i <= step) {
+                        ind.className = 'w-10 h-10 rounded-full bg-primary-600 text-white font-bold flex items-center justify-center shadow-md transition-colors';
+                    } else {
+                        ind.className = 'w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-400 font-bold flex items-center justify-center transition-colors';
+                    }
+                }
+
+                // Show target
+                setTimeout(() => {
+                    const target = document.getElementById(`step-${step}`);
+                    target.style.display = 'block';
+                    // Trigger reflow
+                    void target.offsetWidth;
+                    target.classList.add('active');
+                }, 400);
+            },
+
+            selectEdu: (value, element) => {
+                EligibilityEngine.state.edu = value;
+                // Reset styles
+                document.querySelectorAll('.edu-card').forEach(card => {
+                    card.classList.remove('border-primary-500', 'bg-primary-50');
+                    card.classList.add('border-slate-100');
+                    card.querySelector('i').classList.remove('text-primary-500');
+                    card.querySelector('i').classList.add('text-slate-400');
+                });
+                // Apply active style
+                element.classList.remove('border-slate-100');
+                element.classList.add('border-primary-500', 'bg-primary-50');
+                element.querySelector('i').classList.remove('text-slate-400');
+                element.querySelector('i').classList.add('text-primary-500');
+            },
+
+            analyze: () => {
+                if(!EligibilityEngine.state.edu) { alert('Please select your qualification.'); return; }
+                
+                // Show loading
+                document.querySelectorAll('.step-container').forEach(el => {
+                    el.classList.remove('active');
+                    el.style.display = 'none';
+                });
+                const loading = document.getElementById('step-loading');
+                loading.style.display = 'block';
+                setTimeout(() => loading.classList.add('active'), 10);
+
+                // Simulate processing delay
+                setTimeout(() => {
+                    EligibilityEngine.renderResults();
+                    loading.classList.remove('active');
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        const step3 = document.getElementById('step-3');
+                        step3.style.display = 'block';
+                        setTimeout(() => step3.classList.add('active'), 10);
+                        document.getElementById('progress-line').style.width = '100%';
+                        document.getElementById(`ind-3`).querySelector('div').className = 'w-10 h-10 rounded-full bg-primary-600 text-white font-bold flex items-center justify-center shadow-md transition-colors';
+                    }, 400);
+                }, 1500);
+            },
+
+            calculateAgeData: (dobStr, targetObj) => {
+                const dob = new Date(dobStr);
+                const now = new Date();
+                let y = now.getFullYear() - dob.getFullYear();
+                let m = now.getMonth() - dob.getMonth();
+                let d = now.getDate() - dob.getDate();
+                if(d < 0) { m--; let prev = new Date(now.getFullYear(), now.getMonth(), 0); d += prev.getDate(); }
+                if(m < 0) { y--; m += 12; }
+                targetObj.y = y; targetObj.m = m; targetObj.d = d;
+                return y;
+            },
+
+            animateCounter: (id, endVal) => {
+                let current = 0;
+                const el = document.getElementById(id);
+                const duration = 1000;
+                const stepTime = Math.abs(Math.floor(duration / (endVal || 1)));
+                const timer = setInterval(() => {
+                    if(current >= endVal) { el.innerText = endVal; clearInterval(timer); return; }
+                    current += 1;
+                    el.innerText = current;
+                }, stepTime);
+            },
+
+            renderResults: () => {
+                const s = EligibilityEngine.state;
+                // Render Summary
+                document.getElementById('res-state').innerText = s.state;
+                document.getElementById('res-edu').innerText = s.edu;
+                document.getElementById('res-cat').innerText = s.category === 'UR' ? 'General' : s.category === 'SCST' ? 'SC/ST' : s.category;
+                
+                // Animate Age
+                EligibilityEngine.animateCounter('res-y', s.exactAge.y);
+                EligibilityEngine.animateCounter('res-m', s.exactAge.m);
+                EligibilityEngine.animateCounter('res-d', s.exactAge.d);
+
+                // Matching Logic
+                const ageNum = s.exactAge.y;
+                let relaxation = 0;
+                if(s.category === 'OBC') relaxation = 3;
+                if(s.category === 'SCST') relaxation = 5;
+
+                const matchedExams = MOCK_EXAM_DB.filter(ex => {
+                    const maxAllowed = ex.maxAge + relaxation;
+                    const ageMatch = (ageNum >= ex.minAge && ageNum <= maxAllowed);
+                    const eduMatch = (s.edu === ex.edu) || 
+                                     (s.edu === 'Graduation' && (ex.edu === '12th' || ex.edu === '10th')) ||
+                                     (s.edu === 'PG' && (ex.edu === 'Graduation' || ex.edu === '12th' || ex.edu === '10th')) ||
+                                     (s.edu === '12th' && ex.edu === '10th');
+                    return ageMatch && eduMatch;
+                });
+
+                document.getElementById('res-count').innerText = `${matchedExams.length} opportunities found`;
+                
+                const container = document.getElementById('dynamic-results');
+                container.innerHTML = '';
+
+                if(matchedExams.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-10 bg-white border border-slate-200 rounded-xl">
+                            <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
+                            <h4 class="font-bold text-slate-700">No close matches found</h4>
+                            <p class="text-sm text-slate-500">Try updating your qualification or profile details.</p>
+                        </div>
+                    `;
+                } else {
+                    matchedExams.forEach(ex => {
+                        container.innerHTML += `
+                            <div class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm hover:shadow-md hover:border-primary-300 transition-all group flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <h4 class="font-bold text-slate-900 text-lg group-hover:text-primary-600 transition-colors">${ex.name}</h4>
+                                        <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fa-solid fa-check"></i> Match</span>
+                                    </div>
+                                    <div class="text-sm text-slate-500 flex items-center gap-3">
+                                        <span><i class="fa-regular fa-building mr-1"></i> ${ex.org}</span>
+                                        <span><i class="fa-regular fa-user mr-1"></i> ${ex.minAge}-${ex.maxAge} Yrs</span>
+                                        <span><i class="fa-solid fa-graduation-cap mr-1"></i> ${ex.edu}</span>
+                                    </div>
+                                </div>
+                                <button class="w-full sm:w-auto bg-slate-50 hover:bg-primary-50 text-primary-600 font-bold py-2 px-4 rounded-lg border border-slate-200 hover:border-primary-200 transition-all text-sm whitespace-nowrap">View Details</button>
+                            </div>
+                        `;
+                    });
+                }
+            }
         };
 
-        window.googleLogin = async () => {
-            try { await signInWithPopup(auth, provider); alert("Logged in!"); toggleModal(false); }
-            catch(err) { alert(err.message); }
-        };
+        // --- 4. Standalone Tools Logic ---
+        const Tools = {
+            calculateAge: () => {
+                const input = document.getElementById('tool-dob').value;
+                if(!input) return;
+                
+                const ageData = {y:0, m:0, d:0};
+                EligibilityEngine.calculateAgeData(input, ageData);
+                
+                document.getElementById('tool-age-empty').style.display = 'none';
+                const resDiv = document.getElementById('tool-age-result');
+                resDiv.style.display = 'block';
+                
+                document.getElementById('ta-y').innerText = ageData.y;
+                document.getElementById('ta-m').innerText = ageData.m;
+                document.getElementById('ta-d').innerText = ageData.d;
 
-        window.calcAge = () => {
-            const dob = new Date(document.getElementById('dob').value);
-            const now = new Date();
-            let y = now.getFullYear() - dob.getFullYear();
-            let m = now.getMonth() - dob.getMonth();
-            let d = now.getDate() - dob.getDate();
-            if(d < 0) { m--; d += 30; }
-            if(m < 0) { y--; m += 12; }
-            document.getElementById('ageResult').innerText = `${y} Years, ${m} Months, ${d} Days`;
-        }
+                // Next birthday logic
+                const dob = new Date(input);
+                const now = new Date();
+                let nextBday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+                if (now > nextBday) nextBday.setFullYear(now.getFullYear() + 1);
+                
+                const diffTime = Math.abs(nextBday - now);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                document.getElementById('ta-next').innerText = `Next birthday in ${diffDays} days 🎂`;
+            }
+        };
+        
+        // Initial Trigger for reveal elements above fold
+        setTimeout(() => window.dispatchEvent(new Event('scroll')), 100);
     </script>
 </body>
 </html>
