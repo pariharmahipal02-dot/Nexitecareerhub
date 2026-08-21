@@ -4,7 +4,76 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#ffffff">
+<meta name="description" content="Nexite Career Lab helps students discover government exams, check eligibility, calculate age, percentage and CGPA, and find useful career resources in one place.">
+<meta name="keywords" content="Nexite Career Lab, government exam eligibility, exam eligibility checker, government exams 2026, SSC eligibility, UPSC eligibility, railway exams, banking exams, age calculator, percentage calculator, CGPA converter">
+<meta name="author" content="Nexite Career Lab">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="./">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nexite Career Lab — Smart Career Discovery">
+<meta property="og:description" content="Discover exams, check eligibility and use practical student tools with Nexite Career Lab.">
+<meta property="og:url" content="./">
+<meta property="og:site_name" content="Nexite Career Lab">
+<meta property="og:image" content="./11318.png">
+<meta property="og:image:alt" content="Nexite Career Lab logo">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nexite Career Lab — Smart Career Discovery">
+<meta name="twitter:description" content="Discover exams, check eligibility and use practical student tools with Nexite Career Lab.">
+<meta name="twitter:image" content="./11318.png">
+<meta name="twitter:image:alt" content="Nexite Career Lab logo">
+
+<link rel="icon" type="image/png" href="./11318.png">
+<link rel="apple-touch-icon" href="./11318.png">
+<link rel="manifest" href="./site.webmanifest">
 <title>Nexite Career Lab — Smart Career Discovery</title>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Organization",
+      "@id":"./#organization",
+      "name":"Nexite Career Lab",
+      "url":"./",
+      "logo":"./11318.png",
+      "image":"./11318.png",
+      "sameAs":["https://www.instagram.com/nexiteofficial/"],
+      "founder":{
+        "@type":"Person",
+        "name":"Mahipal Parihar",
+        "image":"./11287.jpg"
+      }
+    },
+    {
+      "@type":"WebSite",
+      "@id":"./#website",
+      "url":"./",
+      "name":"Nexite Career Lab",
+      "description":"Career discovery, exam eligibility and student utility tools.",
+      "publisher":{"@id":"./#organization"},
+      "potentialAction":{
+        "@type":"SearchAction",
+        "target":"./?q={search_term_string}",
+        "query-input":"required name=search_term_string"
+      }
+    },
+    {
+      "@type":"WebApplication",
+      "@id":"./#application",
+      "name":"Nexite Career Lab",
+      "url":"./",
+      "applicationCategory":"EducationalApplication",
+      "operatingSystem":"Any",
+      "description":"A student-focused career discovery tool for exam eligibility, exam discovery and practical calculators.",
+      "publisher":{"@id":"./#organization"}
+    }
+  ]
+}
+</script>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -201,6 +270,15 @@ select:focus{
 }
 
 </style>
+  <meta name="google-site-verification" content="-rJq35mUQFmnfanMeO9_aG0I5tJIRGJtMoZlkKx9RW8" />
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MK9PD3MQMB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MK9PD3MQMB');
+  </script>
 </head>
 
 <body class="mesh">
@@ -1257,7 +1335,7 @@ Instagram
 <img
 id="founderPhoto"
 class="w-40 h-40 rounded-full object-cover mx-auto border-4 border-white/20 shadow-2xl"
-alt="Founder">
+alt="Mahipal Parihar, Founder of Nexite Career Lab">
 
 <h3 class="text-2xl font-extrabold mt-6">
 Mahipal Parihar
@@ -1293,7 +1371,7 @@ Building simple digital tools that help students make better career decisions.
 <div class="max-w-7xl mx-auto px-5 sm:px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
 
 <div class="flex items-center gap-3">
-  <img id="footerLogo" class="w-8 h-8 rounded-lg object-contain bg-white" alt="NCL Logo">
+  <img id="footerLogo" class="w-8 h-8 rounded-lg object-contain bg-white" alt="Nexite Career Lab logo">
   <span class="font-extrabold text-white text-base">Nexite Career Lab</span>
 </div>
 
@@ -1482,7 +1560,7 @@ const provider=new GoogleAuthProvider();
 const db=getFirestore(app);
 
 
-/* ================= BRAND ASSETS ================= */
+/* ================= BRAND ASSETS ================= -->
 
 const LOGO="./11318.png";
 const FOUNDER="./11287.jpg";
@@ -1496,7 +1574,7 @@ if(footerLogo){ footerLogo.src=LOGO; footerLogo.onerror=()=>{ footerLogo.src="11
 if(founderPhoto){ founderPhoto.src=FOUNDER; founderPhoto.onerror=()=>{ founderPhoto.src="11287.jpg"; }; }
 
 
-/* ================= ELEMENTS ================= */
+/* ================= ELEMENTS ================= -->
 
 const state=document.getElementById("state");
 const category=document.getElementById("category");
@@ -1564,7 +1642,7 @@ const dashEmail = document.getElementById("dashEmail");
 const dashSavedExams = document.getElementById("dashSavedExams");
 const logoutBtn = document.getElementById("logoutBtn");
 
-/* ================= STATES ================= */
+/* ================= STATES ================= -->
 
 const states=[
 "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi", "Jammu & Kashmir", "Ladakh", "Chandigarh", "Puducherry"
@@ -1573,8 +1651,7 @@ const states=[
 state.innerHTML=states.map(x=>`<option>${x}</option>`).join("");
 
 
-/* ================= EXAM DATA (DEFAULT FALLBACK) ================= */
-// Notice ID is now string to support Firebase auto-generated IDs smoothly
+/* ================= EXAM DATA (DEFAULT FALLBACK) ================= -->
 let exams=[
 {id:"1", name:"SSC CHSL", org:"Staff Selection Commission", cat:"Government", edu:"12th", min:18, max:27, status:"Reference", desc:"Combined Higher Secondary Level recruitment."},
 {id:"2", name:"SSC CGL", org:"Staff Selection Commission", cat:"Government", edu:"Graduation", min:18, max:32, status:"Reference", desc:"Combined Graduate Level recruitment."},
@@ -1591,12 +1668,7 @@ let selectedEdu="12th";
 let selectedCategory="All";
 
 
-/* ================= DYNAMIC MONTHLY EXAM DATA ================= */
-/*
-  Keep index.html unchanged every month.
-  Upload/replace only exams.json in the same folder.
-  If exams.json is unavailable, Firebase/local data continues to work.
-*/
+/* ================= DYNAMIC MONTHLY EXAM DATA ================= -->
 async function fetchDynamicExams() {
   try {
     const response = await fetch("./exams.json?v=" + Date.now(), {
@@ -1635,7 +1707,6 @@ async function fetchDynamicExams() {
     console.log("exams.json unavailable. Falling back to Firebase/local exams:", e);
   }
 
-  /* Original Firebase fallback */
   try {
     const examsRef = collection(db, "exams");
     const snap = await getDocs(examsRef);
@@ -1666,11 +1737,8 @@ async function fetchDynamicExams() {
   }
 }
 
-/* ================= LATEST NEWS DATA ================= */
-/*
-  Upload/replace news.json in the same folder.
-  This does not interfere with the existing website if no news container exists.
-*/
+
+/* ================= LATEST NEWS DATA ================= -->
 let latestNews=[];
 async function fetchLatestNews(){
   try{
@@ -1702,7 +1770,7 @@ function renderLatestNews(){
 }
 
 
-/* ================= EXAM RENDER ================= */
+/* ================= EXAM RENDER ================= -->
 
 function renderExams(){
 const q=examSearch.value.trim().toLowerCase();
@@ -1735,7 +1803,7 @@ window.renderExams=renderExams;
 examSearch.oninput=renderExams;
 
 
-/* ================= AGE ================= */
+/* ================= AGE ================= -->
 
 function calculateAge(dateStr){
 const b=new Date(dateStr+"T00:00:00");
@@ -1750,14 +1818,14 @@ return { y, m, d };
 }
 
 
-/* ================= ESCAPE ================= */
+/* ================= ESCAPE ================= -->
 
 function escape(s){
 return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
 }
 
 
-/* ================= EDUCATION ================= */
+/* ================= EDUCATION ================= -->
 
 eduChoices.innerHTML=eduOrder.map(e=>`
 <button data-edu="${e}" class="eduBtn text-left card rounded-2xl p-5 hover:border-blue-400">
@@ -1775,7 +1843,7 @@ button.classList.add("border-blue-500", "ring-2", "ring-blue-100");
 });
 
 
-/* ================= STEPS ================= */
+/* ================= STEPS ================= -->
 
 function setStep(n){
 eligStep1.classList.toggle("hidden", n!==1);
@@ -1803,7 +1871,7 @@ backEligibility.onclick=()=>setStep(1);
 editProfile.onclick=()=>setStep(1);
 
 
-/* ================= ELIGIBILITY ENGINE ================= */
+/* ================= ELIGIBILITY ENGINE ================= -->
 
 analyzeEligibility.onclick=()=>{
 const age=calculateAge(dob.value);
@@ -1838,7 +1906,7 @@ setStep(3);
 };
 
 
-/* ================= TOOLS LOGIC ================= */
+/* ================= TOOLS LOGIC ================= -->
 ageBtn.onclick=()=>{
 const a=calculateAge(ageDob.value);
 ageOut.textContent=a?`${a.y} years, ${a.m} months, ${a.d} days`:"Enter a valid DOB.";
@@ -1860,14 +1928,14 @@ dateOut.textContent=a.getTime()&&b.getTime()?`${Math.abs(Math.round((b-a)/864000
 };
 
 
-/* ================= TOAST ================= */
+/* ================= TOAST ================= -->
 function toastMsg(t){
 toast.textContent=t; toast.classList.remove("hidden"); toast.classList.add("toast");
 setTimeout(()=>{ toast.classList.add("hidden"); },2600);
 }
 
 
-/* ================= SAVE EXAMS (Local + Cloud Sync, String IDs) ================= */
+/* ================= SAVE EXAMS ================= -->
 let saved=JSON.parse(localStorage.getItem("ncl_saved")||"[]").map(String);
 
 window.toggleSave = async id => {
@@ -1878,14 +1946,10 @@ window.toggleSave = async id => {
     saved.push(id); 
   }
   
-  // Save Locally First
   localStorage.setItem("ncl_saved", JSON.stringify(saved));
   updateSavedButtons();
-  
-  // Update dashboard if it's open
   renderDashboardExams();
   
-  // Sync to Cloud if logged in
   const user = auth.currentUser;
   if (user) {
     try {
@@ -1909,7 +1973,6 @@ function updateSavedButtons(){
   });
 }
 
-// Function to fetch and merge cloud data on login
 async function syncSavedExams(user) {
   if (!user) return;
   try {
@@ -1919,12 +1982,10 @@ async function syncSavedExams(user) {
     if (docSnap.exists() && docSnap.data().savedExams) {
       remoteSaved = docSnap.data().savedExams.map(String);
     }
-    // Merge Local and Cloud
     saved = [...new Set([...saved, ...remoteSaved])];
     localStorage.setItem("ncl_saved", JSON.stringify(saved));
     updateSavedButtons();
     renderDashboardExams();
-    // Push merged data back to Cloud
     await setDoc(userRef, { savedExams: saved }, { merge: true });
   } catch (err) {
     console.error("Sync error: ", err);
@@ -1932,7 +1993,7 @@ async function syncSavedExams(user) {
 }
 
 
-/* ================= FIREBASE LOGIN (WITH VALIDATION) ================= */
+/* ================= FIREBASE LOGIN ================= -->
 
 let isSignup = false;
 
@@ -2030,7 +2091,8 @@ googleLogin.onclick=async()=>{
   }catch(e){ toastMsg(e?.message||"Login failed."); }
 };
 
-/* ================= DASHBOARD UI LOGIC ================= */
+
+/* ================= DASHBOARD UI LOGIC ================= -->
 
 function renderDashboardExams() {
   const savedList = exams.filter(e => saved.includes(e.id));
@@ -2077,7 +2139,7 @@ logoutBtn.onclick = async () => {
 };
 
 
-/* ================= AUTH STATE OBSERVER ================= */
+/* ================= AUTH STATE OBSERVER ================= -->
 onAuthStateChanged(auth,u=>{
 if(u){
 loginBtn.classList.add("hidden");
@@ -2088,7 +2150,6 @@ profileBtn.innerHTML=`
 <img src="${u.photoURL||LOGO}" class="w-7 h-7 rounded-full object-cover">
 <span>${escape((u.displayName||(u.email ? u.email.split("@")[0] : "Student")).split(" ")[0])}</span>
 `;
-// Sync Cloud on Login
 syncSavedExams(u);
 
 }else{
@@ -2099,23 +2160,20 @@ profileBtn.classList.remove("flex");
 });
 
 
-/* ================= MOBILE MENU ================= */
+/* ================= MOBILE MENU ================= -->
 menuBtn.onclick=()=>{ mobileMenu.classList.toggle("mobile-open"); };
 
-/* ================= SCROLL ANIMATION ================= */
+/* ================= SCROLL ANIMATION ================= -->
 const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add("show"); } });
 },{ threshold:.12 });
 document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
 
-/* ================= INITIALIZE ================= */
-
-// First setup chips and render local fallback exams
+/* ================= INITIALIZE ================= -->
 document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
 renderExams();
 setStep(1);
 
-// Now trigger Dynamic Fetch in background
 fetchDynamicExams();
 fetchLatestNews();
 
