@@ -151,7 +151,7 @@ body{
 .modal{
   opacity:0;
   pointer-events:none;
-  transition:.2s
+  transition:.2s z-[200]
 }
 
 .modal.open{
@@ -433,6 +433,7 @@ Your opportunity radar
 </div>
 
 
+<!-- DYNAMIC RADAR GRID -->
 <div class="mt-6 grid grid-cols-3 gap-3">
 
 <div class="bg-slate-50 rounded-2xl p-4">
@@ -441,8 +442,8 @@ Your opportunity radar
 Age
 </p>
 
-<b>
-20 yrs
+<b id="radarAge">
+--
 </b>
 
 </div>
@@ -454,8 +455,8 @@ Age
 State
 </p>
 
-<b>
-Rajasthan
+<b id="radarState" class="truncate block">
+--
 </b>
 
 </div>
@@ -467,8 +468,8 @@ Rajasthan
 Edu.
 </p>
 
-<b>
-12th
+<b id="radarEdu">
+--
 </b>
 
 </div>
@@ -1327,7 +1328,7 @@ Mahiey AI
 </main>
 
 
-<!-- ================= LOGIN MODAL (UPDATED WITH VALIDATION) ================= -->
+<!-- ================= LOGIN MODAL ================= -->
 
 <div
 id="loginModal"
@@ -1420,6 +1421,22 @@ Continue with Google
     
   </div>
 
+</div>
+
+
+<!-- ================= EXAM DETAIL MODAL ================= -->
+<div id="examDetailModal" class="modal fixed inset-0 z-[150] bg-slate-950/50 backdrop-blur-sm flex justify-center items-center p-4 sm:p-5">
+  <div class="modal-panel bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative">
+    
+    <button onclick="closeExamDetail()" class="absolute top-4 right-4 w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition text-slate-600 flex justify-center items-center z-10">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div id="examDetailContent" class="mt-2">
+      <!-- Details JS se yahan aayengi -->
+    </div>
+
+  </div>
 </div>
 
 
@@ -1573,17 +1590,57 @@ const states=[
 state.innerHTML=states.map(x=>`<option>${x}</option>`).join("");
 
 
-/* ================= EXAM DATA (DEFAULT FALLBACK) ================= */
-// Notice ID is now string to support Firebase auto-generated IDs smoothly
+/* ================= EXAM DATA (UPDATED WITH MODAL FIELDS) ================= */
+// ADDED: startDate, applyLink, notification, syllabus to prevent undefined errors.
 let exams=[
-{id:"1", name:"SSC CHSL", org:"Staff Selection Commission", cat:"Government", edu:"12th", min:18, max:27, status:"Reference", desc:"Combined Higher Secondary Level recruitment."},
-{id:"2", name:"SSC CGL", org:"Staff Selection Commission", cat:"Government", edu:"Graduation", min:18, max:32, status:"Reference", desc:"Combined Graduate Level recruitment."},
-{id:"3", name:"Air Force Agniveer Vayu", org:"Indian Air Force", cat:"Defence", edu:"12th", min:17.5, max:21, status:"Reference", desc:"Defence recruitment opportunity; verify current intake rules."},
-{id:"4", name:"RRB NTPC", org:"Railway Recruitment Boards", cat:"Railway", edu:"12th", min:18, max:33, status:"Reference", desc:"Non-Technical Popular Categories recruitment."},
-{id:"5", name:"UPSC Civil Services", org:"Union Public Service Commission", cat:"Civil Services", edu:"Graduation", min:21, max:32, status:"Reference", desc:"Civil Services Examination; verify category relaxations."},
-{id:"6", name:"IBPS PO", org:"Institute of Banking Personnel Selection", cat:"Banking", edu:"Graduation", min:20, max:30, status:"Reference", desc:"Probationary Officer recruitment; verify current notification."},
-{id:"7", name:"REET / Teacher Recruitment", org:"State Education Recruitment", cat:"Teaching", edu:"12th", min:18, max:40, status:"Reference", desc:"State-specific teacher opportunities vary by notification."},
-{id:"8", name:"State Police Recruitment", org:"State Recruitment Boards", cat:"Police", edu:"12th", min:18, max:28, status:"Reference", desc:"Rules vary by state and recruitment notification."}
+{
+  id:"1", name:"SSC CHSL", org:"Staff Selection Commission", cat:"Government", edu:"12th", min:18, max:27, status:"Reference", 
+  desc:"Combined Higher Secondary Level recruitment.",
+  startDate: "08-May-2026", applyLink: "https://ssc.gov.in", notification: "#", 
+  syllabus: "Tier 1: Basic English, General Intelligence, Quantitative Aptitude (Basic Arithmetic), General Awareness."
+},
+{
+  id:"2", name:"SSC CGL", org:"Staff Selection Commission", cat:"Government", edu:"Graduation", min:18, max:32, status:"Reference", 
+  desc:"Combined Graduate Level recruitment.",
+  startDate: "Upcoming", applyLink: "https://ssc.gov.in", notification: "#", 
+  syllabus: "Tier 1: General Intelligence & Reasoning, General Awareness, Quantitative Aptitude, English Comprehension."
+},
+{
+  id:"3", name:"Air Force Agniveer Vayu", org:"Indian Air Force", cat:"Defence", edu:"12th", min:17.5, max:21, status:"Reference", 
+  desc:"Defence recruitment opportunity; verify current intake rules.",
+  startDate: "To be announced", applyLink: "https://agnipathvayu.cdac.in/", notification: "#", 
+  syllabus: "Group Y: English (20 Marks), Reasoning & General Awareness (30 Marks)."
+},
+{
+  id:"4", name:"RRB NTPC", org:"Railway Recruitment Boards", cat:"Railway", edu:"12th", min:18, max:33, status:"Reference", 
+  desc:"Non-Technical Popular Categories recruitment.",
+  startDate: "Upcoming", applyLink: "https://indianrailways.gov.in/", notification: "#", 
+  syllabus: "CBT 1: Mathematics, General Intelligence and Reasoning, General Awareness."
+},
+{
+  id:"5", name:"UPSC Civil Services", org:"Union Public Service Commission", cat:"Civil Services", edu:"Graduation", min:21, max:32, status:"Reference", 
+  desc:"Civil Services Examination; verify category relaxations.",
+  startDate: "Upcoming", applyLink: "https://upsconline.nic.in/", notification: "#", 
+  syllabus: "Prelims: General Studies Paper I & CSAT Paper II. Mains: 9 Papers including Optional subjects."
+},
+{
+  id:"6", name:"IBPS PO", org:"Institute of Banking Personnel Selection", cat:"Banking", edu:"Graduation", min:20, max:30, status:"Reference", 
+  desc:"Probationary Officer recruitment; verify current notification.",
+  startDate: "Upcoming", applyLink: "https://ibps.in/", notification: "#", 
+  syllabus: "Prelims: English Language, Quantitative Aptitude, Reasoning Ability."
+},
+{
+  id:"7", name:"REET / Teacher Recruitment", org:"State Education Recruitment", cat:"Teaching", edu:"12th", min:18, max:40, status:"Reference", 
+  desc:"State-specific teacher opportunities vary by notification.",
+  startDate: "Upcoming", applyLink: "#", notification: "#", 
+  syllabus: "Child Development and Pedagogy, Language I, Language II, Subject specific papers."
+},
+{
+  id:"8", name:"State Police Recruitment", org:"State Recruitment Boards", cat:"Police", edu:"12th", min:18, max:28, status:"Reference", 
+  desc:"Rules vary by state and recruitment notification.",
+  startDate: "Upcoming", applyLink: "#", notification: "#", 
+  syllabus: "General Knowledge, Reasoning, Numerical Ability, State specific General Knowledge."
+}
 ];
 
 const eduOrder=["10th", "12th", "Graduation", "Post Graduation"];
@@ -1592,11 +1649,6 @@ let selectedCategory="All";
 
 
 /* ================= DYNAMIC MONTHLY EXAM DATA ================= */
-/*
-  Keep index.html unchanged every month.
-  Upload/replace only exams.json in the same folder.
-  If exams.json is unavailable, Firebase/local data continues to work.
-*/
 async function fetchDynamicExams() {
   try {
     const response = await fetch("./exams.json?v=" + Date.now(), {
@@ -1667,10 +1719,6 @@ async function fetchDynamicExams() {
 }
 
 /* ================= LATEST NEWS DATA ================= */
-/*
-  Upload/replace news.json in the same folder.
-  This does not interfere with the existing website if no news container exists.
-*/
 let latestNews=[];
 async function fetchLatestNews(){
   try{
@@ -1702,33 +1750,34 @@ function renderLatestNews(){
 }
 
 
-/* ================= EXAM RENDER ================= */
+/* ================= EXAM RENDER (MODAL ENABLED) ================= */
 
 function renderExams(){
-const q=examSearch.value.trim().toLowerCase();
-const list=exams.filter(e=>
-(selectedCategory==="All"||e.cat===selectedCategory) &&
-(!q||(`${e.name} ${e.org} ${e.cat}`).toLowerCase().includes(q))
-);
+  const q = examSearch.value.trim().toLowerCase();
+  const list = exams.filter(e =>
+    (selectedCategory === "All" || e.cat === selectedCategory) &&
+    (!q || (`${e.name} ${e.org} ${e.cat}`).toLowerCase().includes(q))
+  );
 
-examGrid.innerHTML=list.map(e=>`
-<article class="card rounded-2xl p-5 hover:border-blue-300 transition reveal show">
-<div class="flex justify-between gap-3">
-<span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${e.cat}</span>
-<button onclick="toggleSave('${e.id}')" class="saveBtn text-slate-400 hover:text-blue-600"><i class="fa-regular fa-bookmark"></i></button>
-</div>
-<h3 class="text-lg font-extrabold mt-4">${e.name}</h3>
-<p class="text-xs text-slate-500 mt-1">${e.org}</p>
-<p class="text-sm text-slate-600 mt-4">${e.desc}</p>
-<div class="grid grid-cols-2 gap-2 mt-4 text-xs">
-<div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Age</span><b>${e.min}–${e.max}</b></div>
-<div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Education</span><b>${e.edu}+</b></div>
-</div>
-<div class="mt-4 text-xs text-amber-700 bg-amber-50 rounded-xl p-3"><i class="fa-solid fa-circle-info mr-1"></i>Verify current notification before applying.</div>
-</article>
-`).join("") || `<div class="col-span-full text-center py-12 text-slate-500">No matching exams found.</div>`;
+  examGrid.innerHTML = list.map(e => `
+    <article onclick="openExamDetail('${e.id}')" class="card rounded-2xl p-5 hover:border-blue-300 transition reveal show cursor-pointer">
+      <div class="flex justify-between gap-3">
+        <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${e.cat}</span>
+        <button onclick="event.stopPropagation(); toggleSave('${e.id}')" class="saveBtn text-slate-400 hover:text-blue-600">
+          <i class="fa-regular fa-bookmark"></i>
+        </button>
+      </div>
+      <h3 class="text-lg font-extrabold mt-4">${e.name}</h3>
+      <p class="text-xs text-slate-500 mt-1">${e.org}</p>
+      <p class="text-sm text-slate-600 mt-4 line-clamp-2">${e.desc}</p>
+      <div class="grid grid-cols-2 gap-2 mt-4 text-xs">
+        <div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Age</span><b>${e.min}–${e.max}</b></div>
+        <div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Education</span><b>${e.edu}+</b></div>
+      </div>
+    </article>
+  `).join("") || `<div class="col-span-full text-center py-12 text-slate-500">No matching exams found.</div>`;
 
-updateSavedButtons();
+  updateSavedButtons();
 }
 
 window.renderExams=renderExams;
@@ -1803,7 +1852,7 @@ backEligibility.onclick=()=>setStep(1);
 editProfile.onclick=()=>setStep(1);
 
 
-/* ================= ELIGIBILITY ENGINE ================= */
+/* ================= ELIGIBILITY ENGINE (RADAR DYNAMIC UPDATE) ================= */
 
 analyzeEligibility.onclick=()=>{
 const age=calculateAge(dob.value);
@@ -1815,6 +1864,11 @@ summary.innerHTML=`
 <div><span class="text-xs text-slate-400">Category</span><b class="block">${escape(category.value)}</b></div>
 <div><span class="text-xs text-slate-400">Qualification</span><b class="block">${escape(selectedEdu)}</b></div>
 `;
+
+// Dynamic Opportunity Radar Update
+document.getElementById("radarAge").textContent = `${age.y} yrs`;
+document.getElementById("radarState").textContent = state.value;
+document.getElementById("radarEdu").textContent = selectedEdu;
 
 const rankOk=e=>{ return eduRank>=eduOrder.indexOf(e.edu); };
 const results=exams.filter(e=> age.y>=Math.floor(e.min) && age.y<=e.max && rankOk(e) );
@@ -1867,7 +1921,7 @@ setTimeout(()=>{ toast.classList.add("hidden"); },2600);
 }
 
 
-/* ================= SAVE EXAMS (Local + Cloud Sync, String IDs) ================= */
+/* ================= SAVE EXAMS ================= */
 let saved=JSON.parse(localStorage.getItem("ncl_saved")||"[]").map(String);
 
 window.toggleSave = async id => {
@@ -1909,7 +1963,6 @@ function updateSavedButtons(){
   });
 }
 
-// Function to fetch and merge cloud data on login
 async function syncSavedExams(user) {
   if (!user) return;
   try {
@@ -1919,12 +1972,10 @@ async function syncSavedExams(user) {
     if (docSnap.exists() && docSnap.data().savedExams) {
       remoteSaved = docSnap.data().savedExams.map(String);
     }
-    // Merge Local and Cloud
     saved = [...new Set([...saved, ...remoteSaved])];
     localStorage.setItem("ncl_saved", JSON.stringify(saved));
     updateSavedButtons();
     renderDashboardExams();
-    // Push merged data back to Cloud
     await setDoc(userRef, { savedExams: saved }, { merge: true });
   } catch (err) {
     console.error("Sync error: ", err);
@@ -1932,7 +1983,7 @@ async function syncSavedExams(user) {
 }
 
 
-/* ================= FIREBASE LOGIN (WITH VALIDATION) ================= */
+/* ================= FIREBASE LOGIN ================= */
 
 let isSignup = false;
 
@@ -2088,9 +2139,7 @@ profileBtn.innerHTML=`
 <img src="${u.photoURL||LOGO}" class="w-7 h-7 rounded-full object-cover">
 <span>${escape((u.displayName||(u.email ? u.email.split("@")[0] : "Student")).split(" ")[0])}</span>
 `;
-// Sync Cloud on Login
 syncSavedExams(u);
-
 }else{
 loginBtn.classList.remove("hidden");
 profileBtn.classList.add("hidden");
@@ -2098,6 +2147,56 @@ profileBtn.classList.remove("flex");
 }
 });
 
+
+/* ================= EXAM DETAIL MODAL LOGIC ================= */
+window.openExamDetail = (id) => {
+  const exam = exams.find(e => e.id === id);
+  if(!exam) return;
+
+  const content = document.getElementById("examDetailContent");
+  content.innerHTML = `
+    <div class="flex items-center gap-3 mb-4">
+      <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-violet-50 text-violet-700">${exam.cat}</span>
+      <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-600">${exam.edu}+</span>
+    </div>
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">${exam.name}</h2>
+    <p class="text-slate-500 font-bold mt-1">${exam.org}</p>
+    
+    <p class="mt-5 text-slate-600 leading-relaxed">${exam.desc}</p>
+
+    <div class="grid grid-cols-2 gap-4 mt-6">
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+        <span class="block text-xs text-slate-400 font-bold uppercase tracking-wide">Age Limit</span>
+        <b class="text-base sm:text-lg">${exam.min} - ${exam.max} Years</b>
+      </div>
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+        <span class="block text-xs text-slate-400 font-bold uppercase tracking-wide">Form Starts</span>
+        <b class="text-base sm:text-lg">${exam.startDate || "Upcoming"}</b>
+      </div>
+    </div>
+
+    <div class="mt-6 bg-blue-50/50 border border-blue-100 p-5 rounded-2xl">
+      <h3 class="font-extrabold text-lg text-blue-900 mb-2">
+        <i class="fa-solid fa-book-open mr-2"></i>Syllabus & Details
+      </h3>
+      <p class="text-sm text-blue-800 leading-relaxed whitespace-pre-wrap">${exam.syllabus || "Syllabus pattern will be updated as per official notification."}</p>
+    </div>
+
+    <div class="mt-6 flex flex-col sm:flex-row gap-3">
+      <a href="${exam.applyLink || '#'}" target="_blank" class="flex-1 text-center py-4 rounded-xl bg-slate-900 text-white font-extrabold hover:bg-slate-800 transition">
+        Apply Now <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+      </a>
+      <a href="${exam.notification || '#'}" target="_blank" class="flex-1 text-center py-4 rounded-xl bg-white border border-slate-200 text-slate-800 font-extrabold hover:bg-slate-50 transition">
+        Official Notification
+      </a>
+    </div>
+  `;
+  document.getElementById("examDetailModal").classList.add("open");
+};
+
+window.closeExamDetail = () => {
+  document.getElementById("examDetailModal").classList.remove("open");
+};
 
 /* ================= MOBILE MENU ================= */
 menuBtn.onclick=()=>{ mobileMenu.classList.toggle("mobile-open"); };
@@ -2109,13 +2208,10 @@ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add("s
 document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
 
 /* ================= INITIALIZE ================= */
-
-// First setup chips and render local fallback exams
 document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
 renderExams();
 setStep(1);
 
-// Now trigger Dynamic Fetch in background
 fetchDynamicExams();
 fetchLatestNews();
 
