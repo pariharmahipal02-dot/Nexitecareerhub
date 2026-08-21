@@ -1,0 +1,49 @@
+[
+  {
+    "id": "news-001",
+    "title": "SSC 2026-27 examination calendar released",
+    "description": "SSC has published its tentative examination calendar for the 2026-27 cycle. Candidates should check the official SSC website for the latest notification and dates.",
+    "category": "SSC",
+    "date": "2026-08-21",
+    "important": true,
+    "active": true,
+    "url": "https://ssc.gov.in/",
+    "source": "SSC Official Website"
+  },
+
+  {
+    "id": "news-002",
+    "title": "UPSC latest examination updates",
+    "description": "UPSC's active examinations and examination-related updates are available through its official website. Candidates should verify the latest notice before applying.",
+    "category": "UPSC",
+    "date": "2026-08-21",
+    "important": true,
+    "active": true,
+    "url": "https://upsc.gov.in/",
+    "source": "UPSC Official Website"
+  },
+
+  {
+    "id": "news-003",
+    "title": "IBPS Specialist Officer XVI recruitment update",
+    "description": "IBPS has published the Specialist Officer XVI recruitment notification. Candidates should read the official notification for eligibility, important dates and application instructions.",
+    "category": "Banking",
+    "date": "2026-08-21",
+    "important": true,
+    "active": true,
+    "url": "https://www.ibps.in/",
+    "source": "IBPS Official Website"
+  },
+
+  {
+    "id": "news-004",
+    "title": "Railway recruitment updates",
+    "description": "Candidates should regularly check official Railway Recruitment Board and Indian Railways portals for current recruitment notices, schedules and application updates.",
+    "category": "Railway",
+    "date": "2026-08-21",
+    "important": false,
+    "active": true,
+    "url": "https://indianrailways.gov.in/",
+    "source": "Indian Railways"
+  }
+]
