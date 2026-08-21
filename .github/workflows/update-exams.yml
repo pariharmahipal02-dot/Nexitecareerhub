@@ -1,0 +1,149 @@
+name: Auto Update Exam Data
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-exams:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Update exam data
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python <<'PY'
+          import os
+          import json
+          import urllib.request
+          import re
+          from datetime import date
+
+          api_key = os.environ["GEMINI_API_KEY"]
+
+          today = date.today().isoformat()
+
+          prompt = f"""
+          Today is {today}.
+
+          Generate a current India government/competitive exam reference database
+          for a student career website.
+
+          Return ONLY valid JSON.
+          Do not use markdown.
+          Do not use ```.
+
+          JSON must be an array of objects.
+
+          Every object MUST contain exactly:
+          id
+          name
+          org
+          cat
+          edu
+          min
+          max
+          status
+          desc
+
+          cat examples:
+          Government, Defence, Railway, Banking, Civil Services, Teaching, Police
+
+          edu must be one of:
+          10th, 12th, Graduation, Post Graduation
+
+          Include important exams such as SSC, Railway, Defence, Banking,
+          UPSC, Teaching and State Police where appropriate.
+
+          Do not invent notification dates.
+          This is a reference eligibility database, so use reasonable
+          age ranges and qualification requirements.
+
+          Return at least 15 useful exams.
+          """
+
+          url = (
+              "https://generativelanguage.googleapis.com/v1beta/models/"
+              "gemini-2.0-flash:generateContent?key=" + api_key
+          )
+
+          payload = {
+              "contents": [
+                  {
+                      "parts": [
+                          {
+                              "text": prompt
+                          }
+                      ]
+                  }
+              ],
+              "generationConfig": {
+                  "temperature": 0.2,
+                  "responseMimeType": "application/json"
+              }
+          }
+
+          req = urllib.request.Request(
+              url,
+              data=json.dumps(payload).encode(),
+              headers={"Content-Type": "application/json"},
+              method="POST"
+          )
+
+          with urllib.request.urlopen(req) as response:
+              result = json.loads(response.read().decode())
+
+          text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+
+          exams = json.loads(text)
+
+          if not isinstance(exams, list) or len(exams) < 5:
+              raise Exception("Invalid exam data received")
+
+          required = [
+              "id",
+              "name",
+              "org",
+              "cat",
+              "edu",
+              "min",
+              "max",
+              "status",
+              "desc"
+          ]
+
+          for exam in exams:
+              for field in required:
+                  if field not in exam:
+                      raise Exception(f"Missing field: {field}")
+
+          with open("exam-data.json", "w", encoding="utf-8") as f:
+              json.dump(exams, f, ensure_ascii=False, indent=2)
+
+          print(f"Updated {len(exams)} exams")
+
+          PY
+
+      - name: Commit updated exam data
+        run: |
+          git config user.name "Nexite Career Lab"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add exam-data.json
+
+          git diff --cached --quiet || git commit -m "Auto update exam data"
+
+          git push
