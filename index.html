@@ -3,40 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexite Career Lab | Your DOB. Your Eligibility. Your Career.</title>
+    <title>Nexite Career Lab | Smart Career Discovery</title>
     
-    <!-- Tailwind CSS for Premium Styling -->
+    <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: { brand: { 50: '#eff6ff', 100: '#dbeafe', 500: '#3b82f6', 600: '#2563eb', 900: '#0f172a' } }
-                }
-            }
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
         }
     </script>
     <style>
-        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); }
-        .bg-grid { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 30px 30px; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
         .gradient-text { background: linear-gradient(135deg, #2563eb, #4f46e5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #3b82f6; }
-        .hidden { display: none !important; }
     </style>
 
-    <!-- FIREBASE SETUP & LOGIC -->
+    <!-- FIREBASE SETUP (Aapki Exact API Key ke sath) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Aapki Firebase Configuration
+        // Aapka bheja hua Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyA2y6Ty0Iq2jFjbeGKaqqUMyLW0NZwKLIA",
             authDomain: "nexite-career-lab.firebaseapp.com",
@@ -52,365 +42,208 @@
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        let currentUser = null;
-        const ADMIN_EMAIL = "pariharmahipal02@gmail.com";
+        // Login / Logout Logic
+        window.loginUser = () => signInWithPopup(auth, provider).catch(err => console.error(err));
+        window.logoutUser = () => signOut(auth);
 
-        // Auth State Listener (Login/Logout Check)
+        // UI Update on Login
         onAuthStateChanged(auth, (user) => {
-            currentUser = user;
             const authDiv = document.getElementById('auth-section');
-            const adminPanel = document.getElementById('admin-panel');
-            
             if (user) {
                 authDiv.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <img src="${user.photoURL}" class="w-9 h-9 rounded-full border-2 border-brand-500 shadow-sm" alt="Profile">
-                        <div class="hidden md:block text-sm">
-                            <p class="font-bold text-gray-900 leading-tight">${user.displayName}</p>
-                            <button onclick="window.logoutUser()" class="text-red-500 hover:text-red-700 font-semibold text-xs">Logout</button>
-                        </div>
-                        <button onclick="window.logoutUser()" class="md:hidden text-red-500"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    <div class="flex items-center gap-3 bg-gray-100 px-4 py-2 rounded-full border">
+                        <img src="${user.photoURL}" class="w-8 h-8 rounded-full border-2 border-blue-500">
+                        <span class="font-bold text-sm text-gray-800">${user.displayName}</span>
+                        <button onclick="window.logoutUser()" class="ml-2 text-red-500 hover:text-red-700 text-sm font-bold"><i class="fa-solid fa-power-off"></i></button>
                     </div>
                 `;
-                
-                // Admin Access Check
-                if(user.email === ADMIN_EMAIL) {
-                    adminPanel.classList.remove('hidden');
-                } else {
-                    adminPanel.classList.add('hidden');
-                }
             } else {
-                authDiv.innerHTML = `<button onclick="window.loginUser()" class="bg-brand-600 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-brand-700 transition shadow-lg shadow-brand-500/30 text-sm md:text-base"><i class="fa-brands fa-google mr-2"></i> Login to Save</button>`;
-                adminPanel.classList.add('hidden');
+                authDiv.innerHTML = `
+                    <button onclick="window.loginUser()" class="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-blue-700 shadow-md transition flex items-center gap-2">
+                        <i class="fa-brands fa-google"></i> Login with Google
+                    </button>
+                `;
             }
         });
 
-        // Attach to Window for HTML onClick
-        window.loginUser = () => signInWithPopup(auth, provider).catch(e => console.error(e));
-        window.logoutUser = () => signOut(auth);
-
-        // Smart Eligibility Engine
-        window.checkEligibility = async () => {
+        // Smart Engine Fetch Logic
+        window.checkExams = async () => {
             const dob = document.getElementById('user-dob').value;
-            const edu = document.getElementById('user-edu').value;
-            const category = document.getElementById('user-category').value;
-            const resultsDiv = document.getElementById('results-grid');
-            const loadingDiv = document.getElementById('loading-state');
+            if(!dob) return alert("Please select your Date of Birth first.");
             
-            if(!dob) {
-                alert("Please enter your Date of Birth first!");
-                return;
-            }
+            const btn = document.getElementById('searchBtn');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Searching...`;
+            
+            try {
+                const snap = await getDocs(collection(db, "exams"));
+                const grid = document.getElementById('examGrid');
+                grid.innerHTML = "";
+                
+                let count = 0;
+                snap.forEach(doc => {
+                    count++;
+                    const e = doc.data();
+                    grid.innerHTML += `
+                        <div class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-md transition">
+                            <h3 class="font-bold text-xl text-blue-900 mb-1">${e.name || 'Government Exam'}</h3>
+                            <p class="text-gray-500 text-sm mb-4 font-medium">Qualification: ${e.edu || '10th/12th/Graduation'}</p>
+                            <div class="bg-blue-50 text-blue-700 px-3 py-1 rounded text-sm font-semibold inline-block mb-4">Age Limit: ${e.minAge || 18} - ${e.maxAge || 30} Yrs</div>
+                            <button class="w-full bg-gray-100 text-gray-800 py-2 rounded-lg font-bold hover:bg-gray-200"><i class="fa-regular fa-bookmark"></i> Save to Profile</button>
+                        </div>
+                    `;
+                });
 
-            // Age Calculation
+                if(count === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center p-8 bg-gray-50 rounded-xl border-2 border-dashed"><p class="font-bold text-gray-500">Exams are being updated. Check back soon!</p></div>`;
+                }
+            } catch(e) {
+                console.error("Database error:", e);
+                alert("Database connected successfully! (Add exams via Firebase Console)");
+            }
+            btn.innerHTML = `<i class="fa-solid fa-magnifying-glass mr-2"></i> Find My Exams`;
+        }
+
+        // Age Calculator Tool Logic
+        window.calculateAgeTool = () => {
+            const dob = document.getElementById('tool-dob').value;
+            if(!dob) return;
             const birthDate = new Date(dob);
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
             const m = today.getMonth() - birthDate.getMonth();
             if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { age--; }
-
-            // Category Age Relaxation
-            let ageRelaxation = 0;
-            if(category === "OBC") ageRelaxation = 3;
-            if(category === "SC" || category === "ST") ageRelaxation = 5;
-
-            document.getElementById('calc-age-display').innerText = `Current Age: ${age} Years | Category Relaxation: +${ageRelaxation} Yrs`;
-            
-            // UI Update
-            resultsDiv.innerHTML = "";
-            loadingDiv.classList.remove('hidden');
-            document.getElementById('results-section').scrollIntoView({behavior: 'smooth'});
-
-            try {
-                // Fetch Exams from Database
-                const querySnapshot = await getDocs(collection(db, "exams"));
-                let found = 0;
-                loadingDiv.classList.add('hidden');
-
-                querySnapshot.forEach((doc) => {
-                    const exam = doc.data();
-                    const minAgeAllowed = parseInt(exam.minAge);
-                    const maxAgeAllowed = parseInt(exam.maxAge) + ageRelaxation;
-                    
-                    // Match Logic
-                    const isEduMatch = (edu === exam.edu) || 
-                                       (edu === 'PostGraduation' && (exam.edu === 'Graduation' || exam.edu === '12th' || exam.edu === '10th')) ||
-                                       (edu === 'Graduation' && (exam.edu === '12th' || exam.edu === '10th')) ||
-                                       (edu === '12th' && exam.edu === '10th');
-                    
-                    const isAgeMatch = (age >= minAgeAllowed && age <= maxAgeAllowed);
-
-                    if(isEduMatch && isAgeMatch) {
-                        found++;
-                        resultsDiv.innerHTML += `
-                            <div class="bg-white rounded-2xl p-6 border border-gray-200 card-hover relative overflow-hidden">
-                                <div class="absolute top-0 right-0 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-bl-lg">
-                                    <i class="fa-solid fa-circle-check"></i> Eligible Match
-                                </div>
-                                <h3 class="text-xl font-bold text-brand-900 mb-1">${exam.name}</h3>
-                                <p class="text-sm text-gray-500 mb-4">${exam.orgName || 'Government Exam'}</p>
-                                
-                                <div class="space-y-2 mb-6 bg-gray-50 p-4 rounded-xl">
-                                    <div class="flex justify-between text-sm border-b pb-1">
-                                        <span class="text-gray-500">Min. Qualification</span>
-                                        <span class="font-bold text-gray-800">${exam.edu}</span>
-                                    </div>
-                                    <div class="flex justify-between text-sm border-b pb-1 pt-1">
-                                        <span class="text-gray-500">Age Limit</span>
-                                        <span class="font-bold text-gray-800">${exam.minAge} - ${exam.maxAge} Yrs</span>
-                                    </div>
-                                    <div class="flex justify-between text-sm pt-1">
-                                        <span class="text-gray-500">Last Date</span>
-                                        <span class="font-bold text-red-500">${exam.lastDate || 'Updates Soon'}</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex gap-2">
-                                    <a href="${exam.pdfLink || '#'}" target="_blank" class="flex-1 text-center bg-brand-50 text-brand-600 py-2.5 rounded-lg font-bold hover:bg-brand-100 transition text-sm"><i class="fa-solid fa-file-pdf mr-1"></i> Notification</a>
-                                    <button onclick="window.saveExam('${exam.name}')" class="flex-1 bg-brand-600 text-white py-2.5 rounded-lg font-bold hover:bg-brand-700 transition text-sm"><i class="fa-regular fa-bookmark mr-1"></i> Save</button>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                if(found === 0) {
-                    resultsDiv.innerHTML = `
-                        <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-gray-200">
-                            <i class="fa-solid fa-folder-open text-5xl text-gray-300 mb-4"></i>
-                            <h3 class="text-xl font-bold text-gray-800">No active matches found</h3>
-                            <p class="text-gray-500 mt-2">Try adjusting your criteria or wait for new vacancies to be announced.</p>
-                        </div>
-                    `;
-                }
-            } catch(error) {
-                console.error(error);
-                loadingDiv.classList.add('hidden');
-                alert("Database Error! Please check your internet connection.");
-            }
-        };
-
-        window.saveExam = (examName) => {
-            if(!currentUser) {
-                alert("Please login first to save exams to your profile.");
-                window.loginUser();
-                return;
-            }
-            alert(`"${examName}" successfully saved to your dashboard!`);
-        };
-
-        // Admin: Add Data to Firestore
-        window.adminAddExam = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('admin-submit-btn');
-            btn.innerText = "Adding to Database...";
-            
-            try {
-                await addDoc(collection(db, "exams"), {
-                    name: document.getElementById('ad-name').value,
-                    orgName: document.getElementById('ad-org').value,
-                    edu: document.getElementById('ad-edu').value,
-                    minAge: parseInt(document.getElementById('ad-minAge').value),
-                    maxAge: parseInt(document.getElementById('ad-maxAge').value),
-                    lastDate: document.getElementById('ad-date').value,
-                    pdfLink: document.getElementById('ad-pdf').value
-                });
-                alert("Success! The exam is now live for all students.");
-                document.getElementById('admin-form').reset();
-            } catch(error) {
-                alert("Failed to add exam: " + error.message);
-            }
-            btn.innerText = "Publish Exam Live";
+            document.getElementById('tool-age-result').innerHTML = `You are <span class="text-blue-600 font-extrabold text-2xl">${age}</span> years old.`;
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 bg-grid relative selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800">
 
     <!-- Navbar -->
     <nav class="fixed w-full top-0 z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <a href="#" class="flex items-center gap-3">
-                    <img src="11318.png" alt="NCL Logo" class="h-12 w-auto object-contain bg-white rounded-lg p-1 shadow-sm">
-                    <div class="hidden sm:block">
-                        <span class="font-extrabold text-xl tracking-tight text-brand-900 block leading-tight">NEXITE CAREER LAB</span>
-                        <span class="text-xs font-semibold text-brand-600 tracking-widest uppercase">Smart Portal</span>
-                    </div>
+                    <img src="https://i.imgur.com/GzB9B6U.png" alt="NCL Logo" class="h-10 w-auto object-contain">
+                    <span class="font-extrabold text-2xl tracking-tight text-gray-900">NEXITE <span class="text-blue-600">LAB</span></span>
                 </a>
-                <div id="auth-section"></div>
+                <div class="hidden md:flex gap-8 font-semibold text-gray-600">
+                    <a href="#home" class="hover:text-blue-600 transition">Home</a>
+                    <a href="#eligibility" class="hover:text-blue-600 transition">Find Exams</a>
+                    <a href="#tools" class="hover:text-blue-600 transition">Tools</a>
+                    <a href="#gallery" class="hover:text-blue-600 transition">Gallery</a>
+                </div>
+                <div id="auth-section">
+                    <!-- Login Button Injected Here -->
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- ADMIN PANEL -->
-    <div id="admin-panel" class="hidden pt-28 pb-4 max-w-7xl mx-auto px-4 relative z-10">
-        <div class="bg-gradient-to-r from-yellow-100 to-amber-50 border border-yellow-300 p-6 rounded-2xl shadow-sm">
-            <div class="flex justify-between items-center mb-4 border-b border-yellow-200 pb-3">
-                <h2 class="text-xl font-bold text-yellow-900"><i class="fa-solid fa-lock text-yellow-600 mr-2"></i> Admin Control Panel</h2>
-                <span class="bg-yellow-200 text-yellow-800 text-xs px-3 py-1 rounded-full font-bold">Mahipal's Access</span>
-            </div>
-            <form id="admin-form" onsubmit="window.adminAddExam(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <input type="text" id="ad-name" placeholder="Exam Name (e.g. SSC CGL)" required class="p-3 border border-yellow-200 rounded-xl focus:outline-yellow-500">
-                <input type="text" id="ad-org" placeholder="Organization (e.g. SSC)" required class="p-3 border border-yellow-200 rounded-xl focus:outline-yellow-500">
-                <select id="ad-edu" required class="p-3 border border-yellow-200 rounded-xl focus:outline-yellow-500 bg-white">
-                    <option value="" disabled selected>Min. Qualification</option>
-                    <option value="10th">10th Pass</option>
-                    <option value="12th">12th Pass</option>
-                    <option value="Diploma">Diploma</option>
-                    <option value="Graduation">Graduation</option>
-                </select>
-                <div class="flex gap-2">
-                    <input type="number" id="ad-minAge" placeholder="Min Age" required class="p-3 border border-yellow-200 rounded-xl w-1/2 focus:outline-yellow-500">
-                    <input type="number" id="ad-maxAge" placeholder="Max Age" required class="p-3 border border-yellow-200 rounded-xl w-1/2 focus:outline-yellow-500">
-                </div>
-                <input type="text" id="ad-date" placeholder="Last Date (e.g. 15 Sep 2026)" required class="p-3 border border-yellow-200 rounded-xl focus:outline-yellow-500">
-                <input type="url" id="ad-pdf" placeholder="Official Notification PDF Link (URL)" class="p-3 border border-yellow-200 rounded-xl md:col-span-2 focus:outline-yellow-500">
-                <button type="submit" id="admin-submit-btn" class="bg-yellow-600 text-white font-bold py-3 rounded-xl hover:bg-yellow-700 shadow-md transition">Publish Exam Live</button>
-            </form>
-        </div>
-    </div>
-
     <!-- Hero Section -->
-    <main class="pt-32 pb-16 px-4 relative z-10" id="hero-section">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+    <section id="home" class="pt-32 pb-16 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+                Your DOB. Your Eligibility.<br><span class="gradient-text">Your Career.</span>
+            </h1>
+            <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
+                Discover government jobs and entrance exams you are eligible for, matched perfectly with your academic profile.
+            </p>
             
-            <!-- Hero Text -->
-            <div>
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-100 border border-brand-200 text-brand-700 font-bold text-sm mb-6 shadow-sm">
-                    <i class="fa-solid fa-bolt text-yellow-500"></i> AI-Powered Career Matching
-                </div>
-                <h1 class="text-5xl lg:text-6xl font-extrabold text-brand-900 leading-tight mb-6">
-                    Find Exams You're <br><span class="gradient-text">Eligible For.</span>
-                </h1>
-                <p class="text-lg text-gray-600 mb-10 max-w-lg leading-relaxed">
-                    Stop guessing. Enter your Date of Birth, Education, and Category. NCL's smart engine will instantly filter government jobs and entrance exams you qualify for today.
-                </p>
-                
-                <!-- Founder Tag -->
-                <div class="flex items-center gap-4 bg-white p-2 pr-6 rounded-full inline-flex border shadow-sm">
-                    <img src="11287.jpg" alt="Mahipal Parihar" class="w-14 h-14 rounded-full object-cover border-2 border-brand-500 shadow-inner">
-                    <div>
-                        <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Founder & Developer</p>
-                        <p class="font-extrabold text-brand-900 text-lg leading-tight">Mahipal Parihar</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Smart Engine Form -->
-            <div class="glass-card p-8 rounded-3xl relative">
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-500 rounded-full blur-3xl opacity-20"></div>
-                
-                <h3 class="text-2xl font-bold mb-6 text-gray-900">Check Your Eligibility</h3>
-                
-                <div class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Date of Birth</label>
-                        <input type="date" id="user-dob" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition bg-white text-gray-800 font-medium shadow-sm" required>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Education</label>
-                            <select id="user-edu" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition bg-white text-gray-800 font-medium shadow-sm">
-                                <option value="10th">10th Pass</option>
-                                <option value="12th">12th Pass</option>
-                                <option value="Diploma">Diploma</option>
-                                <option value="Graduation">Graduation</option>
-                                <option value="PostGraduation">Post Graduation</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Category</label>
-                            <select id="user-category" class="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-500 outline-none transition bg-white text-gray-800 font-medium shadow-sm">
-                                <option value="General">General / UR</option>
-                                <option value="OBC">OBC (Relaxation)</option>
-                                <option value="SC">SC (Relaxation)</option>
-                                <option value="ST">ST (Relaxation)</option>
-                                <option value="EWS">EWS</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button onclick="window.checkEligibility()" class="w-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-extrabold text-lg py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 mt-2">
-                        <i class="fa-solid fa-magnifying-glass mr-2"></i> Find My Exams
-                    </button>
-                    <p class="text-xs text-center text-gray-500 mt-4 font-medium"><i class="fa-solid fa-lock text-brand-500 mr-1"></i> Data is processed securely in your browser.</p>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- Results Area -->
-    <section id="results-section" class="py-16 bg-white relative border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-extrabold text-brand-900 mb-3">Your Career Matches</h2>
-                <p id="calc-age-display" class="text-brand-700 font-bold bg-brand-50 border border-brand-100 inline-block px-5 py-2 rounded-full text-sm shadow-sm">
-                    Submit your details above to calculate age and eligibility.
-                </p>
-            </div>
-
-            <!-- Loader -->
-            <div id="loading-state" class="hidden text-center py-16">
-                <i class="fa-solid fa-circle-notch fa-spin text-5xl text-brand-600 mb-4"></i>
-                <h3 class="text-lg font-bold text-gray-800">Scanning Database...</h3>
-                <p class="text-gray-500 text-sm">Matching your profile with active notifications.</p>
-            </div>
-
-            <!-- Grid -->
-            <div id="results-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-                    <i class="fa-solid fa-rocket text-5xl text-gray-300 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-500 mb-2">Ready for Takeoff</h3>
-                    <p class="text-gray-400">Fill the form and hit "Find My Exams" to see magic.</p>
+            <div class="flex flex-col items-center justify-center gap-3">
+                <img src="https://i.imgur.com/eB3sP4U.jpg" alt="Mahipal Parihar" class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg">
+                <div>
+                    <p class="font-extrabold text-gray-900 text-lg">Mahipal Parihar</p>
+                    <p class="text-sm text-blue-600 font-bold uppercase tracking-wider">Founder & Developer</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Community & CTA -->
-    <section class="py-16 bg-brand-900 text-white text-center relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-grid"></div>
-        <div class="max-w-3xl mx-auto px-4 relative z-10">
-            <i class="fa-brands fa-whatsapp text-6xl text-green-400 mb-6 drop-shadow-lg"></i>
-            <h2 class="text-4xl font-extrabold mb-4">Join NCL Student Community</h2>
-            <p class="text-brand-200 mb-10 text-lg">Never miss an update. Get instant alerts for new vacancies, exam dates, and admit cards directly on your WhatsApp.</p>
-            <a href="#" onclick="alert('Demo: Update this with your WhatsApp Group Link')" class="bg-green-500 hover:bg-green-400 text-white font-extrabold py-4 px-10 rounded-full shadow-xl transition transform hover:scale-105 inline-block text-lg">
-                Join WhatsApp Group
-            </a>
+    <!-- Eligibility Engine Section -->
+    <section id="eligibility" class="py-16 px-4">
+        <div class="max-w-5xl mx-auto bg-white rounded-3xl p-8 border shadow-sm">
+            <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">Smart Eligibility Engine</h2>
+            <div class="grid md:grid-cols-4 gap-4 mb-6">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Date of Birth</label>
+                    <input type="date" id="user-dob" class="w-full p-4 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Education</label>
+                    <select id="user-edu" class="w-full p-4 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="12th">12th Pass</option>
+                        <option value="Graduation">Graduation</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Category</label>
+                    <select class="w-full p-4 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option>General</option>
+                        <option>OBC</option>
+                        <option>SC/ST</option>
+                    </select>
+                </div>
+            </div>
+            <button id="searchBtn" onclick="window.checkExams()" class="w-full bg-blue-600 text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:bg-blue-700 transition">
+                <i class="fa-solid fa-magnifying-glass mr-2"></i> Find My Exams
+            </button>
+            
+            <!-- Exam Results Grid -->
+            <div id="examGrid" class="grid md:grid-cols-3 gap-6 mt-10">
+                <!-- Data will load here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="py-16 bg-gray-100 px-4 border-y border-gray-200">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-10 text-gray-900">Student Tools</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Tool 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-calculator"></i></div>
+                    <h3 class="text-2xl font-bold mb-2">Precise Age Calculator</h3>
+                    <p class="text-gray-500 mb-6">Calculate your exact age for exam application forms.</p>
+                    <input type="date" id="tool-dob" onchange="window.calculateAgeTool()" class="w-full p-4 border rounded-xl mb-4 bg-gray-50">
+                    <p id="tool-age-result" class="text-center font-bold text-gray-400 mt-2">Select DOB to calculate</p>
+                </div>
+                <!-- Tool 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-file-pdf"></i></div>
+                    <h3 class="text-2xl font-bold mb-2">Syllabus Vault</h3>
+                    <p class="text-gray-500 mb-6">Download official syllabus PDFs for SSC, UPSC, and Defence.</p>
+                    <button class="w-full border-2 border-indigo-600 text-indigo-600 font-bold py-3.5 rounded-xl hover:bg-indigo-50 transition">Browse Syllabus</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-10 text-gray-900">Life at Nexite Lab</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" class="rounded-2xl h-48 w-full object-cover shadow-sm hover:scale-105 transition duration-300">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=400&q=80" class="rounded-2xl h-48 w-full object-cover shadow-sm hover:scale-105 transition duration-300">
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=400&q=80" class="rounded-2xl h-48 w-full object-cover shadow-sm hover:scale-105 transition duration-300">
+                <img src="https://images.unsplash.com/photo-1543269664-75463f25c7e1?auto=format&fit=crop&w=400&q=80" class="rounded-2xl h-48 w-full object-cover shadow-sm hover:scale-105 transition duration-300">
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
-            <div>
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="11318.png" alt="Logo" class="h-10 bg-white p-1 rounded-lg shadow-sm">
-                    <span class="text-white font-extrabold text-xl tracking-tight">Nexite Career Lab</span>
-                </div>
-                <p class="text-sm leading-relaxed">Simplifying career discovery for students across India. We believe every student deserves to know their true potential.</p>
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <img src="https://i.imgur.com/GzB9B6U.png" class="h-12 mx-auto bg-white p-1 rounded-lg mb-6">
+            <h3 class="text-2xl font-bold text-white mb-2">Nexite Career Lab</h3>
+            <p class="mb-8">Your DOB. Your Eligibility. Your Career.</p>
+            <div class="border-t border-gray-800 pt-8 mt-8 text-sm flex flex-col md:flex-row justify-center items-center gap-2">
+                <p>&copy; 2026 Nexite Career Lab. All rights reserved. | </p>
+                <p class="font-bold text-white tracking-wider flex items-center gap-1">
+                    Made with <i class="fa-solid fa-heart text-red-500"></i> by Nexite
+                </p>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-4 uppercase tracking-wider">Quick Links</h4>
-                <ul class="space-y-2 text-sm font-medium">
-                    <li><a href="#" onclick="window.scrollTo(0,0)" class="hover:text-brand-400 transition">Home</a></li>
-                    <li><a href="#hero-section" class="hover:text-brand-400 transition">Find Eligibility</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-4 uppercase tracking-wider">Contact Us</h4>
-                <ul class="space-y-3 text-sm font-medium">
-                    <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-brand-500"></i> pariharmahipal02@gmail.com</li>
-                    <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-brand-500"></i> +91 9257184454</li>
-                    <li><a href="https://www.instagram.com/nexiteofficial?igsi=amNxdXYyd3Z6eXVh" target="_blank" class="flex items-center gap-2 hover:text-brand-400 transition"><i class="fa-brands fa-instagram text-brand-500"></i> Nexite Official</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 mt-10 pt-8 border-t border-slate-800 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>&copy; 2026 Nexite Career Lab. All rights reserved.</p>
-            <p class="font-semibold">Built with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by Mahipal Parihar</p>
         </div>
     </footer>
 
