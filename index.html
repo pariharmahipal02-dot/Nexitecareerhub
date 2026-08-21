@@ -887,7 +887,7 @@ class="grid sm:grid-cols-2 gap-4">
 </section>
 
 
-<!-- ================= EXAMS & DYNAMIC NEWS ================= -->
+<!-- ================= EXAMS ================= -->
 
 <section
 id="exams"
@@ -898,7 +898,7 @@ class="bg-white border-y border-slate-200">
 <div class="text-center reveal">
 
 <span class="text-violet-600 font-extrabold text-sm">
-02 / EXAM DIRECTORY & UPDATES
+02 / EXAM DIRECTORY
 </span>
 
 <h2 class="mt-3 text-3xl sm:text-5xl font-extrabold">
@@ -906,22 +906,11 @@ Explore Opportunities
 </h2>
 
 <p class="mt-4 text-slate-600">
-Search and filter the available exam catalogue and stay updated with latest notifications.
+Search and filter the available exam catalogue.
 </p>
 
 </div>
 
-<!-- Latest News Feed Integrated Here -->
-<div class="mt-10 mb-12">
-    <h3 class="text-xl font-extrabold mb-4 flex items-center gap-2">
-        <i class="fa-solid fa-bullhorn text-blue-600"></i> Latest Official News & Updates
-    </h3>
-    <section id="latestNews" class="space-y-4">
-        <div class="p-6 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">
-            Loading latest updates...
-        </div>
-    </section>
-</div>
 
 <div class="mt-10 flex flex-col lg:flex-row gap-4">
 
@@ -1442,119 +1431,6 @@ class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] bg-slate-900 text
 </div>
 
 
-<!-- ================= DYNAMIC NEWS FETCH SYSTEM ================= -->
-<script>
-let latestNews = [];
-const DATA_VERSION = Date.now();
-
-/* =====================================================
-   LOAD LATEST NEWS
-===================================================== */
-async function fetchLatestNews() {
-    try {
-        const response = await fetch(
-            "news.json?v=" + DATA_VERSION,
-            { cache: "no-store" }
-        );
-
-        if (!response.ok) {
-            throw new Error("news.json not found");
-        }
-
-        const data = await response.json();
-
-        if (!Array.isArray(data)) {
-            throw new Error("Invalid news.json format");
-        }
-
-        latestNews = data
-            .filter(item => item.active !== false)
-            .sort(
-                (a, b) =>
-                    new Date(b.date || 0) -
-                    new Date(a.date || 0)
-            );
-
-        renderLatestNews();
-
-    } catch (error) {
-        console.error("Latest news loading failed:", error);
-        const container = document.querySelector("#latestNews");
-        if (container) {
-            container.innerHTML = `<div class="p-6 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">Unable to load latest news updates right now.</div>`;
-        }
-    }
-}
-
-/* =====================================================
-   LATEST NEWS RENDER
-===================================================== */
-function renderLatestNews() {
-    const container = document.querySelector("#latestNews");
-    if (!container) return;
-
-    if (!latestNews.length) {
-        container.innerHTML = `
-            <div class="p-6 text-center text-slate-500 bg-slate-50 rounded-2xl border border-slate-200">
-                Latest updates will appear here.
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML =
-        latestNews
-            .slice(0, 20)
-            .map(news => `
-                <article class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
-                    <div class="flex flex-wrap items-center gap-2 mb-2">
-                        <span class="px-2.5 py-1 rounded-full bg-slate-100 text-xs font-bold">
-                            ${escapeHtml(news.category || "Latest Update")}
-                        </span>
-                        ${
-                            news.important
-                            ? `<span class="px-2.5 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold">IMPORTANT</span>`
-                            : ""
-                        }
-                    </div>
-                    <h3 class="text-lg font-black mb-2">${escapeHtml(news.title || "")}</h3>
-                    <p class="text-sm text-slate-600 mb-3">${escapeHtml(news.description || "")}</p>
-                    <div class="text-xs text-slate-500 mb-4">${escapeHtml(news.date || "")}</div>
-                    ${
-                        news.url
-                        ? `<a href="${safeUrl(news.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold">Read Official Update</a>`
-                        : ""
-                    }
-                </article>
-            `)
-            .join("");
-}
-
-/* =====================================================
-   SECURITY HELPERS
-===================================================== */
-function escapeHtml(value) {
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-function safeUrl(value) {
-    const url = String(value || "").trim();
-    if (url.startsWith("https://") || url.startsWith("http://")) {
-        return escapeHtml(url);
-    }
-    return "#";
-}
-
-// Trigger News Fetch on Load
-fetchLatestNews();
-</script>
-
-
 <!-- ================= FIREBASE ================= -->
 
 <script type="module">
@@ -1606,17 +1482,21 @@ const provider=new GoogleAuthProvider();
 const db=getFirestore(app);
 
 
-/* ================= BRAND ASSETS ================= -->
+/* ================= BRAND ASSETS ================= */
 
-const LOGO="11318.png";
-const FOUNDER="11287.jpg";
+const LOGO="./11318.png";
+const FOUNDER="./11287.jpg";
 
-document.getElementById("navLogo").src=LOGO;
-document.getElementById("footerLogo").src=LOGO;
-document.getElementById("founderPhoto").src=FOUNDER;
+const navLogo=document.getElementById("navLogo");
+const footerLogo=document.getElementById("footerLogo");
+const founderPhoto=document.getElementById("founderPhoto");
+
+if(navLogo){ navLogo.src=LOGO; navLogo.onerror=()=>{ navLogo.src="11318.png"; }; }
+if(footerLogo){ footerLogo.src=LOGO; footerLogo.onerror=()=>{ footerLogo.src="11318.png"; }; }
+if(founderPhoto){ founderPhoto.src=FOUNDER; founderPhoto.onerror=()=>{ founderPhoto.src="11287.jpg"; }; }
 
 
-/* ================= ELEMENTS ================= -->
+/* ================= ELEMENTS ================= */
 
 const state=document.getElementById("state");
 const category=document.getElementById("category");
@@ -1694,6 +1574,7 @@ state.innerHTML=states.map(x=>`<option>${x}</option>`).join("");
 
 
 /* ================= EXAM DATA (DEFAULT FALLBACK) ================= */
+// Notice ID is now string to support Firebase auto-generated IDs smoothly
 let exams=[
 {id:"1", name:"SSC CHSL", org:"Staff Selection Commission", cat:"Government", edu:"12th", min:18, max:27, status:"Reference", desc:"Combined Higher Secondary Level recruitment."},
 {id:"2", name:"SSC CGL", org:"Staff Selection Commission", cat:"Government", edu:"Graduation", min:18, max:32, status:"Reference", desc:"Combined Graduate Level recruitment."},
@@ -1710,38 +1591,114 @@ let selectedEdu="12th";
 let selectedCategory="All";
 
 
-/* ================= FETCH DYNAMIC EXAMS FROM FIREBASE ================= */
+/* ================= DYNAMIC MONTHLY EXAM DATA ================= */
+/*
+  Keep index.html unchanged every month.
+  Upload/replace only exams.json in the same folder.
+  If exams.json is unavailable, Firebase/local data continues to work.
+*/
 async function fetchDynamicExams() {
+  try {
+    const response = await fetch("./exams.json?v=" + Date.now(), {
+      cache: "no-store"
+    });
+
+    if (!response.ok) throw new Error("exams.json not found");
+
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error("Invalid exams.json format");
+
+    exams = data.map((exam, index) => ({
+      id: String(exam.id ?? index + 1),
+      ...exam
+    }));
+
+    const chips=["All", ...new Set(exams.map(x=>x.cat).filter(Boolean))];
+    categoryChips.innerHTML=chips.map(c=>`
+      <button data-cat="${escape(c)}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${escape(c)}</button>
+    `).join("");
+
+    document.querySelectorAll(".chip").forEach(button=>{
+      button.onclick=()=>{
+        selectedCategory=button.dataset.cat;
+        document.querySelectorAll(".chip").forEach(x=>x.classList.remove("bg-slate-900", "text-white"));
+        button.classList.add("bg-slate-900", "text-white");
+        renderExams();
+      };
+    });
+
+    document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
+    renderExams();
+    console.log("Loaded monthly exams:", exams.length);
+    return;
+  } catch(e) {
+    console.log("exams.json unavailable. Falling back to Firebase/local exams:", e);
+  }
+
+  /* Original Firebase fallback */
   try {
     const examsRef = collection(db, "exams");
     const snap = await getDocs(examsRef);
     if (!snap.empty) {
       const cloudExams = [];
-      snap.forEach(doc => {
-        cloudExams.push({ id: doc.id, ...doc.data() });
-      });
-      exams = cloudExams; 
-      
-      const chips=["All", ...new Set(exams.map(x=>x.cat))];
+      snap.forEach(doc => cloudExams.push({ id: doc.id, ...doc.data() }));
+      exams = cloudExams;
+
+      const chips=["All", ...new Set(exams.map(x=>x.cat).filter(Boolean))];
       categoryChips.innerHTML=chips.map(c=>`
-      <button data-cat="${c}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${c}</button>
+        <button data-cat="${escape(c)}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${escape(c)}</button>
       `).join("");
-      
+
       document.querySelectorAll(".chip").forEach(button=>{
         button.onclick=()=>{
           selectedCategory=button.dataset.cat;
-          document.querySelectorAll(".chip").forEach(x=>{ x.classList.remove("bg-slate-900", "text-white"); });
+          document.querySelectorAll(".chip").forEach(x=>x.classList.remove("bg-slate-900", "text-white"));
           button.classList.add("bg-slate-900", "text-white");
           renderExams();
         };
       });
-      
+
       document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
       renderExams();
     }
   } catch(e) {
-    console.log("Using local default exams. Failed to fetch from Cloud:", e);
+    console.log("Using local default exams:", e);
   }
+}
+
+/* ================= LATEST NEWS DATA ================= */
+/*
+  Upload/replace news.json in the same folder.
+  This does not interfere with the existing website if no news container exists.
+*/
+let latestNews=[];
+async function fetchLatestNews(){
+  try{
+    const response=await fetch("./news.json?v="+Date.now(),{cache:"no-store"});
+    if(!response.ok) throw new Error("news.json not found");
+    const data=await response.json();
+    if(!Array.isArray(data)) throw new Error("Invalid news.json format");
+    latestNews=data.filter(x=>x.active!==false).sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+    renderLatestNews();
+  }catch(e){
+    console.log("Latest news file unavailable:",e);
+  }
+}
+
+function renderLatestNews(){
+  const box=document.getElementById("latestNews");
+  if(!box) return;
+  box.innerHTML=latestNews.slice(0,10).map(n=>`
+    <article class="card rounded-2xl p-5 hover:border-blue-300 transition">
+      <div class="flex items-center justify-between gap-3">
+        <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${escape(n.category||"Latest Update")}</span>
+        <span class="text-xs text-slate-400">${escape(n.date||"")}</span>
+      </div>
+      <h3 class="text-lg font-extrabold mt-4">${escape(n.title||"")}</h3>
+      <p class="text-sm text-slate-600 mt-3">${escape(n.description||"")}</p>
+      ${n.url ? `<a href="${escape(n.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex mt-4 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold">Official Update</a>` : ""}
+    </article>
+  `).join("");
 }
 
 
@@ -1910,7 +1867,7 @@ setTimeout(()=>{ toast.classList.add("hidden"); },2600);
 }
 
 
-/* ================= SAVE EXAMS ================= */
+/* ================= SAVE EXAMS (Local + Cloud Sync, String IDs) ================= */
 let saved=JSON.parse(localStorage.getItem("ncl_saved")||"[]").map(String);
 
 window.toggleSave = async id => {
@@ -1921,10 +1878,14 @@ window.toggleSave = async id => {
     saved.push(id); 
   }
   
+  // Save Locally First
   localStorage.setItem("ncl_saved", JSON.stringify(saved));
   updateSavedButtons();
+  
+  // Update dashboard if it's open
   renderDashboardExams();
   
+  // Sync to Cloud if logged in
   const user = auth.currentUser;
   if (user) {
     try {
@@ -1948,6 +1909,7 @@ function updateSavedButtons(){
   });
 }
 
+// Function to fetch and merge cloud data on login
 async function syncSavedExams(user) {
   if (!user) return;
   try {
@@ -1957,10 +1919,12 @@ async function syncSavedExams(user) {
     if (docSnap.exists() && docSnap.data().savedExams) {
       remoteSaved = docSnap.data().savedExams.map(String);
     }
+    // Merge Local and Cloud
     saved = [...new Set([...saved, ...remoteSaved])];
     localStorage.setItem("ncl_saved", JSON.stringify(saved));
     updateSavedButtons();
     renderDashboardExams();
+    // Push merged data back to Cloud
     await setDoc(userRef, { savedExams: saved }, { merge: true });
   } catch (err) {
     console.error("Sync error: ", err);
@@ -1968,7 +1932,7 @@ async function syncSavedExams(user) {
 }
 
 
-/* ================= FIREBASE LOGIN ================= */
+/* ================= FIREBASE LOGIN (WITH VALIDATION) ================= */
 
 let isSignup = false;
 
@@ -2066,7 +2030,6 @@ googleLogin.onclick=async()=>{
   }catch(e){ toastMsg(e?.message||"Login failed."); }
 };
 
-
 /* ================= DASHBOARD UI LOGIC ================= */
 
 function renderDashboardExams() {
@@ -2125,6 +2088,7 @@ profileBtn.innerHTML=`
 <img src="${u.photoURL||LOGO}" class="w-7 h-7 rounded-full object-cover">
 <span>${escape((u.displayName||(u.email ? u.email.split("@")[0] : "Student")).split(" ")[0])}</span>
 `;
+// Sync Cloud on Login
 syncSavedExams(u);
 
 }else{
@@ -2145,10 +2109,15 @@ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add("s
 document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
 
 /* ================= INITIALIZE ================= */
+
+// First setup chips and render local fallback exams
 document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
 renderExams();
 setStep(1);
+
+// Now trigger Dynamic Fetch in background
 fetchDynamicExams();
+fetchLatestNews();
 
 </script>
 
