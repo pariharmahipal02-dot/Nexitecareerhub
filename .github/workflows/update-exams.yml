@@ -29,26 +29,25 @@ jobs:
           import os
           import json
           import urllib.request
-          import re
           from datetime import date
 
           api_key = os.environ["GEMINI_API_KEY"]
-
           today = date.today().isoformat()
 
           prompt = f"""
           Today is {today}.
 
-          Generate a current India government/competitive exam reference database
-          for a student career website.
+          Generate a current India government and competitive exam
+          reference database for a student career website.
 
           Return ONLY valid JSON.
           Do not use markdown.
-          Do not use ```.
+          Do not use code fences.
 
-          JSON must be an array of objects.
+          Return a JSON array of exam objects.
 
-          Every object MUST contain exactly:
+          Every object MUST contain exactly these fields:
+
           id
           name
           org
@@ -59,25 +58,48 @@ jobs:
           status
           desc
 
-          cat examples:
-          Government, Defence, Railway, Banking, Civil Services, Teaching, Police
+          cat must be one of:
+          Government
+          Defence
+          Railway
+          Banking
+          Civil Services
+          Teaching
+          Police
 
           edu must be one of:
-          10th, 12th, Graduation, Post Graduation
+          10th
+          12th
+          Graduation
+          Post Graduation
 
-          Include important exams such as SSC, Railway, Defence, Banking,
-          UPSC, Teaching and State Police where appropriate.
+          Include important exams from:
+          SSC
+          Railway
+          Defence
+          Banking
+          UPSC
+          Teaching
+          Police
+          and other major Indian competitive examinations.
+
+          Use reasonable minimum and maximum age requirements
+          for eligibility reference.
 
           Do not invent notification dates.
-          This is a reference eligibility database, so use reasonable
-          age ranges and qualification requirements.
+
+          Use "Reference" as the status.
 
           Return at least 15 useful exams.
+
+          This is an eligibility reference database.
+          Users should verify the latest official notification
+          before applying.
           """
 
           url = (
               "https://generativelanguage.googleapis.com/v1beta/models/"
-              "gemini-2.0-flash:generateContent?key=" + api_key
+              "gemini-2.5-flash:generateContent"
           )
 
           payload = {
@@ -98,20 +120,37 @@ jobs:
 
           req = urllib.request.Request(
               url,
-              data=json.dumps(payload).encode(),
-              headers={"Content-Type": "application/json"},
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Content-Type": "application/json",
+                  "x-goog-api-key": api_key
+              },
               method="POST"
           )
 
-          with urllib.request.urlopen(req) as response:
-              result = json.loads(response.read().decode())
+          try:
+              with urllib.request.urlopen(req) as response:
+                  result = json.loads(
+                      response.read().decode("utf-8")
+                  )
+          except Exception as e:
+              print("Gemini API request failed:")
+              print(e)
+              raise
 
-          text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+          text = (
+              result["candidates"][0]
+              ["content"]["parts"][0]["text"]
+              .strip()
+          )
 
           exams = json.loads(text)
 
-          if not isinstance(exams, list) or len(exams) < 5:
+          if not isinstance(exams, list):
               raise Exception("Invalid exam data received")
+
+          if len(exams) < 5:
+              raise Exception("Too few exams received")
 
           required = [
               "id",
@@ -126,24 +165,21 @@ jobs:
           ]
 
           for exam in exams:
+              if not isinstance(exam, dict):
+                  raise Exception("Invalid exam object")
+
               for field in required:
                   if field not in exam:
-                      raise Exception(f"Missing field: {field}")
+                      raise Exception(
+                          f"Missing field: {field}"
+                      )
 
-          with open("exam-data.json", "w", encoding="utf-8") as f:
-              json.dump(exams, f, ensure_ascii=False, indent=2)
-
-          print(f"Updated {len(exams)} exams")
-
-          PY
-
-      - name: Commit updated exam data
-        run: |
-          git config user.name "Nexite Career Lab"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add exam-data.json
-
-          git diff --cached --quiet || git commit -m "Auto update exam data"
-
-          git push
+          with open(
+              "exam-data.json",
+              "w",
+              encoding="utf-8"
+          ) as f:
+              json.dump(
+                  exams,
+                  f,
+                  ensure
