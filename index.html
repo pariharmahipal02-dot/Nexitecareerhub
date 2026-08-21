@@ -1,903 +1,2046 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexite Career Lab | Smart Career Discovery</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
-                    colors: { brand: { 50: '#eef2ff', 500: '#6366f1', 600: '#4f46e5', 900: '#0f172a', 950: '#020617' } },
-                    animation: { 'float': 'float 6s ease-in-out infinite', 'fade-in': 'fadeIn 0.5s ease-out forwards' },
-                    keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
-                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
-                    }
-                }
-            }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Nexite Career Lab — Smart Career Discovery</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config={
+  theme:{
+    extend:{
+      fontFamily:{
+        sans:['Plus Jakarta Sans','sans-serif']
+      },
+      colors:{
+        ncl:{
+          blue:'#2563eb',
+          violet:'#7c3aed',
+          ink:'#0f172a',
+          muted:'#64748b',
+          soft:'#f8fafc'
         }
-    </script>
+      },
+      boxShadow:{
+        soft:'0 20px 60px rgba(15,23,42,.10)',
+        card:'0 10px 35px rgba(37,99,235,.10)'
+      }
+    }
+  }
+}
+</script>
 
-    <style>
-        body { background-color: #020617; color: #f8fafc; overflow-x: hidden; }
-        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .glass-card { background: linear-gradient(145deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.9) 100%); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-        .text-gradient { background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .mesh-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background-image: radial-gradient(at 0% 0%, rgba(79,70,229,0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(124,58,237,0.15) 0px, transparent 50%); }
-        .view-section { display: none; opacity: 0; transition: opacity 0.4s ease; }
-        .view-section.active { display: block; opacity: 1; animation: fadeIn 0.4s ease forwards; }
-        .step-hidden { display: none; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15,23,42,0.5); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
-    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyA2y6Ty0Iq2jFjbeGKaqqUMyLW0NZwKLIA",
-            authDomain: "nexite-career-lab.firebaseapp.com",
-            projectId: "nexite-career-lab",
-            storageBucket: "nexite-career-lab.firebasestorage.app",
-            messagingSenderId: "341950730543",
-            appId: "1:341950730543:web:88d3b101af0351b53cd1da"
-        };
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        
-        window.NCL = {
-            auth: auth,
-            provider: new GoogleAuthProvider(),
-            user: null,
+<style>
 
-            navigate: (viewId) => {
-                document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-                document.getElementById(viewId).classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                document.getElementById('mobile-menu').classList.add('hidden');
-            },
+html{
+  scroll-behavior:smooth
+}
 
-            login: async () => {
-                try {
-                    await signInWithPopup(auth, window.NCL.provider);
-                } catch(e) {
-                    console.error(e);
-                }
-            },
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:#f8fafc;
+  color:#0f172a;
+  overflow-x:hidden
+}
 
-            logout: () => {
-                signOut(auth);
-                window.NCL.navigate('view-home');
-            }
-        };
+*{
+  box-sizing:border-box
+}
 
-        onAuthStateChanged(auth, (user) => {
-            window.NCL.user = user;
-            const authAreas = document.querySelectorAll('.auth-container');
+.mesh{
+  background:
+  radial-gradient(circle at 8% 8%,rgba(37,99,235,.12),transparent 28%),
+  radial-gradient(circle at 92% 12%,rgba(124,58,237,.10),transparent 25%),
+  radial-gradient(circle at 70% 90%,rgba(14,165,233,.08),transparent 28%)
+}
 
-            authAreas.forEach(area => {
-                if(user) {
-                    area.innerHTML = `
-                        <div class="flex items-center gap-3 bg-brand-900/50 border border-brand-500/30 px-3 py-1.5 rounded-full cursor-pointer hover:bg-brand-900 transition" onclick="window.NCL.navigate('view-dashboard')">
-                            <img src="${user.photoURL}" class="w-8 h-8 rounded-full border border-brand-500">
-                            <span class="text-sm font-semibold truncate max-w-[100px]">${user.displayName.split(' ')[0]}</span>
-                        </div>
-                    `;
-                } else {
-                    area.innerHTML = `
-                        <button onclick="window.NCL.login()" class="bg-brand-600 text-white px-6 py-2 rounded-full font-bold hover:bg-brand-500 transition shadow-[0_0_15px_rgba(79,70,229,0.4)]">
-                            Login
-                        </button>
-                    `;
-                }
-            });
-        });
+.glass{
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(148,163,184,.20)
+}
 
-        let currentStep = 1;
+.card{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  box-shadow:0 12px 35px rgba(15,23,42,.06)
+}
 
-        window.nextStep = (step) => {
-            document.querySelectorAll('.form-step').forEach(el => el.classList.add('step-hidden'));
-            document.getElementById(`step-${step}`).classList.remove('step-hidden');
-            document.getElementById('progress-bar').style.width = `${(step/3)*100}%`;
+.gradient{
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent
+}
 
-            if(step === 3) processEligibility();
-        };
+.btn{
+  transition:.25s ease
+}
 
-        const mockDB = [
-            {
-                id: 1,
-                name: "SSC CHSL",
-                type: "Government",
-                edu: "12th",
-                minAge: 18,
-                maxAge: 27,
-                status: "Active",
-                match: "High"
-            },
-            {
-                id: 2,
-                name: "Air Force Agniveer Vayu",
-                type: "Defence",
-                edu: "12th",
-                minAge: 17.5,
-                maxAge: 21,
-                status: "Upcoming",
-                match: "High"
-            },
-            {
-                id: 3,
-                name: "Rajasthan LDC Phase-II",
-                type: "State",
-                edu: "12th",
-                minAge: 18,
-                maxAge: 40,
-                status: "Closing Soon",
-                match: "Medium"
-            },
-            {
-                id: 4,
-                name: "SSC CGL",
-                type: "Government",
-                edu: "Graduation",
-                minAge: 18,
-                maxAge: 32,
-                status: "Active",
-                match: "Eligible"
-            }
-        ];
+.btn:hover{
+  transform:translateY(-2px)
+}
 
-        function processEligibility() {
-            const dob = document.getElementById('e-dob').value;
-            const edu = document.getElementById('e-edu').value;
-            const state = document.getElementById('e-state').value;
-            
-            if(!dob) {
-                alert("DOB is required");
-                window.nextStep(1);
-                return;
-            }
+.btn:active{
+  transform:translateY(0) scale(.98)
+}
 
-            const birthDate = new Date(dob);
-            const today = new Date();
+.float{
+  animation:float 5s ease-in-out infinite
+}
 
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
+@keyframes float{
+  50%{
+    transform:translateY(-12px)
+  }
+}
 
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .7s ease,transform .7s ease
+}
 
-            document.getElementById('res-summary').innerHTML = `
-                <div class="flex justify-between items-center text-sm mb-2">
-                    <span class="text-slate-400">Calculated Age</span>
-                    <span class="font-bold text-white">${age} Years</span>
-                </div>
+.reveal.show{
+  opacity:1;
+  transform:none
+}
 
-                <div class="flex justify-between items-center text-sm mb-2">
-                    <span class="text-slate-400">Qualification</span>
-                    <span class="font-bold text-white">${edu}</span>
-                </div>
+.hero-grid{
+  background-image:
+  linear-gradient(rgba(148,163,184,.08) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(148,163,184,.08) 1px,transparent 1px);
+  background-size:42px 42px
+}
 
-                <div class="flex justify-between items-center text-sm">
-                    <span class="text-slate-400">State</span>
-                    <span class="font-bold text-white">${state}</span>
-                </div>
-            `;
+.ring{
+  box-shadow:
+  0 0 0 12px rgba(37,99,235,.06),
+  0 0 0 24px rgba(124,58,237,.04)
+}
 
-            const results = mockDB.filter(ex => {
-                if(edu === "10th" && ex.edu !== "10th") return false;
-                if(edu === "12th" && ex.edu === "Graduation") return false;
+.toast{
+  animation:toast .3s ease
+}
 
-                return age >= Math.floor(ex.minAge) && age <= ex.maxAge;
-            });
+@keyframes toast{
+  from{
+    opacity:0;
+    transform:translateY(10px)
+  }
+  to{
+    opacity:1;
+    transform:none
+  }
+}
 
-            const grid = document.getElementById('res-grid');
-            grid.innerHTML = '';
-            
-            if(results.length === 0) {
+.mobile-open{
+  max-height:500px!important;
+  opacity:1!important
+}
 
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12">
-                        <i class="fa-solid fa-ghost text-4xl text-slate-600 mb-4"></i>
-                        <p class="text-slate-400">
-                            No immediate matches found for your profile.
-                        </p>
-                    </div>
-                `;
+.modal{
+  opacity:0;
+  pointer-events:none;
+  transition:.2s
+}
 
-            } else {
+.modal.open{
+  opacity:1;
+  pointer-events:auto
+}
 
-                results.forEach(ex => {
+.modal-panel{
+  transform:translateY(15px) scale(.98);
+  transition:.25s
+}
 
-                    grid.innerHTML += `
-                        <div class="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:border-brand-500 transition group cursor-pointer">
+.modal.open .modal-panel{
+  transform:none
+}
 
-                            <div class="flex justify-between items-start mb-4">
+input,
+select{
+  outline:none
+}
 
-                                <span class="text-xs font-bold px-2 py-1 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">
-                                    ${ex.match} Match
-                                </span>
+input:focus,
+select:focus{
+  box-shadow:0 0 0 4px rgba(37,99,235,.10);
+  border-color:#60a5fa!important
+}
 
-                                <i class="fa-regular fa-bookmark text-slate-500 hover:text-white"></i>
+.tool-card{
+  transition:.3s
+}
 
-                            </div>
+.tool-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 18px 45px rgba(15,23,42,.10)
+}
 
-                            <h4 class="text-xl font-bold mb-1 group-hover:text-brand-400 transition">
-                                ${ex.name}
-                            </h4>
+@media(prefers-reduced-motion:reduce){
 
-                            <p class="text-sm text-slate-400 mb-4">
-                                ${ex.type} Sector
-                            </p>
+  *,
+  *:before,
+  *:after{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important
+  }
 
-                            <div class="space-y-2 text-sm">
+}
 
-                                <div class="flex justify-between">
-                                    <span class="text-slate-500">Age Limit</span>
-                                    <span class="font-medium">
-                                        ${ex.minAge} - ${ex.maxAge}
-                                    </span>
-                                </div>
-
-                                <div class="flex justify-between">
-                                    <span class="text-slate-500">Qualification</span>
-                                    <span class="font-medium">
-                                        ${ex.edu}
-                                    </span>
-                                </div>
-
-                            </div>
-
-                            <button class="w-full mt-6 py-2 rounded-lg bg-slate-700/50 text-white font-semibold group-hover:bg-brand-600 transition">
-                                View Details
-                            </button>
-
-                        </div>
-                    `;
-                });
-            }
-        }
-    </script>
+</style>
 </head>
 
-<body class="custom-scrollbar">
+<body class="mesh">
 
-    <div class="mesh-bg"></div>
+<!-- ================= NAVBAR ================= -->
 
-    <!-- Sticky Navbar -->
+<header class="fixed top-0 left-0 right-0 z-50">
 
-    <nav class="fixed w-full z-50 glass border-b-0">
+<nav class="glass mx-auto mt-3 max-w-7xl rounded-2xl px-4 sm:px-6 h-16 flex items-center justify-between shadow-sm">
 
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<a href="#home" class="flex items-center gap-3">
 
-            <div class="flex items-center gap-3 cursor-pointer" onclick="window.NCL.navigate('view-home')">
+<img
+id="navLogo"
+class="w-10 h-10 rounded-xl object-contain bg-white"
+alt="NCL logo"
+>
 
-                <!-- LOGO: 11318.png -->
+<div class="leading-tight">
 
-                <img
-                    src="11318.png"
-                    alt="Nexite Career Lab Logo"
-                    class="h-10 w-10 object-contain rounded-lg"
-                >
+<div class="font-extrabold tracking-tight">
+NEXITE
+</div>
 
-                <span class="font-extrabold tracking-tight text-xl">
-                    NCL
-                </span>
+<div class="text-[10px] tracking-[.25em] text-slate-500">
+CAREER LAB
+</div>
 
-            </div>
+</div>
 
-            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-300">
+</a>
 
-                <button onclick="window.NCL.navigate('view-home')" class="hover:text-white transition">
-                    Home
-                </button>
 
-                <button onclick="window.NCL.navigate('view-eligibility')" class="hover:text-white transition">
-                    Eligibility Tool
-                </button>
+<div class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
 
-                <button onclick="window.NCL.navigate('view-tools')" class="hover:text-white transition">
-                    Student Tools
-                </button>
+<a class="hover:text-blue-600" href="#home">
+Home
+</a>
 
-                <button onclick="window.NCL.navigate('view-about')" class="hover:text-white transition">
-                    About
-                </button>
+<a class="hover:text-blue-600" href="#eligibility">
+Eligibility
+</a>
 
-            </div>
+<a class="hover:text-blue-600" href="#exams">
+Exams
+</a>
 
-            <div class="hidden md:block auth-container"></div>
+<a class="hover:text-blue-600" href="#tools">
+Tools
+</a>
 
-            <button
-                class="md:hidden text-2xl text-slate-300"
-                onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"
-            >
-                <i class="fa-solid fa-bars"></i>
-            </button>
+<a class="hover:text-blue-600" href="#about">
+About
+</a>
 
+</div>
+
+
+<div class="flex items-center gap-2">
+
+<button
+id="loginBtn"
+class="btn hidden sm:inline-flex px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm">
+Login / Sign Up
+</button>
+
+<button
+id="profileBtn"
+class="hidden items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition text-sm font-bold cursor-pointer">
+</button>
+
+<button
+id="menuBtn"
+class="lg:hidden w-10 h-10 rounded-xl border border-slate-200 bg-white">
+<i class="fa-solid fa-bars"></i>
+</button>
+
+</div>
+
+</nav>
+
+
+<div
+id="mobileMenu"
+class="lg:hidden max-w-7xl mx-auto mt-2 overflow-hidden max-h-0 opacity-0 transition-all duration-300 glass rounded-2xl p-4">
+
+<div class="grid gap-2 font-semibold text-slate-700">
+
+<a href="#home" class="p-3 rounded-xl hover:bg-white">
+Home
+</a>
+
+<a href="#eligibility" class="p-3 rounded-xl hover:bg-white">
+Eligibility
+</a>
+
+<a href="#exams" class="p-3 rounded-xl hover:bg-white">
+Exams
+</a>
+
+<a href="#tools" class="p-3 rounded-xl hover:bg-white">
+Tools
+</a>
+
+<a href="#about" class="p-3 rounded-xl hover:bg-white">
+About
+</a>
+
+<button
+id="mobileLogin"
+class="text-left p-3 rounded-xl hover:bg-white">
+Login / Sign Up
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+
+<main id="home" class="pt-28">
+
+<!-- ================= HERO ================= -->
+
+<section class="hero-grid relative overflow-hidden">
+
+<div class="max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-24 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
+
+
+<div class="reveal">
+
+<div class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-extrabold tracking-wide">
+
+<span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+
+SMART CAREER DISCOVERY
+
+</div>
+
+
+<h1 class="mt-6 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
+
+Know Your
+
+<span class="gradient">
+Eligibility.
+</span>
+
+<br>
+
+Discover Your Path.
+
+</h1>
+
+
+<p class="mt-6 text-lg text-slate-600 max-w-xl leading-8">
+
+Check your age, state and qualification to discover relevant exam opportunities — then use practical student tools in one place.
+
+</p>
+
+
+<div class="mt-8 flex flex-col sm:flex-row gap-3">
+
+<a
+href="#eligibility"
+class="btn inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-slate-900 text-white font-extrabold shadow-soft">
+
+Check Eligibility
+
+<i class="fa-solid fa-arrow-right"></i>
+
+</a>
+
+
+<a
+href="#tools"
+class="btn inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-white border border-slate-200 font-extrabold text-slate-800">
+
+Explore Tools
+
+</a>
+
+</div>
+
+
+<div class="mt-8 flex flex-wrap gap-4 text-sm font-semibold text-slate-500">
+
+<span>✓ Personalized</span>
+
+<span>✓ Mobile Friendly</span>
+
+<span>✓ Student First</span>
+
+</div>
+
+</div>
+
+
+<div class="relative reveal">
+
+<div class="absolute -inset-8 bg-gradient-to-br from-blue-200/40 to-violet-200/40 blur-3xl"></div>
+
+
+<div class="relative card rounded-[2rem] p-5 sm:p-7 ring">
+
+
+<div class="flex items-center justify-between">
+
+<div>
+
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">
+Profile Match
+</p>
+
+<h3 class="text-xl font-extrabold mt-1">
+Your opportunity radar
+</h3>
+
+</div>
+
+
+<div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center">
+
+<i class="fa-solid fa-bolt"></i>
+
+</div>
+
+</div>
+
+
+<div class="mt-6 grid grid-cols-3 gap-3">
+
+<div class="bg-slate-50 rounded-2xl p-4">
+
+<p class="text-xs text-slate-400">
+Age
+</p>
+
+<b>
+20 yrs
+</b>
+
+</div>
+
+
+<div class="bg-slate-50 rounded-2xl p-4">
+
+<p class="text-xs text-slate-400">
+State
+</p>
+
+<b>
+Rajasthan
+</b>
+
+</div>
+
+
+<div class="bg-slate-50 rounded-2xl p-4">
+
+<p class="text-xs text-slate-400">
+Edu.
+</p>
+
+<b>
+12th
+</b>
+
+</div>
+
+</div>
+
+
+<div class="mt-4 space-y-3">
+
+
+<div class="flex items-center gap-3 p-4 rounded-2xl bg-blue-50 border border-blue-100 float">
+
+<div class="w-10 h-10 rounded-xl bg-white text-blue-600 grid place-items-center">
+
+<i class="fa-solid fa-check"></i>
+
+</div>
+
+<div class="flex-1">
+
+<b class="block">
+SSC CHSL
+</b>
+
+<span class="text-xs text-slate-500">
+Potential match
+</span>
+
+</div>
+
+<strong class="text-blue-600">
+92%
+</strong>
+
+</div>
+
+
+<div class="flex items-center gap-3 p-4 rounded-2xl bg-violet-50 border border-violet-100">
+
+<div class="w-10 h-10 rounded-xl bg-white text-violet-600 grid place-items-center">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+</div>
+
+<div class="flex-1">
+
+<b class="block">
+Defence Opportunity
+</b>
+
+<span class="text-xs text-slate-500">
+Profile based
+</span>
+
+</div>
+
+<strong class="text-violet-600">
+87%
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="mt-4 flex items-center justify-between p-4 rounded-2xl bg-slate-900 text-white">
+
+<span class="text-sm font-bold">
+Opportunities found
+</span>
+
+<span class="text-2xl font-extrabold">
+12+
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= QUICK FEATURES ================= -->
+
+<section class="max-w-7xl mx-auto px-5 sm:px-6 -mt-5 relative z-10">
+
+<div class="card rounded-2xl p-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+
+
+<div class="p-4 rounded-xl bg-slate-50">
+
+<i class="fa-solid fa-user-check text-blue-600"></i>
+
+<b class="block mt-2">
+Profile Match
+</b>
+
+<span class="text-xs text-slate-500">
+DOB + state + education
+</span>
+
+</div>
+
+
+<div class="p-4 rounded-xl bg-slate-50">
+
+<i class="fa-solid fa-calendar-check text-violet-600"></i>
+
+<b class="block mt-2">
+Important Dates
+</b>
+
+<span class="text-xs text-slate-500">
+Track deadlines
+</span>
+
+</div>
+
+
+<div class="p-4 rounded-xl bg-slate-50">
+
+<i class="fa-solid fa-calculator text-emerald-600"></i>
+
+<b class="block mt-2">
+Student Tools
+</b>
+
+<span class="text-xs text-slate-500">
+Useful daily utilities
+</span>
+
+</div>
+
+
+<div class="p-4 rounded-xl bg-slate-50">
+
+<i class="fa-solid fa-bookmark text-amber-600"></i>
+
+<b class="block mt-2">
+Save Exams
+</b>
+
+<span class="text-xs text-slate-500">
+Keep opportunities handy
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ELIGIBILITY ================= -->
+
+<section
+id="eligibility"
+class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
+
+<div class="text-center max-w-2xl mx-auto reveal">
+
+<span class="text-blue-600 font-extrabold text-sm">
+01 / ELIGIBILITY ENGINE
+</span>
+
+<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight">
+Find what you may qualify for.
+</h2>
+
+<p class="mt-4 text-slate-600">
+Enter a few details. Results are calculated from the rules available in this version.
+</p>
+
+</div>
+
+
+<div class="mt-10 max-w-5xl mx-auto card rounded-[2rem] p-5 sm:p-8 reveal">
+
+
+<!-- progress -->
+
+<div class="flex items-center gap-3 mb-8">
+
+<div
+id="step1Dot"
+class="w-9 h-9 rounded-full bg-slate-900 text-white grid place-items-center text-sm font-bold">
+1
+</div>
+
+<div
+id="progress"
+class="h-1 flex-1 bg-blue-600 rounded-full">
+</div>
+
+<div
+id="step2Dot"
+class="w-9 h-9 rounded-full bg-slate-100 text-slate-400 grid place-items-center text-sm font-bold">
+2
+</div>
+
+<div
+id="progress2"
+class="h-1 flex-1 bg-slate-200 rounded-full">
+</div>
+
+<div
+id="step3Dot"
+class="w-9 h-9 rounded-full bg-slate-100 text-slate-400 grid place-items-center text-sm font-bold">
+3
+</div>
+
+</div>
+
+
+<!-- STEP 1 -->
+
+<div id="eligStep1">
+
+<h3 class="text-2xl font-extrabold">
+Basic Details
+</h3>
+
+<p class="text-slate-500 mt-1">
+Tell us about yourself.
+</p>
+
+
+<div class="grid md:grid-cols-2 gap-5 mt-7">
+
+
+<div>
+
+<label class="block text-sm font-bold mb-2">
+Date of Birth
+</label>
+
+<input
+id="dob"
+type="date"
+class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white">
+
+</div>
+
+
+<div>
+
+<label class="block text-sm font-bold mb-2">
+State
+</label>
+
+<select
+id="state"
+class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white">
+</select>
+
+</div>
+
+
+<div>
+
+<label class="block text-sm font-bold mb-2">
+Category
+</label>
+
+<select
+id="category"
+class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white">
+
+<option>General / UR</option>
+<option>OBC</option>
+<option>SC</option>
+<option>ST</option>
+<option>EWS</option>
+
+</select>
+
+</div>
+
+
+</div>
+
+
+<button
+id="nextEligibility"
+class="btn mt-7 w-full py-4 rounded-xl bg-slate-900 text-white font-extrabold">
+
+Continue
+
+<i class="fa-solid fa-arrow-right ml-2"></i>
+
+</button>
+
+</div>
+
+
+<!-- STEP 2 -->
+
+<div
+id="eligStep2"
+class="hidden">
+
+<h3 class="text-2xl font-extrabold">
+Academic Profile
+</h3>
+
+<p class="text-slate-500 mt-1">
+Select your highest qualification.
+</p>
+
+
+<div
+id="eduChoices"
+class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
+</div>
+
+
+<div class="flex gap-3 mt-7">
+
+<button
+id="backEligibility"
+class="w-1/3 py-4 rounded-xl bg-slate-100 font-bold">
+
+Back
+
+</button>
+
+
+<button
+id="analyzeEligibility"
+class="w-2/3 py-4 rounded-xl bg-slate-900 text-white font-extrabold">
+
+Analyze Profile
+
+<i class="fa-solid fa-wand-magic-sparkles ml-2"></i>
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- STEP 3 -->
+
+<div
+id="eligStep3"
+class="hidden">
+
+<div class="grid lg:grid-cols-3 gap-6">
+
+
+<div>
+
+<div class="bg-slate-50 rounded-2xl p-6">
+
+<h4 class="text-xs uppercase tracking-widest font-extrabold text-slate-400">
+Your Profile
+</h4>
+
+<div
+id="summary"
+class="mt-5 space-y-4">
+</div>
+
+<button
+id="editProfile"
+class="mt-6 text-blue-600 font-bold text-sm">
+Edit Profile
+</button>
+
+</div>
+
+</div>
+
+
+<div class="lg:col-span-2">
+
+<div class="flex justify-between items-center mb-4">
+
+<div>
+
+<h3 class="text-xl font-extrabold">
+Potential Matches
+</h3>
+
+<p
+id="matchCount"
+class="text-sm text-slate-500">
+</p>
+
+</div>
+
+</div>
+
+
+<div
+id="resultGrid"
+class="grid sm:grid-cols-2 gap-4">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= EXAMS ================= -->
+
+<section
+id="exams"
+class="bg-white border-y border-slate-200">
+
+<div class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
+
+<div class="text-center reveal">
+
+<span class="text-violet-600 font-extrabold text-sm">
+02 / EXAM DIRECTORY
+</span>
+
+<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold">
+Explore Opportunities
+</h2>
+
+<p class="mt-4 text-slate-600">
+Search and filter the available exam catalogue.
+</p>
+
+</div>
+
+
+<div class="mt-10 flex flex-col lg:flex-row gap-4">
+
+<div class="relative flex-1">
+
+<i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+<input
+id="examSearch"
+placeholder="Search SSC, Railway, Defence, Banking..."
+class="w-full border border-slate-200 rounded-xl py-4 pl-11 pr-4 bg-white">
+
+</div>
+
+</div>
+
+
+<div
+id="categoryChips"
+class="mt-5 flex gap-2 overflow-x-auto pb-2">
+</div>
+
+
+<div
+id="examGrid"
+class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-7">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= TOOLS ================= -->
+
+<section
+id="tools"
+class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
+
+<div class="text-center reveal">
+
+<span class="text-emerald-600 font-extrabold text-sm">
+03 / STUDENT TOOLS
+</span>
+
+<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold">
+Useful Tools For Students
+</h2>
+
+<p class="mt-4 text-slate-600">
+Quick calculations without leaving Nexite Career Lab.
+</p>
+
+</div>
+
+
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+
+
+<!-- AGE -->
+
+<div class="tool-card card rounded-2xl p-6">
+
+<div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 grid place-items-center">
+
+<i class="fa-solid fa-cake-candles"></i>
+
+</div>
+
+<h3 class="font-extrabold text-lg mt-5">
+Age Calculator
+</h3>
+
+<p class="text-sm text-slate-500 mt-2">
+Calculate exact age.
+</p>
+
+<input
+id="ageDob"
+type="date"
+class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+
+<button
+id="ageBtn"
+class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
+
+Calculate
+
+</button>
+
+<div
+id="ageOut"
+class="mt-4 text-center font-bold text-blue-600">
+</div>
+
+</div>
+
+
+<!-- PERCENTAGE -->
+
+<div class="tool-card card rounded-2xl p-6">
+
+<div class="w-12 h-12 rounded-xl bg-violet-50 text-violet-600 grid place-items-center">
+
+<i class="fa-solid fa-percent"></i>
+
+</div>
+
+<h3 class="font-extrabold text-lg mt-5">
+Percentage Calculator
+</h3>
+
+<input
+id="marks"
+type="number"
+placeholder="Obtained marks"
+class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+
+<input
+id="total"
+type="number"
+placeholder="Total marks"
+class="mt-3 w-full border border-slate-200 rounded-xl p-3">
+
+<button
+id="pctBtn"
+class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
+
+Calculate
+
+</button>
+
+<div
+id="pctOut"
+class="mt-4 text-center font-bold text-violet-600">
+</div>
+
+</div>
+
+
+<!-- CGPA -->
+
+<div class="tool-card card rounded-2xl p-6">
+
+<div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 grid place-items-center">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+</div>
+
+<h3 class="font-extrabold text-lg mt-5">
+CGPA Converter
+</h3>
+
+<input
+id="cgpa"
+type="number"
+step="0.01"
+placeholder="CGPA 0–10"
+class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+
+<button
+id="cgpaBtn"
+class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
+
+Convert
+
+</button>
+
+<div
+id="cgpaOut"
+class="mt-4 text-center font-bold text-emerald-600">
+</div>
+
+</div>
+
+
+<!-- DATE -->
+
+<div class="tool-card card rounded-2xl p-6">
+
+<div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 grid place-items-center">
+
+<i class="fa-solid fa-calendar-days"></i>
+
+</div>
+
+<h3 class="font-extrabold text-lg mt-5">
+Date Difference
+</h3>
+
+<input
+id="dateA"
+type="date"
+class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+
+<input
+id="dateB"
+type="date"
+class="mt-3 w-full border border-slate-200 rounded-xl p-3">
+
+<button
+id="dateBtn"
+class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
+
+Calculate
+
+</button>
+
+<div
+id="dateOut"
+class="mt-4 text-center font-bold text-amber-600">
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= MAHIEY AI AD ================= -->
+
+<section class="max-w-7xl mx-auto px-5 sm:px-6 pb-10">
+
+<div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-6 sm:p-8">
+
+<div class="absolute -right-20 -top-20 w-64 h-64 bg-blue-600/30 blur-3xl"></div>
+
+<div class="relative flex flex-col md:flex-row items-center justify-between gap-6">
+
+<div>
+
+<span class="text-xs font-bold text-blue-300 uppercase tracking-widest">
+Recommended
+</span>
+
+<h3 class="text-2xl sm:text-3xl font-extrabold mt-2">
+Try Mahiey AI
+</h3>
+
+<p class="text-slate-300 mt-2 max-w-xl">
+AI-powered photo tools for background removal, image editing, compression and more.
+</p>
+
+</div>
+
+
+<a
+href="https://mahieyai.vercel.app/"
+target="_blank"
+rel="noopener"
+class="btn shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-slate-900 font-extrabold">
+
+Open Mahiey AI
+
+<i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section
+id="about"
+class="bg-slate-900 text-white">
+
+<div class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
+
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+
+
+<div class="reveal">
+
+<span class="text-blue-400 font-extrabold text-sm">
+04 / NEXITE CAREER LAB
+</span>
+
+<h2 class="mt-4 text-3xl sm:text-5xl font-extrabold">
+Built for students.
+<br>
+Designed for clarity.
+</h2>
+
+<p class="mt-6 text-slate-300 leading-8 max-w-xl">
+
+Nexite Career Lab is designed to make career discovery simpler by bringing eligibility checks, exam discovery and useful student utilities together in one place.
+
+</p>
+
+
+<div class="mt-8 flex flex-wrap gap-3">
+
+<a
+href="mailto:pariharmahipal02@gmail.com"
+class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20">
+
+<i class="fa-solid fa-envelope mr-2"></i>
+Email
+
+</a>
+
+
+<a
+href="tel:+919257184454"
+class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20">
+
+<i class="fa-solid fa-phone mr-2"></i>
+Call
+
+</a>
+
+
+<a
+href="https://www.instagram.com/nexiteofficial/"
+target="_blank"
+class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20">
+
+<i class="fa-brands fa-instagram mr-2"></i>
+Instagram
+
+</a>
+
+</div>
+
+</div>
+
+
+<div class="reveal">
+
+<div class="relative max-w-md mx-auto">
+
+<div class="absolute -inset-5 bg-gradient-to-br from-blue-600/30 to-violet-600/30 blur-3xl"></div>
+
+
+<div class="relative bg-white/10 border border-white/10 rounded-[2rem] p-7 text-center">
+
+<img
+id="founderPhoto"
+class="w-40 h-40 rounded-full object-cover mx-auto border-4 border-white/20 shadow-2xl"
+alt="Founder">
+
+<h3 class="text-2xl font-extrabold mt-6">
+Mahipal Parihar
+</h3>
+
+<p class="text-blue-300 font-bold mt-1">
+Founder — Nexite Career Lab
+</p>
+
+<p class="text-slate-300 text-sm leading-7 mt-5">
+
+Building simple digital tools that help students make better career decisions.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-slate-950 text-slate-400">
+
+<div class="max-w-7xl mx-auto px-5 sm:px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
+
+<div class="flex items-center gap-3">
+  <img id="footerLogo" class="w-8 h-8 rounded-lg object-contain bg-white" alt="NCL Logo">
+  <span class="font-extrabold text-white text-base">Nexite Career Lab</span>
+</div>
+
+<div class="text-center md:text-left">
+  © 2026 Nexite Career Lab. All rights reserved.<br class="sm:hidden">
+  <span class="text-slate-500 mt-1 inline-block">Made with ❤️ by <a href="https://nexite-pi.vercel.app/" target="_blank" class="text-blue-400 font-bold hover:text-blue-300 transition">Nexite</a></span>
+</div>
+
+<div class="flex gap-5 font-semibold">
+
+<a
+href="https://nexite-pi.vercel.app/"
+target="_blank"
+class="hover:text-white transition">
+Nexite
+</a>
+
+<a
+href="https://mahieyai.vercel.app/"
+target="_blank"
+class="hover:text-white transition">
+Mahiey AI
+</a>
+
+</div>
+
+</div>
+
+</footer>
+
+</main>
+
+
+<!-- ================= LOGIN MODAL (UPDATED WITH VALIDATION) ================= -->
+
+<div
+id="loginModal"
+class="modal fixed inset-0 z-[100] bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-5">
+
+<div class="modal-panel bg-white rounded-3xl p-7 max-w-md w-full shadow-2xl relative">
+
+<button
+id="closeModal"
+class="absolute top-5 right-5 w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition text-slate-600 flex items-center justify-center">
+<i class="fa-solid fa-xmark"></i>
+</button>
+
+<div class="flex gap-6 border-b border-slate-200 pb-3 mb-6 pr-10">
+  <button id="tabLogin" class="text-lg font-extrabold text-blue-600 border-b-2 border-blue-600 pb-3 -mb-[13.5px] transition">Login</button>
+  <button id="tabSignup" class="text-lg font-extrabold text-slate-400 pb-3 -mb-[13.5px] hover:text-slate-600 transition">Sign Up</button>
+</div>
+
+<form id="authForm" class="space-y-4">
+  <div>
+    <label class="block text-sm font-bold mb-2 text-slate-700">Email Address</label>
+    <input type="email" id="authEmail" required placeholder="student@example.com" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white focus:border-blue-500 outline-none transition">
+  </div>
+  <div>
+    <label class="block text-sm font-bold mb-2 text-slate-700">Password</label>
+    <input type="password" id="authPassword" required placeholder="Min. 6 characters" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white focus:border-blue-500 outline-none transition">
+    <div id="passFeedback" class="hidden mt-1 transition-all"></div>
+    
+    <div class="text-right">
+      <button type="button" id="forgotPasswordBtn" class="text-xs text-blue-600 font-bold hover:underline mt-2 inline-block">Forgot Password?</button>
+    </div>
+  </div>
+  <button type="submit" id="authSubmit" class="btn mt-2 w-full py-4 rounded-xl bg-slate-900 text-white font-extrabold hover:bg-slate-800">
+    Login to account
+  </button>
+</form>
+
+<div class="mt-6 flex items-center gap-4">
+  <div class="h-px bg-slate-200 flex-1"></div>
+  <span class="text-xs text-slate-400 font-bold uppercase tracking-widest">Or</span>
+  <div class="h-px bg-slate-200 flex-1"></div>
+</div>
+
+<button
+id="googleLogin"
+class="btn mt-6 w-full py-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold flex items-center justify-center gap-3">
+<i class="fa-brands fa-google text-red-500"></i>
+Continue with Google
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= PROFILE DASHBOARD MODAL ================= -->
+
+<div id="dashboardModal" class="modal fixed inset-0 z-[100] bg-slate-950/50 backdrop-blur-sm flex justify-end">
+
+  <div id="dashPanel" class="bg-white w-full sm:w-[400px] h-full flex flex-col shadow-2xl transform translate-x-full transition-transform duration-300 ease-out">
+    
+    <div class="flex justify-between items-center p-6 border-b border-slate-200 shrink-0">
+       <h3 class="text-xl font-extrabold">My Dashboard</h3>
+       <button id="closeDashboard" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex justify-center items-center transition">
+         <i class="fa-solid fa-xmark"></i>
+       </button>
+    </div>
+    
+    <div class="p-6 pb-2 flex items-center gap-4 shrink-0">
+       <img id="dashPic" class="w-16 h-16 rounded-full object-cover border border-slate-200">
+       <div class="overflow-hidden">
+          <h4 id="dashName" class="font-extrabold text-lg truncate"></h4>
+          <p id="dashEmail" class="text-sm text-slate-500 truncate"></p>
+       </div>
+    </div>
+    
+    <div class="flex-1 overflow-y-auto p-6 pt-4">
+       <h5 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Your Saved Exams</h5>
+       <div id="dashSavedExams" class="space-y-3">
+         <!-- Saved Exams injected here via JS -->
+       </div>
+    </div>
+    
+    <div class="p-6 border-t border-slate-200 shrink-0 bg-slate-50">
+       <button id="logoutBtn" class="w-full py-3.5 rounded-xl bg-red-100 text-red-600 font-extrabold hover:bg-red-200 transition flex items-center justify-center gap-2">
+         <i class="fa-solid fa-arrow-right-from-bracket"></i>
+         Log Out
+       </button>
+    </div>
+    
+  </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+id="toast"
+class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-bold">
+</div>
+
+
+<!-- ================= FIREBASE ================= -->
+
+<script type="module">
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup,
+onAuthStateChanged,
+signOut,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail
+}
+from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import { 
+getFirestore, 
+doc, 
+setDoc, 
+getDoc,
+collection,
+getDocs
+} 
+from 
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+const firebaseConfig={
+apiKey:"AIzaSyA2y6Ty0Iq2jFjbeGKaqqUMyLW0NZwKLIA",
+authDomain:"nexite-career-lab.firebaseapp.com",
+projectId:"nexite-career-lab",
+storageBucket:"nexite-career-lab.firebasestorage.app",
+messagingSenderId:"341950730543",
+appId:"1:341950730543:web:88d3b101af0351b53cd1da"
+};
+
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const provider=new GoogleAuthProvider();
+const db=getFirestore(app);
+
+
+/* ================= BRAND ASSETS ================= */
+
+const LOGO="11318.png";
+const FOUNDER="11287.jpg";
+
+document.getElementById("navLogo").src=LOGO;
+document.getElementById("footerLogo").src=LOGO;
+document.getElementById("founderPhoto").src=FOUNDER;
+
+
+/* ================= ELEMENTS ================= */
+
+const state=document.getElementById("state");
+const category=document.getElementById("category");
+const dob=document.getElementById("dob");
+const eduChoices=document.getElementById("eduChoices");
+const eligStep1=document.getElementById("eligStep1");
+const eligStep2=document.getElementById("eligStep2");
+const eligStep3=document.getElementById("eligStep3");
+const progress=document.getElementById("progress");
+const progress2=document.getElementById("progress2");
+const step1Dot=document.getElementById("step1Dot");
+const step2Dot=document.getElementById("step2Dot");
+const step3Dot=document.getElementById("step3Dot");
+const nextEligibility=document.getElementById("nextEligibility");
+const backEligibility=document.getElementById("backEligibility");
+const analyzeEligibility=document.getElementById("analyzeEligibility");
+const editProfile=document.getElementById("editProfile");
+const summary=document.getElementById("summary");
+const resultGrid=document.getElementById("resultGrid");
+const matchCount=document.getElementById("matchCount");
+const examSearch=document.getElementById("examSearch");
+const examGrid=document.getElementById("examGrid");
+const categoryChips=document.getElementById("categoryChips");
+const ageDob=document.getElementById("ageDob");
+const ageOut=document.getElementById("ageOut");
+const ageBtn=document.getElementById("ageBtn");
+const marks=document.getElementById("marks");
+const total=document.getElementById("total");
+const pctBtn=document.getElementById("pctBtn");
+const pctOut=document.getElementById("pctOut");
+const cgpa=document.getElementById("cgpa");
+const cgpaBtn=document.getElementById("cgpaBtn");
+const cgpaOut=document.getElementById("cgpaOut");
+const dateA=document.getElementById("dateA");
+const dateB=document.getElementById("dateB");
+const dateBtn=document.getElementById("dateBtn");
+const dateOut=document.getElementById("dateOut");
+const toast=document.getElementById("toast");
+const loginBtn=document.getElementById("loginBtn");
+const profileBtn=document.getElementById("profileBtn");
+const mobileLogin=document.getElementById("mobileLogin");
+const loginModal=document.getElementById("loginModal");
+const closeModal=document.getElementById("closeModal");
+const googleLogin=document.getElementById("googleLogin");
+const menuBtn=document.getElementById("menuBtn");
+const mobileMenu=document.getElementById("mobileMenu");
+
+/* AUTH ELEMENTS */
+const tabLogin = document.getElementById("tabLogin");
+const tabSignup = document.getElementById("tabSignup");
+const authForm = document.getElementById("authForm");
+const authEmail = document.getElementById("authEmail");
+const authPassword = document.getElementById("authPassword");
+const authSubmit = document.getElementById("authSubmit");
+const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
+const passFeedback = document.getElementById("passFeedback");
+
+/* DASHBOARD ELEMENTS */
+const dashboardModal = document.getElementById("dashboardModal");
+const dashPanel = document.getElementById("dashPanel");
+const closeDashboard = document.getElementById("closeDashboard");
+const dashPic = document.getElementById("dashPic");
+const dashName = document.getElementById("dashName");
+const dashEmail = document.getElementById("dashEmail");
+const dashSavedExams = document.getElementById("dashSavedExams");
+const logoutBtn = document.getElementById("logoutBtn");
+
+/* ================= STATES ================= */
+
+const states=[
+"Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi", "Jammu & Kashmir", "Ladakh", "Chandigarh", "Puducherry"
+];
+
+state.innerHTML=states.map(x=>`<option>${x}</option>`).join("");
+
+
+/* ================= EXAM DATA (DEFAULT FALLBACK) ================= */
+// Notice ID is now string to support Firebase auto-generated IDs smoothly
+let exams=[
+{id:"1", name:"SSC CHSL", org:"Staff Selection Commission", cat:"Government", edu:"12th", min:18, max:27, status:"Reference", desc:"Combined Higher Secondary Level recruitment."},
+{id:"2", name:"SSC CGL", org:"Staff Selection Commission", cat:"Government", edu:"Graduation", min:18, max:32, status:"Reference", desc:"Combined Graduate Level recruitment."},
+{id:"3", name:"Air Force Agniveer Vayu", org:"Indian Air Force", cat:"Defence", edu:"12th", min:17.5, max:21, status:"Reference", desc:"Defence recruitment opportunity; verify current intake rules."},
+{id:"4", name:"RRB NTPC", org:"Railway Recruitment Boards", cat:"Railway", edu:"12th", min:18, max:33, status:"Reference", desc:"Non-Technical Popular Categories recruitment."},
+{id:"5", name:"UPSC Civil Services", org:"Union Public Service Commission", cat:"Civil Services", edu:"Graduation", min:21, max:32, status:"Reference", desc:"Civil Services Examination; verify category relaxations."},
+{id:"6", name:"IBPS PO", org:"Institute of Banking Personnel Selection", cat:"Banking", edu:"Graduation", min:20, max:30, status:"Reference", desc:"Probationary Officer recruitment; verify current notification."},
+{id:"7", name:"REET / Teacher Recruitment", org:"State Education Recruitment", cat:"Teaching", edu:"12th", min:18, max:40, status:"Reference", desc:"State-specific teacher opportunities vary by notification."},
+{id:"8", name:"State Police Recruitment", org:"State Recruitment Boards", cat:"Police", edu:"12th", min:18, max:28, status:"Reference", desc:"Rules vary by state and recruitment notification."}
+];
+
+const eduOrder=["10th", "12th", "Graduation", "Post Graduation"];
+let selectedEdu="12th";
+let selectedCategory="All";
+
+
+/* ================= FETCH DYNAMIC EXAMS FROM FIREBASE ================= */
+async function fetchDynamicExams() {
+  try {
+    const examsRef = collection(db, "exams");
+    const snap = await getDocs(examsRef);
+    if (!snap.empty) {
+      const cloudExams = [];
+      snap.forEach(doc => {
+        cloudExams.push({ id: doc.id, ...doc.data() });
+      });
+      exams = cloudExams; // Override with database data!
+      
+      // Re-initialize category chips
+      const chips=["All", ...new Set(exams.map(x=>x.cat))];
+      categoryChips.innerHTML=chips.map(c=>`
+      <button data-cat="${c}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${c}</button>
+      `).join("");
+      
+      document.querySelectorAll(".chip").forEach(button=>{
+        button.onclick=()=>{
+          selectedCategory=button.dataset.cat;
+          document.querySelectorAll(".chip").forEach(x=>{ x.classList.remove("bg-slate-900", "text-white"); });
+          button.classList.add("bg-slate-900", "text-white");
+          renderExams();
+        };
+      });
+      
+      // Default select "All"
+      document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
+      renderExams();
+    }
+  } catch(e) {
+    console.log("Using local default exams. Failed to fetch from Cloud:", e);
+  }
+}
+
+
+/* ================= EXAM RENDER ================= */
+
+function renderExams(){
+const q=examSearch.value.trim().toLowerCase();
+const list=exams.filter(e=>
+(selectedCategory==="All"||e.cat===selectedCategory) &&
+(!q||(`${e.name} ${e.org} ${e.cat}`).toLowerCase().includes(q))
+);
+
+examGrid.innerHTML=list.map(e=>`
+<article class="card rounded-2xl p-5 hover:border-blue-300 transition reveal show">
+<div class="flex justify-between gap-3">
+<span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${e.cat}</span>
+<button onclick="toggleSave('${e.id}')" class="saveBtn text-slate-400 hover:text-blue-600"><i class="fa-regular fa-bookmark"></i></button>
+</div>
+<h3 class="text-lg font-extrabold mt-4">${e.name}</h3>
+<p class="text-xs text-slate-500 mt-1">${e.org}</p>
+<p class="text-sm text-slate-600 mt-4">${e.desc}</p>
+<div class="grid grid-cols-2 gap-2 mt-4 text-xs">
+<div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Age</span><b>${e.min}–${e.max}</b></div>
+<div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Education</span><b>${e.edu}+</b></div>
+</div>
+<div class="mt-4 text-xs text-amber-700 bg-amber-50 rounded-xl p-3"><i class="fa-solid fa-circle-info mr-1"></i>Verify current notification before applying.</div>
+</article>
+`).join("") || `<div class="col-span-full text-center py-12 text-slate-500">No matching exams found.</div>`;
+
+updateSavedButtons();
+}
+
+window.renderExams=renderExams;
+examSearch.oninput=renderExams;
+
+
+/* ================= AGE ================= */
+
+function calculateAge(dateStr){
+const b=new Date(dateStr+"T00:00:00");
+const t=new Date();
+if(Number.isNaN(b.getTime()) || b>t) return null;
+let y=t.getFullYear()-b.getFullYear();
+let m=t.getMonth()-b.getMonth();
+let d=t.getDate()-b.getDate();
+if(d<0){ m--; d+=new Date(t.getFullYear(), t.getMonth(), 0).getDate(); }
+if(m<0){ y--; m+=12; }
+return { y, m, d };
+}
+
+
+/* ================= ESCAPE ================= */
+
+function escape(s){
+return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
+}
+
+
+/* ================= EDUCATION ================= */
+
+eduChoices.innerHTML=eduOrder.map(e=>`
+<button data-edu="${e}" class="eduBtn text-left card rounded-2xl p-5 hover:border-blue-400">
+<div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i class="fa-solid fa-graduation-cap"></i></div>
+<b class="block mt-4">${e}</b><span class="text-xs text-slate-500">Select</span>
+</button>
+`).join("");
+
+document.querySelectorAll(".eduBtn").forEach(button=>{
+button.onclick=()=>{
+selectedEdu=button.dataset.edu;
+document.querySelectorAll(".eduBtn").forEach(x=>{ x.classList.remove("border-blue-500", "ring-2", "ring-blue-100"); });
+button.classList.add("border-blue-500", "ring-2", "ring-blue-100");
+};
+});
+
+
+/* ================= STEPS ================= */
+
+function setStep(n){
+eligStep1.classList.toggle("hidden", n!==1);
+eligStep2.classList.toggle("hidden", n!==2);
+eligStep3.classList.toggle("hidden", n!==3);
+
+progress.style.width=n>=2?"100%":"33%";
+progress2.style.width=n>=3?"100%":"0%";
+
+[step1Dot,step2Dot,step3Dot].forEach((d,i)=>{
+d.classList.toggle("bg-slate-900", i<n);
+d.classList.toggle("text-white", i<n);
+d.classList.toggle("bg-slate-100", i>=n);
+d.classList.toggle("text-slate-400", i>=n);
+});
+}
+
+nextEligibility.onclick=()=>{
+if(!dob.value){ toastMsg("Please select your date of birth."); return; }
+if(!calculateAge(dob.value)){ toastMsg("Please enter a valid past date."); return; }
+setStep(2);
+};
+
+backEligibility.onclick=()=>setStep(1);
+editProfile.onclick=()=>setStep(1);
+
+
+/* ================= ELIGIBILITY ENGINE ================= */
+
+analyzeEligibility.onclick=()=>{
+const age=calculateAge(dob.value);
+const eduRank=eduOrder.indexOf(selectedEdu);
+
+summary.innerHTML=`
+<div><span class="text-xs text-slate-400">Age</span><b class="block">${age.y}y ${age.m}m ${age.d}d</b></div>
+<div><span class="text-xs text-slate-400">State</span><b class="block">${escape(state.value)}</b></div>
+<div><span class="text-xs text-slate-400">Category</span><b class="block">${escape(category.value)}</b></div>
+<div><span class="text-xs text-slate-400">Qualification</span><b class="block">${escape(selectedEdu)}</b></div>
+`;
+
+const rankOk=e=>{ return eduRank>=eduOrder.indexOf(e.edu); };
+const results=exams.filter(e=> age.y>=Math.floor(e.min) && age.y<=e.max && rankOk(e) );
+
+matchCount.textContent=`${results.length} potential matches based on the current reference rules`;
+
+resultGrid.innerHTML=results.map(e=>`
+<div class="rounded-2xl border border-slate-200 p-5 bg-white">
+<div class="flex justify-between"><span class="text-xs font-extrabold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">Potential Match</span><i class="fa-regular fa-bookmark text-slate-400"></i></div>
+<h4 class="font-extrabold text-lg mt-4">${e.name}</h4>
+<p class="text-xs text-slate-500">${e.org}</p>
+<div class="mt-4 text-sm space-y-2">
+<div class="flex justify-between"><span class="text-slate-400">Age</span><b>${e.min}–${e.max}</b></div>
+<div class="flex justify-between"><span class="text-slate-400">Education</span><b>${e.edu}+</b></div>
+</div>
+<button onclick="document.getElementById('exams').scrollIntoView({behavior:'smooth'});document.getElementById('examSearch').value='${escape(e.name)}';renderExams()" class="mt-4 w-full py-2.5 rounded-xl bg-slate-900 text-white font-bold text-sm">Find Exam <i class="fa-solid fa-arrow-right ml-1"></i></button>
+</div>
+`).join("") || `<div class="sm:col-span-2 p-8 rounded-2xl bg-slate-50 text-center text-slate-500">No close matches found. Try another qualification or review current official notifications.</div>`;
+
+setStep(3);
+};
+
+
+/* ================= TOOLS LOGIC ================= */
+ageBtn.onclick=()=>{
+const a=calculateAge(ageDob.value);
+ageOut.textContent=a?`${a.y} years, ${a.m} months, ${a.d} days`:"Enter a valid DOB.";
+};
+
+pctBtn.onclick=()=>{
+const a=+marks.value; const b=+total.value;
+pctOut.textContent=b>0&&a>=0?`${((a/b)*100).toFixed(2)}%`:"Enter valid marks.";
+};
+
+cgpaBtn.onclick=()=>{
+const c=+cgpa.value;
+cgpaOut.textContent=c>=0&&c<=10?`${(c*9.5).toFixed(2)}% (9.5× method)`:"Enter CGPA 0–10.";
+};
+
+dateBtn.onclick=()=>{
+const a=new Date(dateA.value); const b=new Date(dateB.value);
+dateOut.textContent=a.getTime()&&b.getTime()?`${Math.abs(Math.round((b-a)/86400000))} days`:"Select both dates.";
+};
+
+
+/* ================= TOAST ================= */
+function toastMsg(t){
+toast.textContent=t; toast.classList.remove("hidden"); toast.classList.add("toast");
+setTimeout(()=>{ toast.classList.add("hidden"); },2600);
+}
+
+
+/* ================= SAVE EXAMS (Local + Cloud Sync, String IDs) ================= */
+let saved=JSON.parse(localStorage.getItem("ncl_saved")||"[]").map(String);
+
+window.toggleSave = async id => {
+  id = String(id);
+  if (saved.includes(id)) { 
+    saved = saved.filter(x => x !== id); 
+  } else { 
+    saved.push(id); 
+  }
+  
+  // Save Locally First
+  localStorage.setItem("ncl_saved", JSON.stringify(saved));
+  updateSavedButtons();
+  
+  // Update dashboard if it's open
+  renderDashboardExams();
+  
+  // Sync to Cloud if logged in
+  const user = auth.currentUser;
+  if (user) {
+    try {
+      await setDoc(doc(db, "users", user.uid), { savedExams: saved }, { merge: true });
+      toastMsg(saved.includes(id) ? "Exam saved to Cloud ☁️" : "Exam removed from Cloud ☁️");
+    } catch(e) {
+      console.error(e);
+      toastMsg("Saved locally. Sync failed.");
+    }
+  } else {
+    toastMsg(saved.includes(id) ? "Saved locally. Login to sync!" : "Exam removed locally.");
+  }
+};
+
+function updateSavedButtons(){
+  document.querySelectorAll(".saveBtn").forEach(b=>{
+    const match = b.getAttribute("onclick").match(/toggleSave\(['"]?([^'"]+)['"]?\)/);
+    if(!match) return;
+    const id = match[1];
+    b.innerHTML=saved.includes(id)?'<i class="fa-solid fa-bookmark text-blue-600"></i>':'<i class="fa-regular fa-bookmark"></i>';
+  });
+}
+
+// Function to fetch and merge cloud data on login
+async function syncSavedExams(user) {
+  if (!user) return;
+  try {
+    const userRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(userRef);
+    let remoteSaved = [];
+    if (docSnap.exists() && docSnap.data().savedExams) {
+      remoteSaved = docSnap.data().savedExams.map(String);
+    }
+    // Merge Local and Cloud
+    saved = [...new Set([...saved, ...remoteSaved])];
+    localStorage.setItem("ncl_saved", JSON.stringify(saved));
+    updateSavedButtons();
+    renderDashboardExams();
+    // Push merged data back to Cloud
+    await setDoc(userRef, { savedExams: saved }, { merge: true });
+  } catch (err) {
+    console.error("Sync error: ", err);
+  }
+}
+
+
+/* ================= FIREBASE LOGIN (WITH VALIDATION) ================= */
+
+let isSignup = false;
+
+authPassword.addEventListener('input', (e) => {
+  if(!isSignup) { passFeedback.classList.add('hidden'); return; }
+  const val = e.target.value;
+  passFeedback.classList.remove('hidden');
+  
+  if (val.length === 0) {
+    passFeedback.classList.add('hidden');
+    authPassword.classList.remove('border-red-500', 'border-emerald-500');
+    authPassword.classList.add('border-slate-200');
+  } else if (val.length < 6) {
+    passFeedback.textContent = "Weak: Need at least 6 characters";
+    passFeedback.className = "text-[10px] font-bold mt-1 text-red-500";
+    authPassword.classList.add('border-red-500');
+    authPassword.classList.remove('border-slate-200', 'border-emerald-500');
+  } else {
+    passFeedback.textContent = "Looks good!";
+    passFeedback.className = "text-[10px] font-bold mt-1 text-emerald-500";
+    authPassword.classList.add('border-emerald-500');
+    authPassword.classList.remove('border-slate-200', 'border-red-500');
+  }
+});
+
+
+tabLogin.onclick = () => {
+  isSignup = false;
+  tabLogin.classList.add("text-blue-600", "border-b-2", "border-blue-600");
+  tabLogin.classList.remove("text-slate-400");
+  tabSignup.classList.remove("text-blue-600", "border-b-2", "border-blue-600");
+  tabSignup.classList.add("text-slate-400");
+  authSubmit.textContent = "Login to account";
+  forgotPasswordBtn.classList.remove('hidden');
+  passFeedback.classList.add('hidden');
+  authPassword.classList.remove('border-red-500', 'border-emerald-500');
+  authPassword.classList.add('border-slate-200');
+};
+
+tabSignup.onclick = () => {
+  isSignup = true;
+  tabSignup.classList.add("text-blue-600", "border-b-2", "border-blue-600");
+  tabSignup.classList.remove("text-slate-400");
+  tabLogin.classList.remove("text-blue-600", "border-b-2", "border-blue-600");
+  tabLogin.classList.add("text-slate-400");
+  authSubmit.textContent = "Create an account";
+  forgotPasswordBtn.classList.add('hidden');
+  authPassword.dispatchEvent(new Event('input'));
+};
+
+loginBtn.onclick=()=>{ loginModal.classList.add("open"); };
+mobileLogin.onclick=()=>{ mobileMenu.classList.remove("mobile-open"); loginModal.classList.add("open"); };
+closeModal.onclick=()=>{ loginModal.classList.remove("open"); };
+
+forgotPasswordBtn.onclick = async () => {
+  const email = authEmail.value.trim();
+  if(!email) { toastMsg("Please enter your email address first."); authEmail.focus(); return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    toastMsg("Password reset link sent to your email!");
+    loginModal.classList.remove("open");
+  } catch(err) { toastMsg(err.message || "Failed to send reset link."); }
+};
+
+authForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const email = authEmail.value; const pass = authPassword.value;
+  const originalText = authSubmit.textContent;
+  try {
+    authSubmit.textContent = "Processing..."; authSubmit.disabled = true;
+    if (isSignup) {
+      await createUserWithEmailAndPassword(auth, email, pass);
+      toastMsg("Account created successfully!");
+    } else {
+      await signInWithEmailAndPassword(auth, email, pass);
+      toastMsg("Logged in successfully!");
+    }
+    loginModal.classList.remove("open"); authForm.reset();
+  } catch (err) {
+    let msg = "An error occurred.";
+    if(err.code === 'auth/email-already-in-use') msg = "Email already registered. Try Login.";
+    if(err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') msg = "Invalid email or password.";
+    if(err.code === 'auth/weak-password') msg = "Password should be at least 6 characters.";
+    toastMsg(msg);
+  } finally {
+    authSubmit.textContent = originalText; authSubmit.disabled = false;
+  }
+};
+
+googleLogin.onclick=async()=>{
+  try{
+    await signInWithPopup(auth,provider);
+    loginModal.classList.remove("open");
+    toastMsg("Signed in successfully.");
+  }catch(e){ toastMsg(e?.message||"Login failed."); }
+};
+
+/* ================= DASHBOARD UI LOGIC ================= */
+
+function renderDashboardExams() {
+  const savedList = exams.filter(e => saved.includes(e.id));
+  if(savedList.length === 0) {
+    dashSavedExams.innerHTML = `<div class="text-slate-500 text-sm text-center py-6 bg-slate-50 rounded-xl border border-dashed border-slate-300">You haven't saved any exams yet.</div>`;
+  } else {
+    dashSavedExams.innerHTML = savedList.map(e => `
+      <div class="p-4 border border-slate-200 rounded-xl flex justify-between items-center bg-white hover:border-blue-200 transition group">
+        <div>
+          <h6 class="font-extrabold text-sm text-slate-900">${e.name}</h6>
+          <p class="text-xs text-slate-500 mt-0.5">${e.org}</p>
         </div>
-
-        <!-- Mobile Menu -->
-
-        <div
-            id="mobile-menu"
-            class="hidden md:hidden glass border-t border-white/10 absolute w-full left-0 p-4 space-y-4"
-        >
-
-            <button
-                onclick="window.NCL.navigate('view-home')"
-                class="block w-full text-left font-semibold text-slate-300"
-            >
-                Home
-            </button>
-
-            <button
-                onclick="window.NCL.navigate('view-eligibility')"
-                class="block w-full text-left font-semibold text-slate-300"
-            >
-                Eligibility Tool
-            </button>
-
-            <button
-                onclick="window.NCL.navigate('view-tools')"
-                class="block w-full text-left font-semibold text-slate-300"
-            >
-                Tools
-            </button>
-
-            <div class="auth-container pt-4 border-t border-slate-700"></div>
-
-        </div>
-
-    </nav>
-
-    <!-- VIEWS CONTAINER -->
-
-    <main class="pt-24 pb-12 min-h-screen max-w-7xl mx-auto px-4 sm:px-6">
-
-        <!-- VIEW: HOME -->
-
-        <section
-            id="view-home"
-            class="view-section active h-[80vh] flex flex-col justify-center items-center text-center"
-        >
-
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-900/50 border border-brand-500/30 text-brand-300 text-xs font-bold mb-8 animate-fade-in">
-
-                <span class="relative flex h-2 w-2">
-
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
-
-                </span>
-
-                Smart Career Discovery Engine
-
-            </div>
-
-            <h1
-                class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight max-w-4xl animate-fade-in"
-                style="animation-delay: 0.1s;"
-            >
-
-                Know Your <span class="text-gradient">Eligibility.</span>
-                <br>
-                Discover Your Path.
-
-            </h1>
-
-            <p
-                class="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 animate-fade-in"
-                style="animation-delay: 0.2s;"
-            >
-
-                Stop guessing. Enter your academic profile and instantly discover government exams, defence opportunities, and careers you qualify for today.
-
-            </p>
-
-            <div
-                class="flex flex-col sm:flex-row gap-4 animate-fade-in"
-                style="animation-delay: 0.3s;"
-            >
-
-                <button
-                    onclick="window.NCL.navigate('view-eligibility')"
-                    class="bg-brand-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-brand-500 transition shadow-[0_0_20px_rgba(79,70,229,0.5)] flex items-center justify-center gap-2"
-                >
-
-                    Check Eligibility
-
-                    <i class="fa-solid fa-arrow-right"></i>
-
-                </button>
-
-                <button
-                    onclick="window.NCL.navigate('view-tools')"
-                    class="bg-slate-800 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-slate-700 transition border border-slate-700"
-                >
-
-                    Explore Tools
-
-                </button>
-
-            </div>
-
-        </section>
-
-        <!-- VIEW: ELIGIBILITY ENGINE -->
-
-        <section id="view-eligibility" class="view-section pt-10">
-
-            <div class="max-w-4xl mx-auto">
-
-                <div class="text-center mb-10">
-
-                    <h2 class="text-3xl font-bold mb-2">
-                        Eligibility Engine
-                    </h2>
-
-                    <p class="text-slate-400">
-                        Find exactly what you qualify for.
-                    </p>
-
-                </div>
-
-                <div class="glass-card rounded-3xl p-6 md:p-10 relative overflow-hidden">
-
-                    <!-- Progress -->
-
-                    <div class="w-full bg-slate-800 h-1.5 rounded-full mb-8 overflow-hidden">
-
-                        <div
-                            id="progress-bar"
-                            class="bg-brand-500 h-full transition-all duration-500"
-                            style="width: 33%;"
-                        ></div>
-
-                    </div>
-
-                    <!-- Step 1 -->
-
-                    <div id="step-1" class="form-step animate-fade-in">
-
-                        <h3 class="text-2xl font-semibold mb-6">
-                            01. Basic Details
-                        </h3>
-
-                        <div class="space-y-6">
-
-                            <div>
-
-                                <label class="block text-sm font-medium text-slate-400 mb-2">
-                                    Date of Birth
-                                </label>
-
-                                <input
-                                    type="date"
-                                    id="e-dob"
-                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-white focus:outline-none focus:border-brand-500 transition"
-                                >
-
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4">
-
-                                <div>
-
-                                    <label class="block text-sm font-medium text-slate-400 mb-2">
-                                        Category
-                                    </label>
-
-                                    <select
-                                        id="e-cat"
-                                        class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-white focus:outline-none focus:border-brand-500"
-                                    >
-
-                                        <option value="UR">
-                                            General / UR
-                                        </option>
-
-                                        <option value="OBC">
-                                            OBC
-                                        </option>
-
-                                        <option value="SCST">
-                                            SC / ST
-                                        </option>
-
-                                    </select>
-
-                                </div>
-
-                                <div>
-
-                                    <label class="block text-sm font-medium text-slate-400 mb-2">
-                                        State
-                                    </label>
-
-                                    <select
-                                        id="e-state"
-                                        class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-white focus:outline-none focus:border-brand-500"
-                                    >
-
-                                        <option value="Rajasthan">
-                                            Rajasthan
-                                        </option>
-
-                                        <option value="Delhi">
-                                            Delhi
-                                        </option>
-
-                                        <option value="Other">
-                                            Other
-                                        </option>
-
-                                    </select>
-
-                                </div>
-
-                            </div>
-
-                            <button
-                                onclick="window.nextStep(2)"
-                                class="w-full bg-brand-600 py-4 rounded-xl font-bold mt-4 hover:bg-brand-500 transition"
-                            >
-                                Continue
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- Step 2 -->
-
-                    <div id="step-2" class="form-step step-hidden animate-fade-in">
-
-                        <h3 class="text-2xl font-semibold mb-6">
-                            02. Academic Profile
-                        </h3>
-
-                        <div class="space-y-6">
-
-                            <div>
-
-                                <label class="block text-sm font-medium text-slate-400 mb-2">
-                                    Highest Qualification
-                                </label>
-
-                                <select
-                                    id="e-edu"
-                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-white focus:outline-none focus:border-brand-500"
-                                >
-
-                                    <option value="10th">
-                                        10th Pass
-                                    </option>
-
-                                    <option value="12th">
-                                        12th Pass
-                                    </option>
-
-                                    <option value="Graduation">
-                                        Graduation
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-                            <div class="flex gap-4">
-
-                                <button
-                                    onclick="window.nextStep(1)"
-                                    class="w-1/3 bg-slate-800 py-4 rounded-xl font-bold hover:bg-slate-700 transition"
-                                >
-                                    Back
-                                </button>
-
-                                <button
-                                    onclick="window.nextStep(3)"
-                                    class="w-2/3 bg-brand-600 py-4 rounded-xl font-bold hover:bg-brand-500 transition shadow-[0_0_15px_rgba(79,70,229,0.3)]"
-                                >
-                                    Analyze Profile
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- Step 3 -->
-
-                    <div id="step-3" class="form-step step-hidden animate-fade-in">
-
-                        <div class="flex flex-col md:flex-row gap-8">
-
-                            <!-- Profile Summary -->
-
-                            <div class="md:w-1/3">
-
-                                <div class="bg-slate-900/80 border border-slate-700 p-6 rounded-2xl">
-
-                                    <h4 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-4">
-                                        Your Profile
-                                    </h4>
-
-                                    <div
-                                        id="res-summary"
-                                        class="space-y-2 border-b border-slate-800 pb-4 mb-4"
-                                    ></div>
-
-                                    <button
-                                        onclick="window.nextStep(1)"
-                                        class="text-sm text-brand-400 hover:text-brand-300 w-full text-center"
-                                    >
-                                        Edit Profile
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                            <!-- Opportunities -->
-
-                            <div class="md:w-2/3">
-
-                                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-
-                                    <i class="fa-solid fa-sparkles text-brand-400"></i>
-
-                                    Best Matches
-
-                                </h3>
-
-                                <div
-                                    id="res-grid"
-                                    class="grid sm:grid-cols-2 gap-4 custom-scrollbar max-h-[500px] overflow-y-auto pr-2"
-                                >
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- VIEW: TOOLS -->
-
-        <section id="view-tools" class="view-section pt-10">
-
-            <h2 class="text-3xl font-bold text-center mb-12">
-                Student Tools
-            </h2>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <!-- Age Calculator -->
-
-                <div class="glass-card p-6 rounded-3xl group">
-
-                    <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-brand-400 text-xl mb-6 group-hover:scale-110 transition">
-
-                        <i class="fa-solid fa-hourglass-half"></i>
-
-                    </div>
-
-                    <h3 class="font-bold text-lg mb-2">
-                        Age Calculator
-                    </h3>
-
-                    <p class="text-sm text-slate-400 mb-6">
-                        Calculate precise age in years, months, days for application forms.
-                    </p>
-
-                    <input
-                        type="date"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm mb-3"
-                    >
-
-                    <button
-                        class="w-full bg-slate-800 hover:bg-brand-600 transition py-2 rounded-lg text-sm font-semibold"
-                    >
-                        Calculate
-                    </button>
-
-                </div>
-
-                <!-- Syllabus Vault -->
-
-                <div class="glass-card p-6 rounded-3xl group">
-
-                    <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-emerald-400 text-xl mb-6 group-hover:scale-110 transition">
-
-                        <i class="fa-solid fa-file-pdf"></i>
-
-                    </div>
-
-                    <h3 class="font-bold text-lg mb-2">
-                        Syllabus Vault
-                    </h3>
-
-                    <p class="text-sm text-slate-400 mb-6">
-                        Access official syllabus documents for top competitive exams.
-                    </p>
-
-                    <button
-                        class="w-full border border-slate-600 hover:border-emerald-500 hover:text-emerald-400 transition py-2 rounded-lg text-sm font-semibold mt-auto"
-                    >
-                        Browse Vault
-                    </button>
-
-                </div>
-
-                <!-- CGPA -->
-
-                <div class="glass-card p-6 rounded-3xl group">
-
-                    <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-amber-400 text-xl mb-6 group-hover:scale-110 transition">
-
-                        <i class="fa-solid fa-percent"></i>
-
-                    </div>
-
-                    <h3 class="font-bold text-lg mb-2">
-                        CGPA Converter
-                    </h3>
-
-                    <p class="text-sm text-slate-400 mb-6">
-                        Instantly convert college/board CGPA to strict percentage formats.
-                    </p>
-
-                    <button
-                        class="w-full border border-slate-600 hover:border-amber-500 hover:text-amber-400 transition py-2 rounded-lg text-sm font-semibold mt-auto"
-                    >
-                        Open Tool
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- VIEW: ABOUT / FOUNDER -->
-
-        <section id="view-about" class="view-section pt-10">
-
-            <div class="max-w-4xl mx-auto text-center">
-
-                <div class="glass-card p-10 rounded-[3rem] relative overflow-hidden">
-
-                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-brand-600 rounded-full blur-[100px] opacity-30"></div>
-
-                    <!-- PHOTO: 11287.jpg -->
-
-                    <img
-                        src="11287.jpg"
-                        alt="Mahipal Parihar"
-                        class="w-32 h-32 rounded-full mx-auto border-4 border-slate-800 object-cover shadow-2xl mb-6 relative z-10"
-                    >
-
-                    <h2 class="text-3xl font-bold mb-1 relative z-10">
-                        Mahipal Parihar
-                    </h2>
-
-                    <p class="text-brand-400 text-sm font-semibold tracking-widest uppercase mb-8 relative z-10">
-                        Founder, Nexite Career Lab
-                    </p>
-
-                    <p class="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto mb-10 relative z-10">
-
-                        "I built Nexite Career Lab to eliminate the confusion students face when navigating career opportunities. Technology should simplify decisions, not complicate them. Our mission is to ensure no student misses a deadline or an opportunity they deserve."
-
-                    </p>
-
-                    <div class="flex justify-center gap-4 relative z-10">
-
-                        <a
-                            href="mailto:pariharmahipal02@gmail.com"
-                            class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 transition text-slate-300 hover:text-white"
-                        >
-                            <i class="fa-solid fa-envelope"></i>
-                        </a>
-
-                        <a
-                            href="https://www.instagram.com/nexiteofficial?igsi=amNxdXYyd3Z6eXVh"
-                            target="_blank"
-                            class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center hover:bg-brand-600 transition text-slate-300 hover:text-white"
-                        >
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- VIEW: DASHBOARD -->
-
-        <section id="view-dashboard" class="view-section pt-10">
-
-            <div class="max-w-5xl mx-auto">
-
-                <h2 class="text-3xl font-bold mb-8">
-                    My Dashboard
-                </h2>
-
-                <div class="grid md:grid-cols-3 gap-6">
-
-                    <div class="md:col-span-2 glass-card p-6 rounded-3xl border border-slate-700">
-
-                        <h3 class="text-lg font-semibold mb-4 text-slate-300">
-                            Saved Opportunities
-                        </h3>
-
-                        <div class="text-center py-12 text-slate-500">
-
-                            <i class="fa-regular fa-bookmark text-4xl mb-3"></i>
-
-                            <p>
-                                No exams saved yet. Explore the Eligibility Engine.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div class="glass-card p-6 rounded-3xl border border-slate-700">
-
-                        <h3 class="text-lg font-semibold mb-4 text-slate-300">
-                            Upcoming Deadlines
-                        </h3>
-
-                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
-
-                            <p class="text-sm font-medium text-slate-300">
-                                SSC Selection Post Phase 14
-                            </p>
-
-                            <p class="text-xs text-brand-400 mt-1">
-                                Check official dates
-                            </p>
-
-                        </div>
-
-                        <button
-                            onclick="window.NCL.logout()"
-                            class="w-full mt-6 py-2 border border-red-500/30 text-red-400 rounded-lg text-sm hover:bg-red-500/10 transition"
-                        >
-                            Sign Out
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
+        <button onclick="toggleSave('${e.id}')" class="w-8 h-8 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition flex items-center justify-center">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    `).join('');
+  }
+}
+
+profileBtn.onclick = () => {
+  const u = auth.currentUser;
+  if(u) {
+    dashPic.src = u.photoURL || LOGO;
+    dashName.textContent = escape((u.displayName || (u.email ? u.email.split("@")[0] : "Student")));
+    dashEmail.textContent = escape(u.email || "No email provided");
+    
+    renderDashboardExams();
+    dashboardModal.classList.add("open");
+    setTimeout(() => { dashPanel.classList.remove("translate-x-full"); }, 10);
+  }
+};
+
+closeDashboard.onclick = () => {
+  dashPanel.classList.add("translate-x-full");
+  setTimeout(() => { dashboardModal.classList.remove("open"); }, 300);
+};
+
+logoutBtn.onclick = async () => {
+  await signOut(auth);
+  dashPanel.classList.add("translate-x-full");
+  setTimeout(() => { dashboardModal.classList.remove("open"); }, 300);
+  toastMsg("Signed out successfully.");
+};
+
+
+/* ================= AUTH STATE OBSERVER ================= */
+onAuthStateChanged(auth,u=>{
+if(u){
+loginBtn.classList.add("hidden");
+profileBtn.classList.remove("hidden");
+profileBtn.classList.add("flex");
+
+profileBtn.innerHTML=`
+<img src="${u.photoURL||LOGO}" class="w-7 h-7 rounded-full object-cover">
+<span>${escape((u.displayName||(u.email ? u.email.split("@")[0] : "Student")).split(" ")[0])}</span>
+`;
+// Sync Cloud on Login
+syncSavedExams(u);
+
+}else{
+loginBtn.classList.remove("hidden");
+profileBtn.classList.add("hidden");
+profileBtn.classList.remove("flex");
+}
+});
+
+
+/* ================= MOBILE MENU ================= */
+menuBtn.onclick=()=>{ mobileMenu.classList.toggle("mobile-open"); };
+
+/* ================= SCROLL ANIMATION ================= */
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add("show"); } });
+},{ threshold:.12 });
+document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
+
+/* ================= INITIALIZE ================= */
+
+// First setup chips and render local fallback exams
+document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
+renderExams();
+setStep(1);
+
+// Now trigger Dynamic Fetch in background
+fetchDynamicExams();
+
+</script>
 
 </body>
 </html>
