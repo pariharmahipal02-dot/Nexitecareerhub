@@ -19,7 +19,6 @@
 <meta property="og:description" content="A smart platform designed to help students discover government exams, check eligibility instantly, and access useful educational tools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nexitecareerlab.vercel.app/">
-<!-- Replace with actual Nexite Career Lab OG image URL when available -->
 <meta property="og:image" content="https://nexitecareerlab.vercel.app/11318.png"> 
 
 <!-- Twitter Card -->
@@ -45,9 +44,6 @@
   }
 }
 </script>
-
-<!-- ADDED SCRIPT -->
-<script>(function(s){s.dataset.zone='11636494',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -78,15 +74,11 @@ tailwind.config={
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <style>
 
-html{
-  scroll-behavior:smooth
-}
+html{ scroll-behavior:smooth }
 
 body{
   font-family:'Plus Jakarta Sans',sans-serif;
@@ -95,9 +87,7 @@ body{
   overflow-x:hidden
 }
 
-*{
-  box-sizing:border-box
-}
+*{ box-sizing:border-box }
 
 .mesh{
   background:
@@ -125,26 +115,14 @@ body{
   color:transparent
 }
 
-.btn{
-  transition:.25s ease
-}
+.btn{ transition:.25s ease }
+.btn:hover{ transform:translateY(-2px) }
+.btn:active{ transform:translateY(0) scale(.98) }
 
-.btn:hover{
-  transform:translateY(-2px)
-}
-
-.btn:active{
-  transform:translateY(0) scale(.98)
-}
-
-.float{
-  animation:float 5s ease-in-out infinite
-}
+.float{ animation:float 5s ease-in-out infinite }
 
 @keyframes float{
-  50%{
-    transform:translateY(-12px)
-  }
+  50%{ transform:translateY(-12px) }
 }
 
 .reveal{
@@ -171,19 +149,11 @@ body{
   0 0 0 24px rgba(124,58,237,.04)
 }
 
-.toast{
-  animation:toast .3s ease
-}
+.toast{ animation:toast .3s ease }
 
 @keyframes toast{
-  from{
-    opacity:0;
-    transform:translateY(10px)
-  }
-  to{
-    opacity:1;
-    transform:none
-  }
+  from{ opacity:0; transform:translateY(10px) }
+  to{ opacity:1; transform:none }
 }
 
 .mobile-open{
@@ -207,40 +177,192 @@ body{
   transition:.25s
 }
 
-.modal.open .modal-panel{
-  transform:none
-}
+.modal.open .modal-panel{ transform:none }
 
-input,
-select{
-  outline:none
-}
+input, select{ outline:none }
 
-input:focus,
-select:focus{
+input:focus, select:focus{
   box-shadow:0 0 0 4px rgba(37,99,235,.10);
   border-color:#60a5fa!important
 }
 
-.tool-card{
-  transition:.3s
-}
-
+.tool-card{ transition:.3s }
 .tool-card:hover{
   transform:translateY(-6px);
   box-shadow:0 18px 45px rgba(15,23,42,.10)
 }
 
 @media(prefers-reduced-motion:reduce){
-
-  *,
-  *:before,
-  *:after{
+  *, *:before, *:after{
     animation:none!important;
     transition:none!important;
     scroll-behavior:auto!important
   }
+}
 
+/* =========================
+   RAKHI CAMPAIGN STYLES (ADDED)
+   ========================= */
+
+#nexite-rakhi-campaign {
+  width: 100%;
+  padding: 35px 15px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.rakhi-card {
+  max-width: 520px;
+  margin: auto;
+  padding: 30px 20px;
+  border-radius: 28px;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, .12), transparent 45%), linear-gradient(145deg, #15152b, #202044);
+  color: white;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.rakhi-card::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  top: -100px;
+  left: -100px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+}
+
+.rakhi-top {
+  position: relative;
+  z-index: 2;
+}
+
+.rakhi-badge {
+  display: inline-block;
+  padding: 7px 13px;
+  border-radius: 50px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  background: rgba(255,255,255,.09);
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.rakhi-top h2 { margin: 15px 0 5px; font-size: 32px; font-weight: 800; }
+.rakhi-subtitle { margin: 0; font-size: 15px; opacity: .85; letter-spacing: 2px; }
+.rakhi-description { margin: 10px 0 25px; font-size: 14px; opacity: .65; }
+
+/* SCRATCH */
+.scratch-wrapper {
+  position: relative;
+  width: min(330px, 90vw);
+  height: 205px;
+  margin: 0 auto 20px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.4), 0 12px 35px rgba(0,0,0,.25);
+  touch-action: none;
+}
+
+.reward-under {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #252542;
+  background: radial-gradient(circle, #fff, #f3efff);
+}
+
+.reward-icon { font-size: 46px; animation: giftFloat 2s ease-in-out infinite; }
+.reward-title { margin-top: 5px; font-size: 20px; font-weight: 900; letter-spacing: 1px; }
+.reward-text { margin-top: 5px; font-size: 13px; opacity: .7; }
+
+#scratchCanvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer; touch-action: none; }
+
+.scratch-hint {
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: white;
+  font-size: 17px;
+  font-weight: 800;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+  transition: opacity .3s;
+}
+
+/* BUTTONS */
+.rakhi-main-btn, .use-btn, .share-btn, .claim-btn, #loginBonusButton {
+  border: 0; cursor: pointer; font-family: inherit; font-weight: 800; transition: transform .2s, box-shadow .2s;
+}
+.rakhi-main-btn:hover, .use-btn:hover, .share-btn:hover, .claim-btn:hover { transform: translateY(-2px); }
+
+.rakhi-main-btn {
+  padding: 14px 28px; border-radius: 14px; color: white;
+  background: linear-gradient(135deg, #7c5cff, #a45cff);
+  box-shadow: 0 10px 25px rgba(124,92,255,.3); font-size: 15px;
+}
+
+/* RESULT */
+.reward-result { display: none; margin-top: 25px; animation: revealResult .6s ease; }
+.reward-result.show { display: block; }
+.confetti { font-size: 45px; animation: celebrate .7s ease; }
+.reward-result h3 { margin: 5px 0 10px; font-size: 25px; }
+.reward-name { margin: 0; font-size: 17px; font-weight: 800; }
+.reward-small { margin: 8px 0 20px; font-size: 13px; opacity: .65; }
+
+/* USE */
+.use-btn { padding: 13px 25px; border-radius: 13px; color: white; background: linear-gradient(135deg, #ff6584, #ff8a5c); }
+
+/* UNLOCK */
+.unlock-box { margin-top: 20px; padding: 20px; border-radius: 20px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); display: none; }
+.unlock-box.show { display: block; animation: slideUp .4s ease; }
+.unlock-box h4 { margin: 0 0 8px; font-size: 18px; }
+.unlock-box p { margin: 5px 0 15px; font-size: 13px; opacity: .7; }
+.ref-progress { margin: 12px 0; font-weight: 800; }
+.progress-track { height: 7px; border-radius: 20px; overflow: hidden; background: rgba(255,255,255,.1); margin-bottom: 18px; }
+#progressBar { height: 100%; width: 0%; background: linear-gradient(90deg, #7c5cff, #ff6584); transition: width .5s ease; }
+.share-btn { width: 100%; padding: 13px; border-radius: 13px; background: #25D366; color: white; font-size: 14px; }
+.share-note { margin-bottom: 0 !important; margin-top: 10px !important; }
+
+/* UNLOCKED */
+.unlocked-box { display: none; margin-top: 20px; padding: 25px; border-radius: 20px; background: linear-gradient(135deg, rgba(124,92,255,.2), rgba(255,101,132,.15)); border: 1px solid rgba(255,255,255,.12); }
+.unlocked-box.show { display: block; animation: unlockAnimation .7s ease; }
+.unlocked-box > div { font-size: 40px; }
+.unlocked-box h4 { margin: 8px 0; }
+.unlocked-box p { font-size: 13px; opacity: .7; }
+.claim-btn { padding: 13px 25px; border-radius: 13px; background: white; color: #272743; font-size: 14px; }
+
+/* LOGIN BONUS */
+.login-bonus { display: flex; align-items: center; gap: 12px; margin-top: 25px; padding: 15px; text-align: left; border-radius: 17px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
+.bonus-icon { font-size: 28px; }
+.login-bonus strong { font-size: 14px; }
+.login-bonus p { margin: 3px 0 0; font-size: 11px; opacity: .6; }
+#loginBonusButton { margin-left: auto; padding: 9px 13px; border-radius: 10px; background: white; color: #202044; font-size: 11px; }
+
+/* ADS */
+.rakhi-ad-area { margin-top: 25px; min-height: 90px; border-radius: 15px; overflow: hidden; }
+.ad-label { font-size: 9px; opacity: .35; margin-bottom: 5px; letter-spacing: 1px; }
+
+/* ANIMATIONS */
+@keyframes giftFloat { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+@keyframes revealResult { from { opacity: 0; transform: scale(.85) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes celebrate { 0% { transform: scale(.2) rotate(-20deg); } 70% { transform: scale(1.2) rotate(10deg); } 100% { transform: scale(1); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes unlockAnimation { 0% { opacity: 0; transform: scale(.8); } 60% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+
+/* MOBILE */
+@media(max-width:500px) {
+  #nexite-rakhi-campaign { padding: 25px 10px; }
+  .rakhi-card { padding: 25px 15px; border-radius: 22px; }
+  .rakhi-top h2 { font-size: 27px; }
+  .scratch-wrapper { height: 190px; }
+  .login-bonus { align-items: flex-start; }
 }
 
 </style>
@@ -255,1141 +377,402 @@ select:focus{
 <nav class="glass mx-auto mt-3 max-w-7xl rounded-2xl px-4 sm:px-6 h-16 flex items-center justify-between shadow-sm">
 
 <a href="#home" class="flex items-center gap-3">
-
-<img
-id="navLogo"
-class="w-10 h-10 rounded-xl object-contain bg-white"
-alt="Nexite Career Lab Logo"
->
-
+<img id="navLogo" class="w-10 h-10 rounded-xl object-contain bg-white" alt="Nexite Career Lab Logo">
 <div class="leading-tight">
-
-<div class="font-extrabold tracking-tight">
-NEXITE
+<div class="font-extrabold tracking-tight">NEXITE</div>
+<div class="text-[10px] tracking-[.25em] text-slate-500">CAREER LAB</div>
 </div>
-
-<div class="text-[10px] tracking-[.25em] text-slate-500">
-CAREER LAB
-</div>
-
-</div>
-
 </a>
-
 
 <div class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
-
-<a class="hover:text-blue-600" href="#home">
-Home
-</a>
-
-<a class="hover:text-blue-600" href="#eligibility">
-Eligibility
-</a>
-
-<a class="hover:text-blue-600" href="#exams">
-Exams
-</a>
-
-<a class="hover:text-blue-600" href="#tools">
-Tools
-</a>
-
-<a class="hover:text-blue-600" href="#about">
-About
-</a>
-
+<a class="hover:text-blue-600" href="#home">Home</a>
+<a class="hover:text-blue-600" href="#eligibility">Eligibility</a>
+<a class="hover:text-blue-600" href="#exams">Exams</a>
+<a class="hover:text-blue-600" href="#tools">Tools</a>
+<a class="hover:text-blue-600" href="#about">About</a>
 </div>
 
-
 <div class="flex items-center gap-2">
-
-<button
-id="loginBtn"
-class="btn hidden sm:inline-flex px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm">
-Login / Sign Up
-</button>
-
-<button
-id="profileBtn"
-class="hidden items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition text-sm font-bold cursor-pointer">
-</button>
-
-<button
-id="menuBtn"
-class="lg:hidden w-10 h-10 rounded-xl border border-slate-200 bg-white">
-<i class="fa-solid fa-bars"></i>
-</button>
-
+<button id="loginBtn" class="btn hidden sm:inline-flex px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm">Login / Sign Up</button>
+<button id="profileBtn" class="hidden items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 transition text-sm font-bold cursor-pointer"></button>
+<button id="menuBtn" class="lg:hidden w-10 h-10 rounded-xl border border-slate-200 bg-white"><i class="fa-solid fa-bars"></i></button>
 </div>
 
 </nav>
 
-
-<div
-id="mobileMenu"
-class="lg:hidden max-w-7xl mx-auto mt-2 overflow-hidden max-h-0 opacity-0 transition-all duration-300 glass rounded-2xl p-4">
-
+<div id="mobileMenu" class="lg:hidden max-w-7xl mx-auto mt-2 overflow-hidden max-h-0 opacity-0 transition-all duration-300 glass rounded-2xl p-4">
 <div class="grid gap-2 font-semibold text-slate-700">
-
-<a href="#home" class="p-3 rounded-xl hover:bg-white">
-Home
-</a>
-
-<a href="#eligibility" class="p-3 rounded-xl hover:bg-white">
-Eligibility
-</a>
-
-<a href="#exams" class="p-3 rounded-xl hover:bg-white">
-Exams
-</a>
-
-<a href="#tools" class="p-3 rounded-xl hover:bg-white">
-Tools
-</a>
-
-<a href="#about" class="p-3 rounded-xl hover:bg-white">
-About
-</a>
-
-<button
-id="mobileLogin"
-class="text-left p-3 rounded-xl hover:bg-white">
-Login / Sign Up
-</button>
-
+<a href="#home" class="p-3 rounded-xl hover:bg-white">Home</a>
+<a href="#eligibility" class="p-3 rounded-xl hover:bg-white">Eligibility</a>
+<a href="#exams" class="p-3 rounded-xl hover:bg-white">Exams</a>
+<a href="#tools" class="p-3 rounded-xl hover:bg-white">Tools</a>
+<a href="#about" class="p-3 rounded-xl hover:bg-white">About</a>
+<button id="mobileLogin" class="text-left p-3 rounded-xl hover:bg-white">Login / Sign Up</button>
 </div>
-
 </div>
-
 </header>
 
 
 <main id="home" class="pt-28">
 
 <!-- ================= HERO ================= -->
-
 <section class="hero-grid relative overflow-hidden">
-
 <div class="max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-24 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
 
-
 <div class="reveal">
-
 <div class="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-extrabold tracking-wide">
-
-<span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
-
-SMART CAREER DISCOVERY
-
+<span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span> SMART CAREER DISCOVERY
 </div>
-
 
 <h1 class="mt-6 text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
-
-Know Your
-
-<span class="gradient">
-Eligibility.
-</span>
-
-<br>
-
-Discover Your Path.
-
+Know Your <span class="gradient">Eligibility.</span><br>Discover Your Path.
 </h1>
 
-
 <p class="mt-6 text-lg text-slate-600 max-w-xl leading-8">
-
 Check your age, state and qualification to discover relevant exam opportunities — then use practical student tools in one place.
-
 </p>
-
 
 <div class="mt-8 flex flex-col sm:flex-row gap-3">
-
-<a
-href="#eligibility"
-class="btn inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-slate-900 text-white font-extrabold shadow-soft">
-
-Check Eligibility
-
-<i class="fa-solid fa-arrow-right"></i>
-
+<a href="#eligibility" class="btn inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-slate-900 text-white font-extrabold shadow-soft">
+Check Eligibility <i class="fa-solid fa-arrow-right"></i>
 </a>
-
-
-<a
-href="#tools"
-class="btn inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-white border border-slate-200 font-extrabold text-slate-800">
-
+<a href="#tools" class="btn inline-flex justify-center items-center gap-2 px-6 py-4 rounded-xl bg-white border border-slate-200 font-extrabold text-slate-800">
 Explore Tools
-
 </a>
-
 </div>
-
 
 <div class="mt-8 flex flex-wrap gap-4 text-sm font-semibold text-slate-500">
-
 <span>✓ Personalized</span>
-
 <span>✓ Mobile Friendly</span>
-
 <span>✓ Student First</span>
-
 </div>
-
 </div>
-
 
 <div class="relative reveal">
-
 <div class="absolute -inset-8 bg-gradient-to-br from-blue-200/40 to-violet-200/40 blur-3xl"></div>
-
-
 <div class="relative card rounded-[2rem] p-5 sm:p-7 ring">
-
-
 <div class="flex items-center justify-between">
-
 <div>
-
-<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">
-Profile Match
-</p>
-
-<h3 class="text-xl font-extrabold mt-1">
-Your opportunity radar
-</h3>
-
+<p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Profile Match</p>
+<h3 class="text-xl font-extrabold mt-1">Your opportunity radar</h3>
+</div>
+<div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i class="fa-solid fa-bolt"></i></div>
 </div>
 
-
-<div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center">
-
-<i class="fa-solid fa-bolt"></i>
-
-</div>
-
-</div>
-
-
-<!-- DYNAMIC RADAR GRID -->
 <div class="mt-6 grid grid-cols-3 gap-3">
-
-<div class="bg-slate-50 rounded-2xl p-4">
-
-<p class="text-xs text-slate-400">
-Age
-</p>
-
-<b id="radarAge">
---
-</b>
-
+<div class="bg-slate-50 rounded-2xl p-4"><p class="text-xs text-slate-400">Age</p><b id="radarAge">--</b></div>
+<div class="bg-slate-50 rounded-2xl p-4"><p class="text-xs text-slate-400">State</p><b id="radarState" class="truncate block">--</b></div>
+<div class="bg-slate-50 rounded-2xl p-4"><p class="text-xs text-slate-400">Edu.</p><b id="radarEdu">--</b></div>
 </div>
-
-
-<div class="bg-slate-50 rounded-2xl p-4">
-
-<p class="text-xs text-slate-400">
-State
-</p>
-
-<b id="radarState" class="truncate block">
---
-</b>
-
-</div>
-
-
-<div class="bg-slate-50 rounded-2xl p-4">
-
-<p class="text-xs text-slate-400">
-Edu.
-</p>
-
-<b id="radarEdu">
---
-</b>
-
-</div>
-
-</div>
-
 
 <div class="mt-4 space-y-3">
-
-
 <div class="flex items-center gap-3 p-4 rounded-2xl bg-blue-50 border border-blue-100 float">
-
-<div class="w-10 h-10 rounded-xl bg-white text-blue-600 grid place-items-center">
-
-<i class="fa-solid fa-check"></i>
-
+<div class="w-10 h-10 rounded-xl bg-white text-blue-600 grid place-items-center"><i class="fa-solid fa-check"></i></div>
+<div class="flex-1"><b class="block">SSC CHSL</b><span class="text-xs text-slate-500">Potential match</span></div>
+<strong class="text-blue-600">92%</strong>
 </div>
-
-<div class="flex-1">
-
-<b class="block">
-SSC CHSL
-</b>
-
-<span class="text-xs text-slate-500">
-Potential match
-</span>
-
-</div>
-
-<strong class="text-blue-600">
-92%
-</strong>
-
-</div>
-
-
 <div class="flex items-center gap-3 p-4 rounded-2xl bg-violet-50 border border-violet-100">
-
-<div class="w-10 h-10 rounded-xl bg-white text-violet-600 grid place-items-center">
-
-<i class="fa-solid fa-shield-halved"></i>
-
+<div class="w-10 h-10 rounded-xl bg-white text-violet-600 grid place-items-center"><i class="fa-solid fa-shield-halved"></i></div>
+<div class="flex-1"><b class="block">Defence Opportunity</b><span class="text-xs text-slate-500">Profile based</span></div>
+<strong class="text-violet-600">87%</strong>
 </div>
-
-<div class="flex-1">
-
-<b class="block">
-Defence Opportunity
-</b>
-
-<span class="text-xs text-slate-500">
-Profile based
-</span>
-
 </div>
-
-<strong class="text-violet-600">
-87%
-</strong>
-
-</div>
-
-
-</div>
-
 
 <div class="mt-4 flex items-center justify-between p-4 rounded-2xl bg-slate-900 text-white">
-
-<span class="text-sm font-bold">
-Opportunities found
-</span>
-
-<span class="text-2xl font-extrabold">
-12+
-</span>
-
+<span class="text-sm font-bold">Opportunities found</span>
+<span class="text-2xl font-extrabold">12+</span>
 </div>
-
-
+</div>
 </div>
 
 </div>
-
-</div>
-
 </section>
-
 
 <!-- ================= QUICK FEATURES ================= -->
-
 <section class="max-w-7xl mx-auto px-5 sm:px-6 -mt-5 relative z-10">
-
 <div class="card rounded-2xl p-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
-
-
-<div class="p-4 rounded-xl bg-slate-50">
-
-<i class="fa-solid fa-user-check text-blue-600"></i>
-
-<b class="block mt-2">
-Profile Match
-</b>
-
-<span class="text-xs text-slate-500">
-DOB + state + education
-</span>
-
+<div class="p-4 rounded-xl bg-slate-50"><i class="fa-solid fa-user-check text-blue-600"></i><b class="block mt-2">Profile Match</b><span class="text-xs text-slate-500">DOB + state + education</span></div>
+<div class="p-4 rounded-xl bg-slate-50"><i class="fa-solid fa-calendar-check text-violet-600"></i><b class="block mt-2">Important Dates</b><span class="text-xs text-slate-500">Track deadlines</span></div>
+<div class="p-4 rounded-xl bg-slate-50"><i class="fa-solid fa-calculator text-emerald-600"></i><b class="block mt-2">Student Tools</b><span class="text-xs text-slate-500">Useful daily utilities</span></div>
+<div class="p-4 rounded-xl bg-slate-50"><i class="fa-solid fa-bookmark text-amber-600"></i><b class="block mt-2">Save Exams</b><span class="text-xs text-slate-500">Keep opportunities handy</span></div>
 </div>
-
-
-<div class="p-4 rounded-xl bg-slate-50">
-
-<i class="fa-solid fa-calendar-check text-violet-600"></i>
-
-<b class="block mt-2">
-Important Dates
-</b>
-
-<span class="text-xs text-slate-500">
-Track deadlines
-</span>
-
-</div>
-
-
-<div class="p-4 rounded-xl bg-slate-50">
-
-<i class="fa-solid fa-calculator text-emerald-600"></i>
-
-<b class="block mt-2">
-Student Tools
-</b>
-
-<span class="text-xs text-slate-500">
-Useful daily utilities
-</span>
-
-</div>
-
-
-<div class="p-4 rounded-xl bg-slate-50">
-
-<i class="fa-solid fa-bookmark text-amber-600"></i>
-
-<b class="block mt-2">
-Save Exams
-</b>
-
-<span class="text-xs text-slate-500">
-Keep opportunities handy
-</span>
-
-</div>
-
-</div>
-
 </section>
 
+<!-- ================= RAKHI SCRATCH CARD ================= -->
+<section id="nexite-rakhi-campaign">
+  <div class="rakhi-card reveal">
+    <div class="rakhi-top">
+      <span class="rakhi-badge">✦ NEXITE SPECIAL ✦</span>
+      <h2>💝 Rakhi Special</h2>
+      <p class="rakhi-subtitle">Scratch • Reveal • Unlock</p>
+      <p class="rakhi-description">A special surprise is waiting for you</p>
+    </div>
+
+    <!-- SCRATCH AREA -->
+    <div id="scratch-area" class="scratch-wrapper">
+      <div class="reward-under">
+        <div class="reward-icon">🎁</div>
+        <div class="reward-title">RAKHI SPECIAL</div>
+        <div class="reward-text">Special Shopping Reward</div>
+      </div>
+      <canvas id="scratchCanvas"></canvas>
+      <div class="scratch-hint">✨ Scratch Here ✨</div>
+    </div>
+    
+    <button id="scratchButton" class="rakhi-main-btn">✨ SCRATCH NOW</button>
+
+    <!-- RESULT -->
+    <div id="rewardResult" class="reward-result">
+      <div class="confetti">🎉</div>
+      <h3>Reward Revealed!</h3>
+      <p class="reward-name">🎁 Rakhi Special Shopping Reward</p>
+      <p class="reward-small">Your special offer is ready.</p>
+      <button id="useRewardButton" class="use-btn">🔒 USE REWARD</button>
+
+      <div id="unlockBox" class="unlock-box">
+        <h4>🔐 Unlock Your Reward</h4>
+        <p>Invite 2 friends to unlock the reward.</p>
+        <div class="ref-progress"><span id="refCount">0</span> / 2 completed</div>
+        <div class="progress-track"><div id="progressBar"></div></div>
+        <button id="shareButton" class="share-btn">📲 SHARE ON WHATSAPP</button>
+        <p class="share-note">Share your Rakhi Special with friends.</p>
+      </div>
+
+      <div id="unlockedBox" class="unlocked-box">
+        <div>🔓</div>
+        <h4>Reward Unlocked!</h4>
+        <p>Your Rakhi Special reward is ready to use.</p>
+        <button class="claim-btn" id="claimButton">🎁 CLAIM REWARD</button>
+      </div>
+    </div>
+
+    <!-- LOGIN BONUS -->
+    <div id="loginBonus" class="login-bonus">
+      <div class="bonus-icon">✨</div>
+      <div>
+        <strong>Login Bonus</strong>
+        <p>Login to receive 1 additional scratch.</p>
+      </div>
+      <button id="loginBonusButton">LOGIN</button>
+    </div>
+
+    <!-- AD AREA -->
+    <div class="rakhi-ad-area">
+      <div class="ad-label">Advertisement</div>
+      <div id="your-ad-code">
+        <!-- YOUR AD NETWORK CODE -->
+        <script>(function(s){s.dataset.zone='11636494',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- ================= ELIGIBILITY ================= -->
-
-<section
-id="eligibility"
-class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
-
+<section id="eligibility" class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
 <div class="text-center max-w-2xl mx-auto reveal">
-
-<span class="text-blue-600 font-extrabold text-sm">
-01 / ELIGIBILITY ENGINE
-</span>
-
-<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight">
-Find what you may qualify for.
-</h2>
-
-<p class="mt-4 text-slate-600">
-Enter a few details. Results are calculated from the rules available in this version.
-</p>
-
+<span class="text-blue-600 font-extrabold text-sm">01 / ELIGIBILITY ENGINE</span>
+<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold tracking-tight">Find what you may qualify for.</h2>
+<p class="mt-4 text-slate-600">Enter a few details. Results are calculated from the rules available in this version.</p>
 </div>
-
 
 <div class="mt-10 max-w-5xl mx-auto card rounded-[2rem] p-5 sm:p-8 reveal">
-
-
 <!-- progress -->
-
 <div class="flex items-center gap-3 mb-8">
-
-<div
-id="step1Dot"
-class="w-9 h-9 rounded-full bg-slate-900 text-white grid place-items-center text-sm font-bold">
-1
+<div id="step1Dot" class="w-9 h-9 rounded-full bg-slate-900 text-white grid place-items-center text-sm font-bold">1</div>
+<div id="progress" class="h-1 flex-1 bg-blue-600 rounded-full"></div>
+<div id="step2Dot" class="w-9 h-9 rounded-full bg-slate-100 text-slate-400 grid place-items-center text-sm font-bold">2</div>
+<div id="progress2" class="h-1 flex-1 bg-slate-200 rounded-full"></div>
+<div id="step3Dot" class="w-9 h-9 rounded-full bg-slate-100 text-slate-400 grid place-items-center text-sm font-bold">3</div>
 </div>
-
-<div
-id="progress"
-class="h-1 flex-1 bg-blue-600 rounded-full">
-</div>
-
-<div
-id="step2Dot"
-class="w-9 h-9 rounded-full bg-slate-100 text-slate-400 grid place-items-center text-sm font-bold">
-2
-</div>
-
-<div
-id="progress2"
-class="h-1 flex-1 bg-slate-200 rounded-full">
-</div>
-
-<div
-id="step3Dot"
-class="w-9 h-9 rounded-full bg-slate-100 text-slate-400 grid place-items-center text-sm font-bold">
-3
-</div>
-
-</div>
-
 
 <!-- STEP 1 -->
-
 <div id="eligStep1">
-
-<h3 class="text-2xl font-extrabold">
-Basic Details
-</h3>
-
-<p class="text-slate-500 mt-1">
-Tell us about yourself.
-</p>
-
-
+<h3 class="text-2xl font-extrabold">Basic Details</h3>
+<p class="text-slate-500 mt-1">Tell us about yourself.</p>
 <div class="grid md:grid-cols-2 gap-5 mt-7">
-
-
-<div>
-
-<label class="block text-sm font-bold mb-2">
-Date of Birth
-</label>
-
-<input
-id="dob"
-type="date"
-class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white">
-
-</div>
-
-
-<div>
-
-<label class="block text-sm font-bold mb-2">
-State
-</label>
-
-<select
-id="state"
-class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white">
+<div><label class="block text-sm font-bold mb-2">Date of Birth</label><input id="dob" type="date" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white"></div>
+<div><label class="block text-sm font-bold mb-2">State</label><select id="state" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white"></select></div>
+<div><label class="block text-sm font-bold mb-2">Category</label>
+<select id="category" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white">
+<option>General / UR</option><option>OBC</option><option>SC</option><option>ST</option><option>EWS</option>
 </select>
-
 </div>
-
-
-<div>
-
-<label class="block text-sm font-bold mb-2">
-Category
-</label>
-
-<select
-id="category"
-class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white">
-
-<option>General / UR</option>
-<option>OBC</option>
-<option>SC</option>
-<option>ST</option>
-<option>EWS</option>
-
-</select>
-
 </div>
-
-
+<button id="nextEligibility" class="btn mt-7 w-full py-4 rounded-xl bg-slate-900 text-white font-extrabold">Continue <i class="fa-solid fa-arrow-right ml-2"></i></button>
 </div>
-
-
-<button
-id="nextEligibility"
-class="btn mt-7 w-full py-4 rounded-xl bg-slate-900 text-white font-extrabold">
-
-Continue
-
-<i class="fa-solid fa-arrow-right ml-2"></i>
-
-</button>
-
-</div>
-
 
 <!-- STEP 2 -->
-
-<div
-id="eligStep2"
-class="hidden">
-
-<h3 class="text-2xl font-extrabold">
-Academic Profile
-</h3>
-
-<p class="text-slate-500 mt-1">
-Select your highest qualification.
-</p>
-
-
-<div
-id="eduChoices"
-class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
-</div>
-
-
+<div id="eligStep2" class="hidden">
+<h3 class="text-2xl font-extrabold">Academic Profile</h3>
+<p class="text-slate-500 mt-1">Select your highest qualification.</p>
+<div id="eduChoices" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-7"></div>
 <div class="flex gap-3 mt-7">
-
-<button
-id="backEligibility"
-class="w-1/3 py-4 rounded-xl bg-slate-100 font-bold">
-
-Back
-
-</button>
-
-
-<button
-id="analyzeEligibility"
-class="w-2/3 py-4 rounded-xl bg-slate-900 text-white font-extrabold">
-
-Analyze Profile
-
-<i class="fa-solid fa-wand-magic-sparkles ml-2"></i>
-
-</button>
-
+<button id="backEligibility" class="w-1/3 py-4 rounded-xl bg-slate-100 font-bold">Back</button>
+<button id="analyzeEligibility" class="w-2/3 py-4 rounded-xl bg-slate-900 text-white font-extrabold">Analyze Profile <i class="fa-solid fa-wand-magic-sparkles ml-2"></i></button>
 </div>
-
 </div>
-
 
 <!-- STEP 3 -->
-
-<div
-id="eligStep3"
-class="hidden">
-
+<div id="eligStep3" class="hidden">
 <div class="grid lg:grid-cols-3 gap-6">
-
-
 <div>
-
 <div class="bg-slate-50 rounded-2xl p-6">
-
-<h4 class="text-xs uppercase tracking-widest font-extrabold text-slate-400">
-Your Profile
-</h4>
-
-<div
-id="summary"
-class="mt-5 space-y-4">
+<h4 class="text-xs uppercase tracking-widest font-extrabold text-slate-400">Your Profile</h4>
+<div id="summary" class="mt-5 space-y-4"></div>
+<button id="editProfile" class="mt-6 text-blue-600 font-bold text-sm">Edit Profile</button>
 </div>
-
-<button
-id="editProfile"
-class="mt-6 text-blue-600 font-bold text-sm">
-Edit Profile
-</button>
-
 </div>
-
-</div>
-
-
 <div class="lg:col-span-2">
-
 <div class="flex justify-between items-center mb-4">
-
-<div>
-
-<h3 class="text-xl font-extrabold">
-Potential Matches
-</h3>
-
-<p
-id="matchCount"
-class="text-sm text-slate-500">
-</p>
-
+<div><h3 class="text-xl font-extrabold">Potential Matches</h3><p id="matchCount" class="text-sm text-slate-500"></p></div>
 </div>
-
+<div id="resultGrid" class="grid sm:grid-cols-2 gap-4"></div>
 </div>
-
-
-<div
-id="resultGrid"
-class="grid sm:grid-cols-2 gap-4">
 </div>
-
 </div>
-
 </div>
-
-</div>
-
-</div>
-
 </section>
-
 
 <!-- ================= EXAMS ================= -->
-
-<section
-id="exams"
-class="bg-white border-y border-slate-200">
-
+<section id="exams" class="bg-white border-y border-slate-200">
 <div class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
-
 <div class="text-center reveal">
-
-<span class="text-violet-600 font-extrabold text-sm">
-02 / EXAM DIRECTORY
-</span>
-
-<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold">
-Explore Opportunities
-</h2>
-
-<p class="mt-4 text-slate-600">
-Search and filter the available exam catalogue.
-</p>
-
+<span class="text-violet-600 font-extrabold text-sm">02 / EXAM DIRECTORY</span>
+<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold">Explore Opportunities</h2>
+<p class="mt-4 text-slate-600">Search and filter the available exam catalogue.</p>
 </div>
-
-
 <div class="mt-10 flex flex-col lg:flex-row gap-4">
-
 <div class="relative flex-1">
-
 <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-
-<input
-id="examSearch"
-placeholder="Search SSC, Railway, Defence, Banking..."
-class="w-full border border-slate-200 rounded-xl py-4 pl-11 pr-4 bg-white">
-
+<input id="examSearch" placeholder="Search SSC, Railway, Defence, Banking..." class="w-full border border-slate-200 rounded-xl py-4 pl-11 pr-4 bg-white">
 </div>
-
 </div>
-
-
-<div
-id="categoryChips"
-class="mt-5 flex gap-2 overflow-x-auto pb-2">
+<div id="categoryChips" class="mt-5 flex gap-2 overflow-x-auto pb-2"></div>
+<div id="examGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-7"></div>
 </div>
-
-
-<div
-id="examGrid"
-class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-7">
-</div>
-
-</div>
-
 </section>
-
 
 <!-- ================= TOOLS ================= -->
-
-<section
-id="tools"
-class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
-
+<section id="tools" class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
 <div class="text-center reveal">
-
-<span class="text-emerald-600 font-extrabold text-sm">
-03 / STUDENT TOOLS
-</span>
-
-<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold">
-Useful Tools For Students
-</h2>
-
-<p class="mt-4 text-slate-600">
-Quick calculations without leaving Nexite Career Lab.
-</p>
-
+<span class="text-emerald-600 font-extrabold text-sm">03 / STUDENT TOOLS</span>
+<h2 class="mt-3 text-3xl sm:text-5xl font-extrabold">Useful Tools For Students</h2>
+<p class="mt-4 text-slate-600">Quick calculations without leaving Nexite Career Lab.</p>
 </div>
-
 
 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
-
-
-<!-- AGE -->
+<div class="tool-card card rounded-2xl p-6">
+<div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i class="fa-solid fa-cake-candles"></i></div>
+<h3 class="font-extrabold text-lg mt-5">Age Calculator</h3>
+<p class="text-sm text-slate-500 mt-2">Calculate exact age.</p>
+<input id="ageDob" type="date" class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+<button id="ageBtn" class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">Calculate</button>
+<div id="ageOut" class="mt-4 text-center font-bold text-blue-600"></div>
+</div>
 
 <div class="tool-card card rounded-2xl p-6">
-
-<div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 grid place-items-center">
-
-<i class="fa-solid fa-cake-candles"></i>
-
+<div class="w-12 h-12 rounded-xl bg-violet-50 text-violet-600 grid place-items-center"><i class="fa-solid fa-percent"></i></div>
+<h3 class="font-extrabold text-lg mt-5">Percentage Calculator</h3>
+<input id="marks" type="number" placeholder="Obtained marks" class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+<input id="total" type="number" placeholder="Total marks" class="mt-3 w-full border border-slate-200 rounded-xl p-3">
+<button id="pctBtn" class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">Calculate</button>
+<div id="pctOut" class="mt-4 text-center font-bold text-violet-600"></div>
 </div>
-
-<h3 class="font-extrabold text-lg mt-5">
-Age Calculator
-</h3>
-
-<p class="text-sm text-slate-500 mt-2">
-Calculate exact age.
-</p>
-
-<input
-id="ageDob"
-type="date"
-class="mt-5 w-full border border-slate-200 rounded-xl p-3">
-
-<button
-id="ageBtn"
-class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
-
-Calculate
-
-</button>
-
-<div
-id="ageOut"
-class="mt-4 text-center font-bold text-blue-600">
-</div>
-
-</div>
-
-
-<!-- PERCENTAGE -->
 
 <div class="tool-card card rounded-2xl p-6">
-
-<div class="w-12 h-12 rounded-xl bg-violet-50 text-violet-600 grid place-items-center">
-
-<i class="fa-solid fa-percent"></i>
-
+<div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 grid place-items-center"><i class="fa-solid fa-graduation-cap"></i></div>
+<h3 class="font-extrabold text-lg mt-5">CGPA Converter</h3>
+<input id="cgpa" type="number" step="0.01" placeholder="CGPA 0–10" class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+<button id="cgpaBtn" class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">Convert</button>
+<div id="cgpaOut" class="mt-4 text-center font-bold text-emerald-600"></div>
 </div>
-
-<h3 class="font-extrabold text-lg mt-5">
-Percentage Calculator
-</h3>
-
-<input
-id="marks"
-type="number"
-placeholder="Obtained marks"
-class="mt-5 w-full border border-slate-200 rounded-xl p-3">
-
-<input
-id="total"
-type="number"
-placeholder="Total marks"
-class="mt-3 w-full border border-slate-200 rounded-xl p-3">
-
-<button
-id="pctBtn"
-class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
-
-Calculate
-
-</button>
-
-<div
-id="pctOut"
-class="mt-4 text-center font-bold text-violet-600">
-</div>
-
-</div>
-
-
-<!-- CGPA -->
 
 <div class="tool-card card rounded-2xl p-6">
-
-<div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 grid place-items-center">
-
-<i class="fa-solid fa-graduation-cap"></i>
-
+<div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 grid place-items-center"><i class="fa-solid fa-calendar-days"></i></div>
+<h3 class="font-extrabold text-lg mt-5">Date Difference</h3>
+<input id="dateA" type="date" class="mt-5 w-full border border-slate-200 rounded-xl p-3">
+<input id="dateB" type="date" class="mt-3 w-full border border-slate-200 rounded-xl p-3">
+<button id="dateBtn" class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">Calculate</button>
+<div id="dateOut" class="mt-4 text-center font-bold text-amber-600"></div>
 </div>
-
-<h3 class="font-extrabold text-lg mt-5">
-CGPA Converter
-</h3>
-
-<input
-id="cgpa"
-type="number"
-step="0.01"
-placeholder="CGPA 0–10"
-class="mt-5 w-full border border-slate-200 rounded-xl p-3">
-
-<button
-id="cgpaBtn"
-class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
-
-Convert
-
-</button>
-
-<div
-id="cgpaOut"
-class="mt-4 text-center font-bold text-emerald-600">
 </div>
-
-</div>
-
-
-<!-- DATE -->
-
-<div class="tool-card card rounded-2xl p-6">
-
-<div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 grid place-items-center">
-
-<i class="fa-solid fa-calendar-days"></i>
-
-</div>
-
-<h3 class="font-extrabold text-lg mt-5">
-Date Difference
-</h3>
-
-<input
-id="dateA"
-type="date"
-class="mt-5 w-full border border-slate-200 rounded-xl p-3">
-
-<input
-id="dateB"
-type="date"
-class="mt-3 w-full border border-slate-200 rounded-xl p-3">
-
-<button
-id="dateBtn"
-class="mt-3 w-full py-3 rounded-xl bg-slate-900 text-white font-bold">
-
-Calculate
-
-</button>
-
-<div
-id="dateOut"
-class="mt-4 text-center font-bold text-amber-600">
-</div>
-
-</div>
-
-</div>
-
 </section>
-
 
 <!-- ================= NEXITE AI AD ================= -->
-
 <section class="max-w-7xl mx-auto px-5 sm:px-6 pb-10">
-
 <div class="relative overflow-hidden rounded-3xl bg-slate-900 text-white p-6 sm:p-8">
-
 <div class="absolute -right-20 -top-20 w-64 h-64 bg-blue-600/30 blur-3xl"></div>
-
 <div class="relative flex flex-col md:flex-row items-center justify-between gap-6">
-
 <div>
-
-<span class="text-xs font-bold text-blue-300 uppercase tracking-widest">
-Recommended
-</span>
-
-<h3 class="text-2xl sm:text-3xl font-extrabold mt-2">
-Try Nexite AI
-</h3>
-
-<p class="text-slate-300 mt-2 max-w-xl">
-AI-powered photo tools for background removal, image editing, compression and more.
-</p>
-
+<span class="text-xs font-bold text-blue-300 uppercase tracking-widest">Recommended</span>
+<h3 class="text-2xl sm:text-3xl font-extrabold mt-2">Try Nexite AI</h3>
+<p class="text-slate-300 mt-2 max-w-xl">AI-powered photo tools for background removal, image editing, compression and more.</p>
 </div>
-
-
-<a
-href="https://mahieyai.vercel.app/"
-target="_blank"
-rel="noopener"
-class="btn shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-slate-900 font-extrabold">
-
-Open Nexite AI
-
-<i class="fa-solid fa-arrow-up-right-from-square"></i>
-
+<a href="https://mahieyai.vercel.app/" target="_blank" rel="noopener" class="btn shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-slate-900 font-extrabold">
+Open Nexite AI <i class="fa-solid fa-arrow-up-right-from-square"></i>
 </a>
-
 </div>
-
 </div>
-
 </section>
-
 
 <!-- ================= ABOUT ================= -->
-
-<section
-id="about"
-class="bg-slate-900 text-white">
-
+<section id="about" class="bg-slate-900 text-white">
 <div class="max-w-7xl mx-auto px-5 sm:px-6 py-20 sm:py-28">
-
 <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-
 <div class="reveal">
-
-<span class="text-blue-400 font-extrabold text-sm">
-04 / NEXITE CAREER LAB
-</span>
-
-<h2 class="mt-4 text-3xl sm:text-5xl font-extrabold">
-Built for students.
-<br>
-Designed for clarity.
-</h2>
-
-<p class="mt-6 text-slate-300 leading-8 max-w-xl">
-
-Nexite Career Lab is designed to make career discovery simpler by bringing eligibility checks, exam discovery and useful student utilities together in one place.
-
-</p>
-
-
+<span class="text-blue-400 font-extrabold text-sm">04 / NEXITE CAREER LAB</span>
+<h2 class="mt-4 text-3xl sm:text-5xl font-extrabold">Built for students.<br>Designed for clarity.</h2>
+<p class="mt-6 text-slate-300 leading-8 max-w-xl">Nexite Career Lab is designed to make career discovery simpler by bringing eligibility checks, exam discovery and useful student utilities together in one place.</p>
 <div class="mt-8 flex flex-wrap gap-3">
-
-<a
-href="mailto:pariharmahipal02@gmail.com"
-class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20">
-
-<i class="fa-solid fa-envelope mr-2"></i>
-Email
-
-</a>
-
-
-<a
-href="tel:+919257184454"
-class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20">
-
-<i class="fa-solid fa-phone mr-2"></i>
-Call
-
-</a>
-
-
-<a
-href="https://www.instagram.com/nexiteofficial/"
-target="_blank"
-class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20">
-
-<i class="fa-brands fa-instagram mr-2"></i>
-Instagram
-
-</a>
-
+<a href="mailto:pariharmahipal02@gmail.com" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20"><i class="fa-solid fa-envelope mr-2"></i>Email</a>
+<a href="tel:+919257184454" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20"><i class="fa-solid fa-phone mr-2"></i>Call</a>
+<a href="https://www.instagram.com/nexiteofficial/" target="_blank" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20"><i class="fa-brands fa-instagram mr-2"></i>Instagram</a>
 </div>
-
 </div>
-
 
 <div class="reveal">
-
 <div class="relative max-w-md mx-auto">
-
 <div class="absolute -inset-5 bg-gradient-to-br from-blue-600/30 to-violet-600/30 blur-3xl"></div>
-
-
 <div class="relative bg-white/10 border border-white/10 rounded-[2rem] p-7 text-center">
-
-<img
-id="founderPhoto"
-class="w-40 h-40 rounded-full object-cover mx-auto border-4 border-white/20 shadow-2xl"
-alt="Mahiey Parihar - Founder, Nexite">
-
-<h3 class="text-2xl font-extrabold mt-6">
-Mahiey Parihar
-</h3>
-
-<p class="text-blue-300 font-bold mt-1">
-Founder, Nexite
-</p>
-
-<p class="text-slate-300 text-sm leading-7 mt-5">
-
-Building simple digital tools that help students make better career decisions.
-
-</p>
-
+<img id="founderPhoto" class="w-40 h-40 rounded-full object-cover mx-auto border-4 border-white/20 shadow-2xl" alt="Mahiey Parihar - Founder, Nexite">
+<h3 class="text-2xl font-extrabold mt-6">Mahiey Parihar</h3>
+<p class="text-blue-300 font-bold mt-1">Founder, Nexite</p>
+<p class="text-slate-300 text-sm leading-7 mt-5">Building simple digital tools that help students make better career decisions.</p>
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </div>
-
 </section>
 
-
 <!-- ================= FOOTER ================= -->
-
 <footer class="bg-slate-950 text-slate-400">
-
 <div class="max-w-7xl mx-auto px-5 sm:px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
-
 <div class="flex items-center gap-3">
   <img id="footerLogo" class="w-8 h-8 rounded-lg object-contain bg-white" alt="Nexite Career Lab Logo">
   <span class="font-extrabold text-white text-base">Nexite Career Lab</span>
 </div>
-
 <div class="text-center md:text-left">
   &copy; 2026 Nexite Career Lab — A career and education product by Nexite.<br class="sm:hidden">
   <span class="text-slate-500 mt-1 inline-block">All rights reserved.</span>
 </div>
-
 <div class="flex gap-5 font-semibold">
-
-<a
-href="https://nexite-pi.vercel.app/"
-target="_blank"
-class="hover:text-white transition">
-Nexite
-</a>
-
-<a
-href="https://mahieyai.vercel.app/"
-target="_blank"
-class="hover:text-white transition">
-Nexite AI
-</a>
-
+<a href="https://nexite-pi.vercel.app/" target="_blank" class="hover:text-white transition">Nexite</a>
+<a href="https://mahieyai.vercel.app/" target="_blank" class="hover:text-white transition">Nexite AI</a>
 </div>
-
 </div>
-
 </footer>
-
 </main>
 
-
 <!-- ================= LOGIN MODAL ================= -->
-
-<div
-id="loginModal"
-class="modal fixed inset-0 z-[100] bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-5">
-
+<div id="loginModal" class="modal fixed inset-0 z-[100] bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-5">
 <div class="modal-panel bg-white rounded-3xl p-7 max-w-md w-full shadow-2xl relative">
-
-<button
-id="closeModal"
-class="absolute top-5 right-5 w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition text-slate-600 flex items-center justify-center">
-<i class="fa-solid fa-xmark"></i>
-</button>
-
+<button id="closeModal" class="absolute top-5 right-5 w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition text-slate-600 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
 <div class="flex gap-6 border-b border-slate-200 pb-3 mb-6 pr-10">
   <button id="tabLogin" class="text-lg font-extrabold text-blue-600 border-b-2 border-blue-600 pb-3 -mb-[13.5px] transition">Login</button>
   <button id="tabSignup" class="text-lg font-extrabold text-slate-400 pb-3 -mb-[13.5px] hover:text-slate-600 transition">Sign Up</button>
 </div>
-
 <form id="authForm" class="space-y-4">
   <div>
     <label class="block text-sm font-bold mb-2 text-slate-700">Email Address</label>
@@ -1399,47 +782,28 @@ class="absolute top-5 right-5 w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-2
     <label class="block text-sm font-bold mb-2 text-slate-700">Password</label>
     <input type="password" id="authPassword" required placeholder="Min. 6 characters" class="w-full border border-slate-200 rounded-xl px-4 py-3 bg-white focus:border-blue-500 outline-none transition">
     <div id="passFeedback" class="hidden mt-1 transition-all"></div>
-    
     <div class="text-right">
       <button type="button" id="forgotPasswordBtn" class="text-xs text-blue-600 font-bold hover:underline mt-2 inline-block">Forgot Password?</button>
     </div>
   </div>
-  <button type="submit" id="authSubmit" class="btn mt-2 w-full py-4 rounded-xl bg-slate-900 text-white font-extrabold hover:bg-slate-800">
-    Login to account
-  </button>
+  <button type="submit" id="authSubmit" class="btn mt-2 w-full py-4 rounded-xl bg-slate-900 text-white font-extrabold hover:bg-slate-800">Login to account</button>
 </form>
-
 <div class="mt-6 flex items-center gap-4">
-  <div class="h-px bg-slate-200 flex-1"></div>
-  <span class="text-xs text-slate-400 font-bold uppercase tracking-widest">Or</span>
-  <div class="h-px bg-slate-200 flex-1"></div>
+  <div class="h-px bg-slate-200 flex-1"></div><span class="text-xs text-slate-400 font-bold uppercase tracking-widest">Or</span><div class="h-px bg-slate-200 flex-1"></div>
 </div>
-
-<button
-id="googleLogin"
-class="btn mt-6 w-full py-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold flex items-center justify-center gap-3">
-<i class="fa-brands fa-google text-red-500"></i>
-Continue with Google
+<button id="googleLogin" class="btn mt-6 w-full py-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-bold flex items-center justify-center gap-3">
+<i class="fa-brands fa-google text-red-500"></i>Continue with Google
 </button>
-
 </div>
-
 </div>
-
 
 <!-- ================= PROFILE DASHBOARD MODAL ================= -->
-
 <div id="dashboardModal" class="modal fixed inset-0 z-[100] bg-slate-950/50 backdrop-blur-sm flex justify-end">
-
   <div id="dashPanel" class="bg-white w-full sm:w-[400px] h-full flex flex-col shadow-2xl transform translate-x-full transition-transform duration-300 ease-out">
-    
     <div class="flex justify-between items-center p-6 border-b border-slate-200 shrink-0">
        <h3 class="text-xl font-extrabold">My Dashboard</h3>
-       <button id="closeDashboard" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex justify-center items-center transition">
-         <i class="fa-solid fa-xmark"></i>
-       </button>
+       <button id="closeDashboard" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex justify-center items-center transition"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    
     <div class="p-6 pb-2 flex items-center gap-4 shrink-0">
        <img id="dashPic" class="w-16 h-16 rounded-full object-cover border border-slate-200">
        <div class="overflow-hidden">
@@ -1447,84 +811,32 @@ Continue with Google
           <p id="dashEmail" class="text-sm text-slate-500 truncate"></p>
        </div>
     </div>
-    
     <div class="flex-1 overflow-y-auto p-6 pt-4">
        <h5 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Your Saved Exams</h5>
-       <div id="dashSavedExams" class="space-y-3">
-         <!-- Saved Exams injected here via JS -->
-       </div>
+       <div id="dashSavedExams" class="space-y-3"></div>
     </div>
-    
     <div class="p-6 border-t border-slate-200 shrink-0 bg-slate-50">
-       <button id="logoutBtn" class="w-full py-3.5 rounded-xl bg-red-100 text-red-600 font-extrabold hover:bg-red-200 transition flex items-center justify-center gap-2">
-         <i class="fa-solid fa-arrow-right-from-bracket"></i>
-         Log Out
-       </button>
+       <button id="logoutBtn" class="w-full py-3.5 rounded-xl bg-red-100 text-red-600 font-extrabold hover:bg-red-200 transition flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-right-from-bracket"></i>Log Out</button>
     </div>
-    
   </div>
-
 </div>
-
 
 <!-- ================= EXAM DETAIL MODAL ================= -->
 <div id="examDetailModal" class="modal fixed inset-0 z-[150] bg-slate-950/50 backdrop-blur-sm flex justify-center items-center p-4 sm:p-5">
   <div class="modal-panel bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative">
-    
-    <button onclick="closeExamDetail()" class="absolute top-4 right-4 w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition text-slate-600 flex justify-center items-center z-10">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-
-    <div id="examDetailContent" class="mt-2">
-      <!-- Details JS se yahan aayengi -->
-    </div>
-
+    <button onclick="closeExamDetail()" class="absolute top-4 right-4 w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 transition text-slate-600 flex justify-center items-center z-10"><i class="fa-solid fa-xmark"></i></button>
+    <div id="examDetailContent" class="mt-2"></div>
   </div>
 </div>
 
-
 <!-- ================= TOAST ================= -->
+<div id="toast" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-bold"></div>
 
-<div
-id="toast"
-class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl text-sm font-bold">
-</div>
-
-
-<!-- ================= FIREBASE ================= -->
-
+<!-- ================= FIREBASE & LOGIC ================= -->
 <script type="module">
-
-import {
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-
-import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup,
-onAuthStateChanged,
-signOut,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-sendPasswordResetEmail
-}
-from
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-import { 
-getFirestore, 
-doc, 
-setDoc, 
-getDoc,
-collection,
-getDocs
-} 
-from 
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyA2y6Ty0Iq2jFjbeGKaqqUMyLW0NZwKLIA",
@@ -1535,29 +847,22 @@ messagingSenderId:"341950730543",
 appId:"1:341950730543:web:88d3b101af0351b53cd1da"
 };
 
-
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const provider=new GoogleAuthProvider();
 const db=getFirestore(app);
 
-
-/* ================= BRAND ASSETS ================= */
-
+/* BRAND ASSETS */
 const LOGO="./11318.png";
 const FOUNDER="./11287.jpg";
-
 const navLogo=document.getElementById("navLogo");
 const footerLogo=document.getElementById("footerLogo");
 const founderPhoto=document.getElementById("founderPhoto");
-
 if(navLogo){ navLogo.src=LOGO; navLogo.onerror=()=>{ navLogo.src="11318.png"; }; }
 if(footerLogo){ footerLogo.src=LOGO; footerLogo.onerror=()=>{ footerLogo.src="11318.png"; }; }
 if(founderPhoto){ founderPhoto.src=FOUNDER; founderPhoto.onerror=()=>{ founderPhoto.src="11287.jpg"; }; }
 
-
-/* ================= ELEMENTS ================= */
-
+/* ELEMENTS */
 const state=document.getElementById("state");
 const category=document.getElementById("category");
 const dob=document.getElementById("dob");
@@ -1624,113 +929,41 @@ const dashEmail = document.getElementById("dashEmail");
 const dashSavedExams = document.getElementById("dashSavedExams");
 const logoutBtn = document.getElementById("logoutBtn");
 
-/* ================= STATES ================= */
-
-const states=[
-"Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi", "Jammu & Kashmir", "Ladakh", "Chandigarh", "Puducherry"
-];
-
+/* STATES */
+const states=["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi", "Jammu & Kashmir", "Ladakh", "Chandigarh", "Puducherry"];
 state.innerHTML=states.map(x=>`<option>${x}</option>`).join("");
 
-
-/* ================= EXAM DATA (UPDATED WITH MODAL FIELDS) ================= */
-// ADDED: startDate, applyLink, notification, syllabus to prevent undefined errors.
+/* EXAM DATA */
 let exams=[
-{
-  id:"1", name:"SSC CHSL", org:"Staff Selection Commission", cat:"Government", edu:"12th", min:18, max:27, status:"Reference", 
-  desc:"Combined Higher Secondary Level recruitment.",
-  startDate: "08-May-2026", applyLink: "https://ssc.gov.in", notification: "#", 
-  syllabus: "Tier 1: Basic English, General Intelligence, Quantitative Aptitude (Basic Arithmetic), General Awareness."
-},
-{
-  id:"2", name:"SSC CGL", org:"Staff Selection Commission", cat:"Government", edu:"Graduation", min:18, max:32, status:"Reference", 
-  desc:"Combined Graduate Level recruitment.",
-  startDate: "Upcoming", applyLink: "https://ssc.gov.in", notification: "#", 
-  syllabus: "Tier 1: General Intelligence & Reasoning, General Awareness, Quantitative Aptitude, English Comprehension."
-},
-{
-  id:"3", name:"Air Force Agniveer Vayu", org:"Indian Air Force", cat:"Defence", edu:"12th", min:17.5, max:21, status:"Reference", 
-  desc:"Defence recruitment opportunity; verify current intake rules.",
-  startDate: "To be announced", applyLink: "https://agnipathvayu.cdac.in/", notification: "#", 
-  syllabus: "Group Y: English (20 Marks), Reasoning & General Awareness (30 Marks)."
-},
-{
-  id:"4", name:"RRB NTPC", org:"Railway Recruitment Boards", cat:"Railway", edu:"12th", min:18, max:33, status:"Reference", 
-  desc:"Non-Technical Popular Categories recruitment.",
-  startDate: "Upcoming", applyLink: "https://indianrailways.gov.in/", notification: "#", 
-  syllabus: "CBT 1: Mathematics, General Intelligence and Reasoning, General Awareness."
-},
-{
-  id:"5", name:"UPSC Civil Services", org:"Union Public Service Commission", cat:"Civil Services", edu:"Graduation", min:21, max:32, status:"Reference", 
-  desc:"Civil Services Examination; verify category relaxations.",
-  startDate: "Upcoming", applyLink: "https://upsconline.nic.in/", notification: "#", 
-  syllabus: "Prelims: General Studies Paper I & CSAT Paper II. Mains: 9 Papers including Optional subjects."
-},
-{
-  id:"6", name:"IBPS PO", org:"Institute of Banking Personnel Selection", cat:"Banking", edu:"Graduation", min:20, max:30, status:"Reference", 
-  desc:"Probationary Officer recruitment; verify current notification.",
-  startDate: "Upcoming", applyLink: "https://ibps.in/", notification: "#", 
-  syllabus: "Prelims: English Language, Quantitative Aptitude, Reasoning Ability."
-},
-{
-  id:"7", name:"REET / Teacher Recruitment", org:"State Education Recruitment", cat:"Teaching", edu:"12th", min:18, max:40, status:"Reference", 
-  desc:"State-specific teacher opportunities vary by notification.",
-  startDate: "Upcoming", applyLink: "#", notification: "#", 
-  syllabus: "Child Development and Pedagogy, Language I, Language II, Subject specific papers."
-},
-{
-  id:"8", name:"State Police Recruitment", org:"State Recruitment Boards", cat:"Police", edu:"12th", min:18, max:28, status:"Reference", 
-  desc:"Rules vary by state and recruitment notification.",
-  startDate: "Upcoming", applyLink: "#", notification: "#", 
-  syllabus: "General Knowledge, Reasoning, Numerical Ability, State specific General Knowledge."
-}
+{ id:"1", name:"SSC CHSL", org:"Staff Selection Commission", cat:"Government", edu:"12th", min:18, max:27, status:"Reference", desc:"Combined Higher Secondary Level recruitment.", startDate: "08-May-2026", applyLink: "https://ssc.gov.in", notification: "#", syllabus: "Tier 1: Basic English, General Intelligence, Quantitative Aptitude (Basic Arithmetic), General Awareness." },
+{ id:"2", name:"SSC CGL", org:"Staff Selection Commission", cat:"Government", edu:"Graduation", min:18, max:32, status:"Reference", desc:"Combined Graduate Level recruitment.", startDate: "Upcoming", applyLink: "https://ssc.gov.in", notification: "#", syllabus: "Tier 1: General Intelligence & Reasoning, General Awareness, Quantitative Aptitude, English Comprehension." },
+{ id:"3", name:"Air Force Agniveer Vayu", org:"Indian Air Force", cat:"Defence", edu:"12th", min:17.5, max:21, status:"Reference", desc:"Defence recruitment opportunity; verify current intake rules.", startDate: "To be announced", applyLink: "https://agnipathvayu.cdac.in/", notification: "#", syllabus: "Group Y: English (20 Marks), Reasoning & General Awareness (30 Marks)." },
+{ id:"4", name:"RRB NTPC", org:"Railway Recruitment Boards", cat:"Railway", edu:"12th", min:18, max:33, status:"Reference", desc:"Non-Technical Popular Categories recruitment.", startDate: "Upcoming", applyLink: "https://indianrailways.gov.in/", notification: "#", syllabus: "CBT 1: Mathematics, General Intelligence and Reasoning, General Awareness." },
+{ id:"5", name:"UPSC Civil Services", org:"Union Public Service Commission", cat:"Civil Services", edu:"Graduation", min:21, max:32, status:"Reference", desc:"Civil Services Examination; verify category relaxations.", startDate: "Upcoming", applyLink: "https://upsconline.nic.in/", notification: "#", syllabus: "Prelims: General Studies Paper I & CSAT Paper II. Mains: 9 Papers including Optional subjects." },
+{ id:"6", name:"IBPS PO", org:"Institute of Banking Personnel Selection", cat:"Banking", edu:"Graduation", min:20, max:30, status:"Reference", desc:"Probationary Officer recruitment; verify current notification.", startDate: "Upcoming", applyLink: "https://ibps.in/", notification: "#", syllabus: "Prelims: English Language, Quantitative Aptitude, Reasoning Ability." },
+{ id:"7", name:"REET / Teacher Recruitment", org:"State Education Recruitment", cat:"Teaching", edu:"12th", min:18, max:40, status:"Reference", desc:"State-specific teacher opportunities vary by notification.", startDate: "Upcoming", applyLink: "#", notification: "#", syllabus: "Child Development and Pedagogy, Language I, Language II, Subject specific papers." },
+{ id:"8", name:"State Police Recruitment", org:"State Recruitment Boards", cat:"Police", edu:"12th", min:18, max:28, status:"Reference", desc:"Rules vary by state and recruitment notification.", startDate: "Upcoming", applyLink: "#", notification: "#", syllabus: "General Knowledge, Reasoning, Numerical Ability, State specific General Knowledge." }
 ];
 
 const eduOrder=["10th", "12th", "Graduation", "Post Graduation"];
 let selectedEdu="12th";
 let selectedCategory="All";
 
-
-/* ================= DYNAMIC MONTHLY EXAM DATA ================= */
 async function fetchDynamicExams() {
   try {
-    const response = await fetch("./exams.json?v=" + Date.now(), {
-      cache: "no-store"
-    });
-
+    const response = await fetch("./exams.json?v=" + Date.now(), { cache: "no-store" });
     if (!response.ok) throw new Error("exams.json not found");
-
     const data = await response.json();
     if (!Array.isArray(data)) throw new Error("Invalid exams.json format");
-
-    exams = data.map((exam, index) => ({
-      id: String(exam.id ?? index + 1),
-      ...exam
-    }));
-
+    exams = data.map((exam, index) => ({ id: String(exam.id ?? index + 1), ...exam }));
     const chips=["All", ...new Set(exams.map(x=>x.cat).filter(Boolean))];
-    categoryChips.innerHTML=chips.map(c=>`
-      <button data-cat="${escape(c)}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${escape(c)}</button>
-    `).join("");
-
-    document.querySelectorAll(".chip").forEach(button=>{
-      button.onclick=()=>{
-        selectedCategory=button.dataset.cat;
-        document.querySelectorAll(".chip").forEach(x=>x.classList.remove("bg-slate-900", "text-white"));
-        button.classList.add("bg-slate-900", "text-white");
-        renderExams();
-      };
-    });
-
+    categoryChips.innerHTML=chips.map(c=>`<button data-cat="${escape(c)}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${escape(c)}</button>`).join("");
+    document.querySelectorAll(".chip").forEach(button=>{ button.onclick=()=>{ selectedCategory=button.dataset.cat; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("bg-slate-900", "text-white")); button.classList.add("bg-slate-900", "text-white"); renderExams(); }; });
     document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
     renderExams();
-    console.log("Loaded monthly exams:", exams.length);
     return;
-  } catch(e) {
-    console.log("exams.json unavailable. Falling back to Firebase/local exams:", e);
-  }
+  } catch(e) { }
 
-  /* Original Firebase fallback */
   try {
     const examsRef = collection(db, "exams");
     const snap = await getDocs(examsRef);
@@ -1738,30 +971,15 @@ async function fetchDynamicExams() {
       const cloudExams = [];
       snap.forEach(doc => cloudExams.push({ id: doc.id, ...doc.data() }));
       exams = cloudExams;
-
       const chips=["All", ...new Set(exams.map(x=>x.cat).filter(Boolean))];
-      categoryChips.innerHTML=chips.map(c=>`
-        <button data-cat="${escape(c)}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${escape(c)}</button>
-      `).join("");
-
-      document.querySelectorAll(".chip").forEach(button=>{
-        button.onclick=()=>{
-          selectedCategory=button.dataset.cat;
-          document.querySelectorAll(".chip").forEach(x=>x.classList.remove("bg-slate-900", "text-white"));
-          button.classList.add("bg-slate-900", "text-white");
-          renderExams();
-        };
-      });
-
+      categoryChips.innerHTML=chips.map(c=>`<button data-cat="${escape(c)}" class="chip px-4 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-bold whitespace-nowrap">${escape(c)}</button>`).join("");
+      document.querySelectorAll(".chip").forEach(button=>{ button.onclick=()=>{ selectedCategory=button.dataset.cat; document.querySelectorAll(".chip").forEach(x=>x.classList.remove("bg-slate-900", "text-white")); button.classList.add("bg-slate-900", "text-white"); renderExams(); }; });
       document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
       renderExams();
     }
-  } catch(e) {
-    console.log("Using local default exams:", e);
-  }
+  } catch(e) { }
 }
 
-/* ================= LATEST NEWS DATA ================= */
 let latestNews=[];
 async function fetchLatestNews(){
   try{
@@ -1771,9 +989,7 @@ async function fetchLatestNews(){
     if(!Array.isArray(data)) throw new Error("Invalid news.json format");
     latestNews=data.filter(x=>x.active!==false).sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
     renderLatestNews();
-  }catch(e){
-    console.log("Latest news file unavailable:",e);
-  }
+  }catch(e){ }
 }
 
 function renderLatestNews(){
@@ -1781,10 +997,7 @@ function renderLatestNews(){
   if(!box) return;
   box.innerHTML=latestNews.slice(0,10).map(n=>`
     <article class="card rounded-2xl p-5 hover:border-blue-300 transition">
-      <div class="flex items-center justify-between gap-3">
-        <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${escape(n.category||"Latest Update")}</span>
-        <span class="text-xs text-slate-400">${escape(n.date||"")}</span>
-      </div>
+      <div class="flex items-center justify-between gap-3"><span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${escape(n.category||"Latest Update")}</span><span class="text-xs text-slate-400">${escape(n.date||"")}</span></div>
       <h3 class="text-lg font-extrabold mt-4">${escape(n.title||"")}</h3>
       <p class="text-sm text-slate-600 mt-3">${escape(n.description||"")}</p>
       ${n.url ? `<a href="${escape(n.url)}" target="_blank" rel="noopener noreferrer" class="inline-flex mt-4 px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-bold">Official Update</a>` : ""}
@@ -1792,472 +1005,217 @@ function renderLatestNews(){
   `).join("");
 }
 
-
-/* ================= EXAM RENDER (MODAL ENABLED) ================= */
-
 function renderExams(){
   const q = examSearch.value.trim().toLowerCase();
-  const list = exams.filter(e =>
-    (selectedCategory === "All" || e.cat === selectedCategory) &&
-    (!q || (`${e.name} ${e.org} ${e.cat}`).toLowerCase().includes(q))
-  );
-
+  const list = exams.filter(e => (selectedCategory === "All" || e.cat === selectedCategory) && (!q || (`${e.name} ${e.org} ${e.cat}`).toLowerCase().includes(q)) );
   examGrid.innerHTML = list.map(e => `
     <article onclick="openExamDetail('${e.id}')" class="card rounded-2xl p-5 hover:border-blue-300 transition reveal show cursor-pointer">
-      <div class="flex justify-between gap-3">
-        <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${e.cat}</span>
-        <button onclick="event.stopPropagation(); toggleSave('${e.id}')" class="saveBtn text-slate-400 hover:text-blue-600">
-          <i class="fa-regular fa-bookmark"></i>
-        </button>
-      </div>
-      <h3 class="text-lg font-extrabold mt-4">${e.name}</h3>
-      <p class="text-xs text-slate-500 mt-1">${e.org}</p>
-      <p class="text-sm text-slate-600 mt-4 line-clamp-2">${e.desc}</p>
-      <div class="grid grid-cols-2 gap-2 mt-4 text-xs">
-        <div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Age</span><b>${e.min}–${e.max}</b></div>
-        <div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Education</span><b>${e.edu}+</b></div>
-      </div>
+      <div class="flex justify-between gap-3"><span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700">${e.cat}</span><button onclick="event.stopPropagation(); toggleSave('${e.id}')" class="saveBtn text-slate-400 hover:text-blue-600"><i class="fa-regular fa-bookmark"></i></button></div>
+      <h3 class="text-lg font-extrabold mt-4">${e.name}</h3><p class="text-xs text-slate-500 mt-1">${e.org}</p><p class="text-sm text-slate-600 mt-4 line-clamp-2">${e.desc}</p>
+      <div class="grid grid-cols-2 gap-2 mt-4 text-xs"><div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Age</span><b>${e.min}–${e.max}</b></div><div class="bg-slate-50 rounded-xl p-3"><span class="text-slate-400 block">Education</span><b>${e.edu}+</b></div></div>
     </article>
   `).join("") || `<div class="col-span-full text-center py-12 text-slate-500">No matching exams found.</div>`;
-
   updateSavedButtons();
 }
-
-window.renderExams=renderExams;
-examSearch.oninput=renderExams;
-
-
-/* ================= AGE ================= */
+window.renderExams=renderExams; examSearch.oninput=renderExams;
 
 function calculateAge(dateStr){
-const b=new Date(dateStr+"T00:00:00");
-const t=new Date();
+const b=new Date(dateStr+"T00:00:00"); const t=new Date();
 if(Number.isNaN(b.getTime()) || b>t) return null;
-let y=t.getFullYear()-b.getFullYear();
-let m=t.getMonth()-b.getMonth();
-let d=t.getDate()-b.getDate();
-if(d<0){ m--; d+=new Date(t.getFullYear(), t.getMonth(), 0).getDate(); }
-if(m<0){ y--; m+=12; }
+let y=t.getFullYear()-b.getFullYear(); let m=t.getMonth()-b.getMonth(); let d=t.getDate()-b.getDate();
+if(d<0){ m--; d+=new Date(t.getFullYear(), t.getMonth(), 0).getDate(); } if(m<0){ y--; m+=12; }
 return { y, m, d };
 }
 
+function escape(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c])); }
 
-/* ================= ESCAPE ================= */
-
-function escape(s){
-return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[c]));
-}
-
-
-/* ================= EDUCATION ================= */
-
-eduChoices.innerHTML=eduOrder.map(e=>`
-<button data-edu="${e}" class="eduBtn text-left card rounded-2xl p-5 hover:border-blue-400">
-<div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i class="fa-solid fa-graduation-cap"></i></div>
-<b class="block mt-4">${e}</b><span class="text-xs text-slate-500">Select</span>
-</button>
-`).join("");
-
-document.querySelectorAll(".eduBtn").forEach(button=>{
-button.onclick=()=>{
-selectedEdu=button.dataset.edu;
-document.querySelectorAll(".eduBtn").forEach(x=>{ x.classList.remove("border-blue-500", "ring-2", "ring-blue-100"); });
-button.classList.add("border-blue-500", "ring-2", "ring-blue-100");
-};
-});
-
-
-/* ================= STEPS ================= */
+eduChoices.innerHTML=eduOrder.map(e=>`<button data-edu="${e}" class="eduBtn text-left card rounded-2xl p-5 hover:border-blue-400"><div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i class="fa-solid fa-graduation-cap"></i></div><b class="block mt-4">${e}</b><span class="text-xs text-slate-500">Select</span></button>`).join("");
+document.querySelectorAll(".eduBtn").forEach(button=>{ button.onclick=()=>{ selectedEdu=button.dataset.edu; document.querySelectorAll(".eduBtn").forEach(x=>{ x.classList.remove("border-blue-500", "ring-2", "ring-blue-100"); }); button.classList.add("border-blue-500", "ring-2", "ring-blue-100"); }; });
 
 function setStep(n){
-eligStep1.classList.toggle("hidden", n!==1);
-eligStep2.classList.toggle("hidden", n!==2);
-eligStep3.classList.toggle("hidden", n!==3);
-
-progress.style.width=n>=2?"100%":"33%";
-progress2.style.width=n>=3?"100%":"0%";
-
-[step1Dot,step2Dot,step3Dot].forEach((d,i)=>{
-d.classList.toggle("bg-slate-900", i<n);
-d.classList.toggle("text-white", i<n);
-d.classList.toggle("bg-slate-100", i>=n);
-d.classList.toggle("text-slate-400", i>=n);
-});
+eligStep1.classList.toggle("hidden", n!==1); eligStep2.classList.toggle("hidden", n!==2); eligStep3.classList.toggle("hidden", n!==3);
+progress.style.width=n>=2?"100%":"33%"; progress2.style.width=n>=3?"100%":"0%";
+[step1Dot,step2Dot,step3Dot].forEach((d,i)=>{ d.classList.toggle("bg-slate-900", i<n); d.classList.toggle("text-white", i<n); d.classList.toggle("bg-slate-100", i>=n); d.classList.toggle("text-slate-400", i>=n); });
 }
 
-nextEligibility.onclick=()=>{
-if(!dob.value){ toastMsg("Please select your date of birth."); return; }
-if(!calculateAge(dob.value)){ toastMsg("Please enter a valid past date."); return; }
-setStep(2);
-};
-
-backEligibility.onclick=()=>setStep(1);
-editProfile.onclick=()=>setStep(1);
-
-
-/* ================= ELIGIBILITY ENGINE (RADAR DYNAMIC UPDATE) ================= */
+nextEligibility.onclick=()=>{ if(!dob.value){ toastMsg("Please select your date of birth."); return; } if(!calculateAge(dob.value)){ toastMsg("Please enter a valid past date."); return; } setStep(2); };
+backEligibility.onclick=()=>setStep(1); editProfile.onclick=()=>setStep(1);
 
 analyzeEligibility.onclick=()=>{
-const age=calculateAge(dob.value);
-const eduRank=eduOrder.indexOf(selectedEdu);
-
-summary.innerHTML=`
-<div><span class="text-xs text-slate-400">Age</span><b class="block">${age.y}y ${age.m}m ${age.d}d</b></div>
-<div><span class="text-xs text-slate-400">State</span><b class="block">${escape(state.value)}</b></div>
-<div><span class="text-xs text-slate-400">Category</span><b class="block">${escape(category.value)}</b></div>
-<div><span class="text-xs text-slate-400">Qualification</span><b class="block">${escape(selectedEdu)}</b></div>
-`;
-
-// Dynamic Opportunity Radar Update
-document.getElementById("radarAge").textContent = `${age.y} yrs`;
-document.getElementById("radarState").textContent = state.value;
-document.getElementById("radarEdu").textContent = selectedEdu;
-
+const age=calculateAge(dob.value); const eduRank=eduOrder.indexOf(selectedEdu);
+summary.innerHTML=`<div><span class="text-xs text-slate-400">Age</span><b class="block">${age.y}y ${age.m}m ${age.d}d</b></div><div><span class="text-xs text-slate-400">State</span><b class="block">${escape(state.value)}</b></div><div><span class="text-xs text-slate-400">Category</span><b class="block">${escape(category.value)}</b></div><div><span class="text-xs text-slate-400">Qualification</span><b class="block">${escape(selectedEdu)}</b></div>`;
+document.getElementById("radarAge").textContent = `${age.y} yrs`; document.getElementById("radarState").textContent = state.value; document.getElementById("radarEdu").textContent = selectedEdu;
 const rankOk=e=>{ return eduRank>=eduOrder.indexOf(e.edu); };
 const results=exams.filter(e=> age.y>=Math.floor(e.min) && age.y<=e.max && rankOk(e) );
-
 matchCount.textContent=`${results.length} potential matches based on the current reference rules`;
-
-resultGrid.innerHTML=results.map(e=>`
-<div class="rounded-2xl border border-slate-200 p-5 bg-white">
-<div class="flex justify-between"><span class="text-xs font-extrabold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">Potential Match</span><i class="fa-regular fa-bookmark text-slate-400"></i></div>
-<h4 class="font-extrabold text-lg mt-4">${e.name}</h4>
-<p class="text-xs text-slate-500">${e.org}</p>
-<div class="mt-4 text-sm space-y-2">
-<div class="flex justify-between"><span class="text-slate-400">Age</span><b>${e.min}–${e.max}</b></div>
-<div class="flex justify-between"><span class="text-slate-400">Education</span><b>${e.edu}+</b></div>
-</div>
-<button onclick="document.getElementById('exams').scrollIntoView({behavior:'smooth'});document.getElementById('examSearch').value='${escape(e.name)}';renderExams()" class="mt-4 w-full py-2.5 rounded-xl bg-slate-900 text-white font-bold text-sm">Find Exam <i class="fa-solid fa-arrow-right ml-1"></i></button>
-</div>
-`).join("") || `<div class="sm:col-span-2 p-8 rounded-2xl bg-slate-50 text-center text-slate-500">No close matches found. Try another qualification or review current official notifications.</div>`;
-
+resultGrid.innerHTML=results.map(e=>`<div class="rounded-2xl border border-slate-200 p-5 bg-white"><div class="flex justify-between"><span class="text-xs font-extrabold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">Potential Match</span><i class="fa-regular fa-bookmark text-slate-400"></i></div><h4 class="font-extrabold text-lg mt-4">${e.name}</h4><p class="text-xs text-slate-500">${e.org}</p><div class="mt-4 text-sm space-y-2"><div class="flex justify-between"><span class="text-slate-400">Age</span><b>${e.min}–${e.max}</b></div><div class="flex justify-between"><span class="text-slate-400">Education</span><b>${e.edu}+</b></div></div><button onclick="document.getElementById('exams').scrollIntoView({behavior:'smooth'});document.getElementById('examSearch').value='${escape(e.name)}';renderExams()" class="mt-4 w-full py-2.5 rounded-xl bg-slate-900 text-white font-bold text-sm">Find Exam <i class="fa-solid fa-arrow-right ml-1"></i></button></div>`).join("") || `<div class="sm:col-span-2 p-8 rounded-2xl bg-slate-50 text-center text-slate-500">No close matches found. Try another qualification or review current official notifications.</div>`;
 setStep(3);
 };
 
+ageBtn.onclick=()=>{ const a=calculateAge(ageDob.value); ageOut.textContent=a?`${a.y} years, ${a.m} months, ${a.d} days`:"Enter a valid DOB."; };
+pctBtn.onclick=()=>{ const a=+marks.value; const b=+total.value; pctOut.textContent=b>0&&a>=0?`${((a/b)*100).toFixed(2)}%`:"Enter valid marks."; };
+cgpaBtn.onclick=()=>{ const c=+cgpa.value; cgpaOut.textContent=c>=0&&c<=10?`${(c*9.5).toFixed(2)}% (9.5× method)`:"Enter CGPA 0–10."; };
+dateBtn.onclick=()=>{ const a=new Date(dateA.value); const b=new Date(dateB.value); dateOut.textContent=a.getTime()&&b.getTime()?`${Math.abs(Math.round((b-a)/86400000))} days`:"Select both dates."; };
 
-/* ================= TOOLS LOGIC ================= */
-ageBtn.onclick=()=>{
-const a=calculateAge(ageDob.value);
-ageOut.textContent=a?`${a.y} years, ${a.m} months, ${a.d} days`:"Enter a valid DOB.";
-};
+function toastMsg(t){ toast.textContent=t; toast.classList.remove("hidden"); toast.classList.add("toast"); setTimeout(()=>{ toast.classList.add("hidden"); },2600); }
 
-pctBtn.onclick=()=>{
-const a=+marks.value; const b=+total.value;
-pctOut.textContent=b>0&&a>=0?`${((a/b)*100).toFixed(2)}%`:"Enter valid marks.";
-};
-
-cgpaBtn.onclick=()=>{
-const c=+cgpa.value;
-cgpaOut.textContent=c>=0&&c<=10?`${(c*9.5).toFixed(2)}% (9.5× method)`:"Enter CGPA 0–10.";
-};
-
-dateBtn.onclick=()=>{
-const a=new Date(dateA.value); const b=new Date(dateB.value);
-dateOut.textContent=a.getTime()&&b.getTime()?`${Math.abs(Math.round((b-a)/86400000))} days`:"Select both dates.";
-};
-
-
-/* ================= TOAST ================= */
-function toastMsg(t){
-toast.textContent=t; toast.classList.remove("hidden"); toast.classList.add("toast");
-setTimeout(()=>{ toast.classList.add("hidden"); },2600);
-}
-
-
-/* ================= SAVE EXAMS ================= */
 let saved=JSON.parse(localStorage.getItem("ncl_saved")||"[]").map(String);
-
 window.toggleSave = async id => {
-  id = String(id);
-  if (saved.includes(id)) { 
-    saved = saved.filter(x => x !== id); 
-  } else { 
-    saved.push(id); 
-  }
-  
-  // Save Locally First
-  localStorage.setItem("ncl_saved", JSON.stringify(saved));
-  updateSavedButtons();
-  
-  // Update dashboard if it's open
-  renderDashboardExams();
-  
-  // Sync to Cloud if logged in
+  id = String(id); if (saved.includes(id)) { saved = saved.filter(x => x !== id); } else { saved.push(id); }
+  localStorage.setItem("ncl_saved", JSON.stringify(saved)); updateSavedButtons(); renderDashboardExams();
   const user = auth.currentUser;
-  if (user) {
-    try {
-      await setDoc(doc(db, "users", user.uid), { savedExams: saved }, { merge: true });
-      toastMsg(saved.includes(id) ? "Exam saved to Cloud ☁️" : "Exam removed from Cloud ☁️");
-    } catch(e) {
-      console.error(e);
-      toastMsg("Saved locally. Sync failed.");
-    }
-  } else {
-    toastMsg(saved.includes(id) ? "Saved locally. Login to sync!" : "Exam removed locally.");
-  }
+  if (user) { try { await setDoc(doc(db, "users", user.uid), { savedExams: saved }, { merge: true }); toastMsg(saved.includes(id) ? "Exam saved to Cloud ☁️" : "Exam removed from Cloud ☁️"); } catch(e) { toastMsg("Saved locally. Sync failed."); } } else { toastMsg(saved.includes(id) ? "Saved locally. Login to sync!" : "Exam removed locally."); }
 };
+function updateSavedButtons(){ document.querySelectorAll(".saveBtn").forEach(b=>{ const match = b.getAttribute("onclick").match(/toggleSave\(['"]?([^'"]+)['"]?\)/); if(!match) return; const id = match[1]; b.innerHTML=saved.includes(id)?'<i class="fa-solid fa-bookmark text-blue-600"></i>':'<i class="fa-regular fa-bookmark"></i>'; }); }
 
-function updateSavedButtons(){
-  document.querySelectorAll(".saveBtn").forEach(b=>{
-    const match = b.getAttribute("onclick").match(/toggleSave\(['"]?([^'"]+)['"]?\)/);
-    if(!match) return;
-    const id = match[1];
-    b.innerHTML=saved.includes(id)?'<i class="fa-solid fa-bookmark text-blue-600"></i>':'<i class="fa-regular fa-bookmark"></i>';
-  });
-}
-
-async function syncSavedExams(user) {
-  if (!user) return;
-  try {
-    const userRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(userRef);
-    let remoteSaved = [];
-    if (docSnap.exists() && docSnap.data().savedExams) {
-      remoteSaved = docSnap.data().savedExams.map(String);
-    }
-    saved = [...new Set([...saved, ...remoteSaved])];
-    localStorage.setItem("ncl_saved", JSON.stringify(saved));
-    updateSavedButtons();
-    renderDashboardExams();
-    await setDoc(userRef, { savedExams: saved }, { merge: true });
-  } catch (err) {
-    console.error("Sync error: ", err);
-  }
-}
-
-
-/* ================= FIREBASE LOGIN ================= */
+async function syncSavedExams(user) { if (!user) return; try { const userRef = doc(db, "users", user.uid); const docSnap = await getDoc(userRef); let remoteSaved = []; if (docSnap.exists() && docSnap.data().savedExams) { remoteSaved = docSnap.data().savedExams.map(String); } saved = [...new Set([...saved, ...remoteSaved])]; localStorage.setItem("ncl_saved", JSON.stringify(saved)); updateSavedButtons(); renderDashboardExams(); await setDoc(userRef, { savedExams: saved }, { merge: true }); } catch (err) { } }
 
 let isSignup = false;
-
-authPassword.addEventListener('input', (e) => {
-  if(!isSignup) { passFeedback.classList.add('hidden'); return; }
-  const val = e.target.value;
-  passFeedback.classList.remove('hidden');
-  
-  if (val.length === 0) {
-    passFeedback.classList.add('hidden');
-    authPassword.classList.remove('border-red-500', 'border-emerald-500');
-    authPassword.classList.add('border-slate-200');
-  } else if (val.length < 6) {
-    passFeedback.textContent = "Weak: Need at least 6 characters";
-    passFeedback.className = "text-[10px] font-bold mt-1 text-red-500";
-    authPassword.classList.add('border-red-500');
-    authPassword.classList.remove('border-slate-200', 'border-emerald-500');
-  } else {
-    passFeedback.textContent = "Looks good!";
-    passFeedback.className = "text-[10px] font-bold mt-1 text-emerald-500";
-    authPassword.classList.add('border-emerald-500');
-    authPassword.classList.remove('border-slate-200', 'border-red-500');
-  }
-});
-
-
-tabLogin.onclick = () => {
-  isSignup = false;
-  tabLogin.classList.add("text-blue-600", "border-b-2", "border-blue-600");
-  tabLogin.classList.remove("text-slate-400");
-  tabSignup.classList.remove("text-blue-600", "border-b-2", "border-blue-600");
-  tabSignup.classList.add("text-slate-400");
-  authSubmit.textContent = "Login to account";
-  forgotPasswordBtn.classList.remove('hidden');
-  passFeedback.classList.add('hidden');
-  authPassword.classList.remove('border-red-500', 'border-emerald-500');
-  authPassword.classList.add('border-slate-200');
-};
-
-tabSignup.onclick = () => {
-  isSignup = true;
-  tabSignup.classList.add("text-blue-600", "border-b-2", "border-blue-600");
-  tabSignup.classList.remove("text-slate-400");
-  tabLogin.classList.remove("text-blue-600", "border-b-2", "border-blue-600");
-  tabLogin.classList.add("text-slate-400");
-  authSubmit.textContent = "Create an account";
-  forgotPasswordBtn.classList.add('hidden');
-  authPassword.dispatchEvent(new Event('input'));
-};
-
-loginBtn.onclick=()=>{ loginModal.classList.add("open"); };
-mobileLogin.onclick=()=>{ mobileMenu.classList.remove("mobile-open"); loginModal.classList.add("open"); };
-closeModal.onclick=()=>{ loginModal.classList.remove("open"); };
-
-forgotPasswordBtn.onclick = async () => {
-  const email = authEmail.value.trim();
-  if(!email) { toastMsg("Please enter your email address first."); authEmail.focus(); return; }
-  try {
-    await sendPasswordResetEmail(auth, email);
-    toastMsg("Password reset link sent to your email!");
-    loginModal.classList.remove("open");
-  } catch(err) { toastMsg(err.message || "Failed to send reset link."); }
-};
-
-authForm.onsubmit = async (e) => {
-  e.preventDefault();
-  const email = authEmail.value; const pass = authPassword.value;
-  const originalText = authSubmit.textContent;
-  try {
-    authSubmit.textContent = "Processing..."; authSubmit.disabled = true;
-    if (isSignup) {
-      await createUserWithEmailAndPassword(auth, email, pass);
-      toastMsg("Account created successfully!");
-    } else {
-      await signInWithEmailAndPassword(auth, email, pass);
-      toastMsg("Logged in successfully!");
-    }
-    loginModal.classList.remove("open"); authForm.reset();
-  } catch (err) {
-    let msg = "An error occurred.";
-    if(err.code === 'auth/email-already-in-use') msg = "Email already registered. Try Login.";
-    if(err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') msg = "Invalid email or password.";
-    if(err.code === 'auth/weak-password') msg = "Password should be at least 6 characters.";
-    toastMsg(msg);
-  } finally {
-    authSubmit.textContent = originalText; authSubmit.disabled = false;
-  }
-};
-
-googleLogin.onclick=async()=>{
-  try{
-    await signInWithPopup(auth,provider);
-    loginModal.classList.remove("open");
-    toastMsg("Signed in successfully.");
-  }catch(e){ toastMsg(e?.message||"Login failed."); }
-};
-
-/* ================= DASHBOARD UI LOGIC ================= */
+authPassword.addEventListener('input', (e) => { if(!isSignup) { passFeedback.classList.add('hidden'); return; } const val = e.target.value; passFeedback.classList.remove('hidden'); if (val.length === 0) { passFeedback.classList.add('hidden'); authPassword.classList.remove('border-red-500', 'border-emerald-500'); authPassword.classList.add('border-slate-200'); } else if (val.length < 6) { passFeedback.textContent = "Weak: Need at least 6 characters"; passFeedback.className = "text-[10px] font-bold mt-1 text-red-500"; authPassword.classList.add('border-red-500'); authPassword.classList.remove('border-slate-200', 'border-emerald-500'); } else { passFeedback.textContent = "Looks good!"; passFeedback.className = "text-[10px] font-bold mt-1 text-emerald-500"; authPassword.classList.add('border-emerald-500'); authPassword.classList.remove('border-slate-200', 'border-red-500'); } });
+tabLogin.onclick = () => { isSignup = false; tabLogin.classList.add("text-blue-600", "border-b-2", "border-blue-600"); tabLogin.classList.remove("text-slate-400"); tabSignup.classList.remove("text-blue-600", "border-b-2", "border-blue-600"); tabSignup.classList.add("text-slate-400"); authSubmit.textContent = "Login to account"; forgotPasswordBtn.classList.remove('hidden'); passFeedback.classList.add('hidden'); authPassword.classList.remove('border-red-500', 'border-emerald-500'); authPassword.classList.add('border-slate-200'); };
+tabSignup.onclick = () => { isSignup = true; tabSignup.classList.add("text-blue-600", "border-b-2", "border-blue-600"); tabSignup.classList.remove("text-slate-400"); tabLogin.classList.remove("text-blue-600", "border-b-2", "border-blue-600"); tabLogin.classList.add("text-slate-400"); authSubmit.textContent = "Create an account"; forgotPasswordBtn.classList.add('hidden'); authPassword.dispatchEvent(new Event('input')); };
+loginBtn.onclick=()=>{ loginModal.classList.add("open"); }; mobileLogin.onclick=()=>{ mobileMenu.classList.remove("mobile-open"); loginModal.classList.add("open"); }; closeModal.onclick=()=>{ loginModal.classList.remove("open"); };
+forgotPasswordBtn.onclick = async () => { const email = authEmail.value.trim(); if(!email) { toastMsg("Please enter your email address first."); authEmail.focus(); return; } try { await sendPasswordResetEmail(auth, email); toastMsg("Password reset link sent to your email!"); loginModal.classList.remove("open"); } catch(err) { toastMsg(err.message || "Failed to send reset link."); } };
+authForm.onsubmit = async (e) => { e.preventDefault(); const email = authEmail.value; const pass = authPassword.value; const originalText = authSubmit.textContent; try { authSubmit.textContent = "Processing..."; authSubmit.disabled = true; if (isSignup) { await createUserWithEmailAndPassword(auth, email, pass); toastMsg("Account created successfully!"); } else { await signInWithEmailAndPassword(auth, email, pass); toastMsg("Logged in successfully!"); } loginModal.classList.remove("open"); authForm.reset(); } catch (err) { let msg = "An error occurred."; if(err.code === 'auth/email-already-in-use') msg = "Email already registered. Try Login."; if(err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') msg = "Invalid email or password."; if(err.code === 'auth/weak-password') msg = "Password should be at least 6 characters."; toastMsg(msg); } finally { authSubmit.textContent = originalText; authSubmit.disabled = false; } };
+googleLogin.onclick=async()=>{ try{ await signInWithPopup(auth,provider); loginModal.classList.remove("open"); toastMsg("Signed in successfully."); }catch(e){ toastMsg(e?.message||"Login failed."); } };
 
 function renderDashboardExams() {
   const savedList = exams.filter(e => saved.includes(e.id));
-  if(savedList.length === 0) {
-    dashSavedExams.innerHTML = `<div class="text-slate-500 text-sm text-center py-6 bg-slate-50 rounded-xl border border-dashed border-slate-300">You haven't saved any exams yet.</div>`;
-  } else {
-    dashSavedExams.innerHTML = savedList.map(e => `
-      <div class="p-4 border border-slate-200 rounded-xl flex justify-between items-center bg-white hover:border-blue-200 transition group">
-        <div>
-          <h6 class="font-extrabold text-sm text-slate-900">${e.name}</h6>
-          <p class="text-xs text-slate-500 mt-0.5">${e.org}</p>
-        </div>
-        <button onclick="toggleSave('${e.id}')" class="w-8 h-8 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition flex items-center justify-center">
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      </div>
-    `).join('');
-  }
+  if(savedList.length === 0) { dashSavedExams.innerHTML = `<div class="text-slate-500 text-sm text-center py-6 bg-slate-50 rounded-xl border border-dashed border-slate-300">You haven't saved any exams yet.</div>`; } else { dashSavedExams.innerHTML = savedList.map(e => `<div class="p-4 border border-slate-200 rounded-xl flex justify-between items-center bg-white hover:border-blue-200 transition group"><div><h6 class="font-extrabold text-sm text-slate-900">${e.name}</h6><p class="text-xs text-slate-500 mt-0.5">${e.org}</p></div><button onclick="toggleSave('${e.id}')" class="w-8 h-8 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition flex items-center justify-center"><i class="fa-solid fa-trash-can"></i></button></div>`).join(''); }
 }
+profileBtn.onclick = () => { const u = auth.currentUser; if(u) { dashPic.src = u.photoURL || LOGO; dashName.textContent = escape((u.displayName || (u.email ? u.email.split("@")[0] : "Student"))); dashEmail.textContent = escape(u.email || "No email provided"); renderDashboardExams(); dashboardModal.classList.add("open"); setTimeout(() => { dashPanel.classList.remove("translate-x-full"); }, 10); } };
+closeDashboard.onclick = () => { dashPanel.classList.add("translate-x-full"); setTimeout(() => { dashboardModal.classList.remove("open"); }, 300); };
+logoutBtn.onclick = async () => { await signOut(auth); dashPanel.classList.add("translate-x-full"); setTimeout(() => { dashboardModal.classList.remove("open"); }, 300); toastMsg("Signed out successfully."); };
+onAuthStateChanged(auth,u=>{ if(u){ loginBtn.classList.add("hidden"); profileBtn.classList.remove("hidden"); profileBtn.classList.add("flex"); profileBtn.innerHTML=`<img src="${u.photoURL||LOGO}" class="w-7 h-7 rounded-full object-cover"><span>${escape((u.displayName||(u.email ? u.email.split("@")[0] : "Student")).split(" ")[0])}</span>`; syncSavedExams(u); }else{ loginBtn.classList.remove("hidden"); profileBtn.classList.add("hidden"); profileBtn.classList.remove("flex"); } });
 
-profileBtn.onclick = () => {
-  const u = auth.currentUser;
-  if(u) {
-    dashPic.src = u.photoURL || LOGO;
-    dashName.textContent = escape((u.displayName || (u.email ? u.email.split("@")[0] : "Student")));
-    dashEmail.textContent = escape(u.email || "No email provided");
-    
-    renderDashboardExams();
-    dashboardModal.classList.add("open");
-    setTimeout(() => { dashPanel.classList.remove("translate-x-full"); }, 10);
-  }
-};
-
-closeDashboard.onclick = () => {
-  dashPanel.classList.add("translate-x-full");
-  setTimeout(() => { dashboardModal.classList.remove("open"); }, 300);
-};
-
-logoutBtn.onclick = async () => {
-  await signOut(auth);
-  dashPanel.classList.add("translate-x-full");
-  setTimeout(() => { dashboardModal.classList.remove("open"); }, 300);
-  toastMsg("Signed out successfully.");
-};
-
-
-/* ================= AUTH STATE OBSERVER ================= */
-onAuthStateChanged(auth,u=>{
-if(u){
-loginBtn.classList.add("hidden");
-profileBtn.classList.remove("hidden");
-profileBtn.classList.add("flex");
-
-profileBtn.innerHTML=`
-<img src="${u.photoURL||LOGO}" class="w-7 h-7 rounded-full object-cover">
-<span>${escape((u.displayName||(u.email ? u.email.split("@")[0] : "Student")).split(" ")[0])}</span>
-`;
-syncSavedExams(u);
-}else{
-loginBtn.classList.remove("hidden");
-profileBtn.classList.add("hidden");
-profileBtn.classList.remove("flex");
-}
-});
-
-
-/* ================= EXAM DETAIL MODAL LOGIC ================= */
-window.openExamDetail = (id) => {
-  const exam = exams.find(e => e.id === id);
-  if(!exam) return;
-
-  const content = document.getElementById("examDetailContent");
-  content.innerHTML = `
-    <div class="flex items-center gap-3 mb-4">
-      <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-violet-50 text-violet-700">${exam.cat}</span>
-      <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-600">${exam.edu}+</span>
-    </div>
-    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">${exam.name}</h2>
-    <p class="text-slate-500 font-bold mt-1">${exam.org}</p>
-    
-    <p class="mt-5 text-slate-600 leading-relaxed">${exam.desc}</p>
-
-    <div class="grid grid-cols-2 gap-4 mt-6">
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-        <span class="block text-xs text-slate-400 font-bold uppercase tracking-wide">Age Limit</span>
-        <b class="text-base sm:text-lg">${exam.min} - ${exam.max} Years</b>
-      </div>
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-        <span class="block text-xs text-slate-400 font-bold uppercase tracking-wide">Form Starts</span>
-        <b class="text-base sm:text-lg">${exam.startDate || "Upcoming"}</b>
-      </div>
-    </div>
-
-    <div class="mt-6 bg-blue-50/50 border border-blue-100 p-5 rounded-2xl">
-      <h3 class="font-extrabold text-lg text-blue-900 mb-2">
-        <i class="fa-solid fa-book-open mr-2"></i>Syllabus & Details
-      </h3>
-      <p class="text-sm text-blue-800 leading-relaxed whitespace-pre-wrap">${exam.syllabus || "Syllabus pattern will be updated as per official notification."}</p>
-    </div>
-
-    <div class="mt-6 flex flex-col sm:flex-row gap-3">
-      <a href="${exam.applyLink || '#'}" target="_blank" class="flex-1 text-center py-4 rounded-xl bg-slate-900 text-white font-extrabold hover:bg-slate-800 transition">
-        Apply Now <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
-      </a>
-      <a href="${exam.notification || '#'}" target="_blank" class="flex-1 text-center py-4 rounded-xl bg-white border border-slate-200 text-slate-800 font-extrabold hover:bg-slate-50 transition">
-        Official Notification
-      </a>
-    </div>
-  `;
-  document.getElementById("examDetailModal").classList.add("open");
-};
-
-window.closeExamDetail = () => {
-  document.getElementById("examDetailModal").classList.remove("open");
-};
-
-/* ================= MOBILE MENU ================= */
+window.openExamDetail = (id) => { const exam = exams.find(e => e.id === id); if(!exam) return; const content = document.getElementById("examDetailContent"); content.innerHTML = `<div class="flex items-center gap-3 mb-4"><span class="text-xs font-extrabold px-3 py-1 rounded-full bg-violet-50 text-violet-700">${exam.cat}</span><span class="text-xs font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-600">${exam.edu}+</span></div><h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">${exam.name}</h2><p class="text-slate-500 font-bold mt-1">${exam.org}</p><p class="mt-5 text-slate-600 leading-relaxed">${exam.desc}</p><div class="grid grid-cols-2 gap-4 mt-6"><div class="bg-slate-50 p-4 rounded-xl border border-slate-100"><span class="block text-xs text-slate-400 font-bold uppercase tracking-wide">Age Limit</span><b class="text-base sm:text-lg">${exam.min} - ${exam.max} Years</b></div><div class="bg-slate-50 p-4 rounded-xl border border-slate-100"><span class="block text-xs text-slate-400 font-bold uppercase tracking-wide">Form Starts</span><b class="text-base sm:text-lg">${exam.startDate || "Upcoming"}</b></div></div><div class="mt-6 bg-blue-50/50 border border-blue-100 p-5 rounded-2xl"><h3 class="font-extrabold text-lg text-blue-900 mb-2"><i class="fa-solid fa-book-open mr-2"></i>Syllabus & Details</h3><p class="text-sm text-blue-800 leading-relaxed whitespace-pre-wrap">${exam.syllabus || "Syllabus pattern will be updated as per official notification."}</p></div><div class="mt-6 flex flex-col sm:flex-row gap-3"><a href="${exam.applyLink || '#'}" target="_blank" class="flex-1 text-center py-4 rounded-xl bg-slate-900 text-white font-extrabold hover:bg-slate-800 transition">Apply Now <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i></a><a href="${exam.notification || '#'}" target="_blank" class="flex-1 text-center py-4 rounded-xl bg-white border border-slate-200 text-slate-800 font-extrabold hover:bg-slate-50 transition">Official Notification</a></div>`; document.getElementById("examDetailModal").classList.add("open"); };
+window.closeExamDetail = () => { document.getElementById("examDetailModal").classList.remove("open"); };
 menuBtn.onclick=()=>{ mobileMenu.classList.toggle("mobile-open"); };
+const observer=new IntersectionObserver(entries=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add("show"); } }); },{ threshold:.12 }); document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
 
-/* ================= SCROLL ANIMATION ================= */
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add("show"); } });
-},{ threshold:.12 });
-document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
-
-/* ================= INITIALIZE ================= */
 document.querySelector('.chip[data-cat="All"]')?.classList.add("bg-slate-900", "text-white");
-renderExams();
-setStep(1);
+renderExams(); setStep(1); fetchDynamicExams(); fetchLatestNews();
+</script>
 
-fetchDynamicExams();
-fetchLatestNews();
+<!-- RAKHI JS SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const STORAGE = { scratchBalance: "nexite_rakhi_scratch_balance", firstScratchUsed: "nexite_rakhi_first_scratch_used", loginBonus: "nexite_rakhi_login_bonus", referralCount: "nexite_rakhi_referral_count", rewardRevealed: "nexite_rakhi_reward_revealed", rewardUnlocked: "nexite_rakhi_reward_unlocked" };
+  function getNumber(key) { return Number(localStorage.getItem(key) || 0); }
+  function setNumber(key, value) { localStorage.setItem(key, String(value)); }
+  if (localStorage.getItem(STORAGE.firstScratchUsed) !== "true") { setNumber(STORAGE.scratchBalance, Math.max(1, getNumber(STORAGE.scratchBalance))); }
 
+  const canvas = document.getElementById("scratchCanvas");
+  if(!canvas) return;
+  const scratchArea = document.getElementById("scratch-area");
+  const scratchButton = document.getElementById("scratchButton");
+  const rewardResult = document.getElementById("rewardResult");
+  const useRewardButton = document.getElementById("useRewardButton");
+  const unlockBox = document.getElementById("unlockBox");
+  const unlockedBox = document.getElementById("unlockedBox");
+  const shareButton = document.getElementById("shareButton");
+  const refCount = document.getElementById("refCount");
+  const progressBar = document.getElementById("progressBar");
+  const loginButton = document.getElementById("loginBonusButton");
+  const ctx = canvas.getContext("2d");
+  let isDrawing = false; let scratching = false;
+
+  function resizeCanvas() {
+    const rect = scratchArea.getBoundingClientRect();
+    const ratio = window.devicePixelRatio || 1;
+    canvas.width = rect.width * ratio; canvas.height = rect.height * ratio;
+    canvas.style.width = rect.width + "px"; canvas.style.height = rect.height + "px";
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+    gradient.addColorStop(0, "#8b6cff"); gradient.addColorStop(.45, "#c2a8ff"); gradient.addColorStop(.7, "#7258e8"); gradient.addColorStop(1, "#a98cff");
+    ctx.fillStyle = gradient; ctx.fillRect(0, 0, rect.width, rect.height);
+    ctx.fillStyle = "rgba(255,255,255,.10)";
+    for (let x = 0; x < rect.width; x += 25) { for (let y = 0; y < rect.height; y += 25) { ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI * 2); ctx.fill(); } }
+  }
+  resizeCanvas(); window.addEventListener("resize", resizeCanvas);
+
+  function getPosition(e) {
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches ? e.touches[0] : e;
+    return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+  }
+
+  function scratch(e) {
+    if (!scratching) return;
+    e.preventDefault();
+    const pos = getPosition(e);
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.beginPath(); ctx.arc(pos.x, pos.y, 24, 0, Math.PI * 2); ctx.fill();
+    checkScratchProgress();
+  }
+
+  canvas.addEventListener("mousedown", function () { isDrawing = true; scratching = true; });
+  canvas.addEventListener("mousemove", scratch);
+  window.addEventListener("mouseup", function () { isDrawing = false; });
+  canvas.addEventListener("touchstart", function (e) { isDrawing = true; scratching = true; e.preventDefault(); }, { passive: false });
+  canvas.addEventListener("touchmove", scratch, { passive: false });
+  canvas.addEventListener("touchend", function () { isDrawing = false; });
+
+  let completed = false;
+  function checkScratchProgress() {
+    if (completed) return;
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let transparent = 0;
+    const total = imageData.data.length / 4;
+    for (let i = 3; i < imageData.data.length; i += 4) { if (imageData.data[i] === 0) { transparent++; } }
+    const percent = transparent / total;
+    if (percent > .48) { completeScratch(); }
+  }
+
+  function completeScratch() {
+    if (completed) return;
+    completed = true; scratching = false;
+    canvas.style.transition = "opacity .5s ease"; canvas.style.opacity = "0";
+    document.querySelector(".scratch-hint").style.opacity = "0";
+    let balance = getNumber(STORAGE.scratchBalance);
+    if (balance > 0) { balance--; setNumber(STORAGE.scratchBalance, balance); }
+    localStorage.setItem(STORAGE.firstScratchUsed, "true");
+    localStorage.setItem(STORAGE.rewardRevealed, "true");
+    setTimeout(function () { rewardResult.classList.add("show"); scratchButton.style.display = "none"; }, 500);
+  }
+
+  scratchButton.addEventListener("click", function () {
+    const balance = getNumber(STORAGE.scratchBalance);
+    if (balance <= 0) { alert("Your scratch is already used. Login to get your bonus scratch."); return; }
+    scratchButton.style.display = "none"; scratching = true;
+    document.querySelector(".scratch-hint").textContent = "✨ Scratch anywhere ✨";
+  });
+
+  useRewardButton.addEventListener("click", function () { unlockBox.classList.add("show"); useRewardButton.style.display = "none"; updateReferralUI(); });
+
+  function updateReferralUI() {
+    const count = Math.min(2, getNumber(STORAGE.referralCount));
+    refCount.textContent = count; progressBar.style.width = ((count / 2) * 100) + "%";
+    if (count >= 2) { unlockReward(); }
+  }
+
+  function unlockReward() { localStorage.setItem(STORAGE.rewardUnlocked, "true"); unlockBox.classList.remove("show"); unlockedBox.classList.add("show"); }
+
+  shareButton.addEventListener("click", function () {
+    const currentCount = getNumber(STORAGE.referralCount);
+    if (currentCount < 2) { setNumber(STORAGE.referralCount, currentCount + 1); }
+    updateReferralUI();
+    const message = "🎁 Rakhi Special Surprise! 💝\n\nScratch your special reward on Nexite Career Lab.\n\n" + window.location.href;
+    const whatsapp = "https://wa.me/?text=" + encodeURIComponent(message);
+    window.open(whatsapp, "_blank");
+  });
+
+  loginButton.addEventListener("click", function () {
+    const bonusClaimed = localStorage.getItem(STORAGE.loginBonus);
+    if (bonusClaimed === "true") { alert("Login bonus already claimed."); return; }
+    let balance = getNumber(STORAGE.scratchBalance);
+    balance++;
+    setNumber(STORAGE.scratchBalance, balance);
+    localStorage.setItem(STORAGE.loginBonus, "true");
+    loginButton.textContent = "BONUS ADDED"; loginButton.disabled = true;
+    alert("Bonus scratch added! You can now scratch again.");
+  });
+});
 </script>
 
 </body>
