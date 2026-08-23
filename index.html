@@ -576,63 +576,6 @@ select:focus{
 }
 
 /* =========================================================
-   REWARDED AD
-   ========================================================= */
-.nx-extra {
-  margin-top:20px;
-  padding:21px;
-  border-radius:20px;
-  background:linear-gradient(145deg,rgba(118,87,255,.12),rgba(255,255,255,.04));
-  border:1px solid rgba(255,255,255,.09);
-}
-.nx-extra-icon {
-  font-size:32px;
-}
-.nx-extra h4 {
-  margin:8px 0 5px;
-  font-size:17px;
-}
-.nx-extra p {
-  margin:0 auto 15px;
-  max-width:300px;
-  font-size:11px;
-  line-height:1.5;
-  opacity:.6;
-}
-.nx-ad-btn {
-  padding:12px 18px;
-  border:0;
-  border-radius:12px;
-  color:#fff;
-  background:linear-gradient(135deg,#ff6485,#ff8a5c);
-  font-size:12px;
-  font-weight:900;
-  cursor:pointer;
-}
-.nx-extra small {
-  display:block;
-  margin-top:10px;
-  font-size:8px;
-  opacity:.35;
-}
-
-/* =========================================================
-   AD SLOT
-   ========================================================= */
-.nx-ad-slot {
-  min-height:80px;
-  margin-top:25px;
-  padding-top:10px;
-}
-.nx-ad-slot > span {
-  display:block;
-  margin-bottom:5px;
-  font-size:8px;
-  letter-spacing:1px;
-  opacity:.3;
-}
-
-/* =========================================================
    ANIMATIONS
    ========================================================= */
 @keyframes nxGiftFloat {
@@ -1174,26 +1117,6 @@ Keep opportunities handy
       </div>
       <button id="nxLoginBtn">LOGIN</button>
     </div>
-
-    <!-- ================= EXTRA SCRATCH AD ================= -->
-    <div class="nx-extra">
-      <div class="nx-extra-icon">📺</div>
-      <h4>Want Another Scratch?</h4>
-      <p>Watch a short rewarded ad to get +1 extra scratch.</p>
-      <button id="nxAdScratch" class="nx-ad-btn">
-        ▶ WATCH AD +1 SCRATCH
-      </button>
-      <small>Reward is given only after the rewarded ad is successfully completed.</small>
-    </div>
-
-    <!-- ================= AD SLOT ================= -->
-    <div class="nx-ad-slot">
-      <span>ADVERTISEMENT</span>
-      <div id="nxAdContainer">
-        <!-- THE AD SCRIPT GOES HERE -->
-        <script>(function(s){s.dataset.zone='11636494',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1729,7 +1652,7 @@ AI-powered photo tools for background removal, image editing, compression and mo
 
 
 <a
-href="https://mahieyai.vercel.app/"
+href="https://ainexite.vercel.app/"
 target="_blank"
 rel="noopener"
 class="btn shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-slate-900 font-extrabold">
@@ -2827,7 +2750,6 @@ const share = document.getElementById("nxShare");
 const count = document.getElementById("nxRefCount");
 const bar = document.getElementById("nxProgressBar");
 const login = document.getElementById("nxLoginBtn");
-const adButton = document.getElementById("nxAdScratch");
 
 /* CANVAS SETUP */
 let W = 0; let H = 0;
@@ -2881,7 +2803,7 @@ canvas.addEventListener("touchend", function(){ drawing = false; });
 
 /* START SCRATCH */
 start.addEventListener("click", function(){
-  if(number(KEY.balance) <= 0){ alert("No scratch available. Login or watch a rewarded ad for another scratch."); return; }
+  if(number(KEY.balance) <= 0){ alert("No scratch available. Login to get another scratch."); return; }
   start.style.display = "none"; active = true;
   document.querySelector(".nx-scratch-text").textContent = "✨ Scratch anywhere ✨";
 });
@@ -2943,15 +2865,6 @@ login.addEventListener("click", function(){
   alert("🎉 Login bonus: +1 Scratch!");
 });
 
-/* REWARDED AD CALLBACK */
-window.NexiteRewardedAdComplete = function(){
-  let balance = number(KEY.balance); balance++; save(KEY.balance, balance);
-  adButton.textContent = "✓ +1 SCRATCH ADDED"; adButton.disabled = true;
-  setTimeout(function(){ adButton.textContent = "▶ WATCH AD +1 SCRATCH"; adButton.disabled = false; }, 3000);
-  alert("🎁 Extra Scratch Added!");
-};
-
-adButton.addEventListener("click", function(){ alert("Rewarded ad is not connected yet. Connect your ad provider's rewarded-web callback here."); });
 document.getElementById("nxClaim").addEventListener("click", function(){ alert("🎁 Your Rakhi Special reward is ready!"); });
 
 /* CONFETTI */
